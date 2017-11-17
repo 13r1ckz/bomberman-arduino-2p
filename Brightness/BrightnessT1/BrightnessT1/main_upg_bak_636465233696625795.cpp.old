@@ -1,0 +1,18 @@
+/*
+ * BrightnessT1.cpp
+ *
+ * Created: 11/17/2017 1:48:54 PM
+ * Author : gerjo
+ */ 
+
+#include <avr/io.h>
+
+
+int main(void)
+{
+    /* Replace with your application code */
+    while (1) 
+    {
+    }
+}
+
