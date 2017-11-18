@@ -18,6 +18,9 @@
 #define ARDUINO 10804
 #define ARDUINO_AVR_UNO
 #define ARDUINO_ARCH_AVR
+void init_adc_single_sample();
+void init_pwm_fast();
+void single_sample();
 int main(void);
 
 #include "pins_arduino.h" 
