@@ -1,6 +1,19 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <EEPROM.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SoftwareSerial.h>
+#include <digitalWriteFast.h>
+#include <GraphicsLib.h>
+#include <MI0283QT9.h>
+#include <DisplaySPI.h>
+#include <DisplayUART.h>
+#include <DisplayI2C.h>
+
+MI0283QT9 lcd;  //MI0283QT9 Adapter v1
+
 int step;
 void init_adc_single_sample()
 {
@@ -18,13 +31,20 @@ void init_pwm_fast()
 
 void single_sample()
 {
+	uint8_t bricht;
 	uint16_t result;
 	ADCSRA |= (1<<ADSC);		// Start conversion
 	while(ADCSRA & (1<<ADSC)) ;	// Wait
 	result = ADC;
 	step = (result >> 2);
 	
+	Serial.print("input ");
 	Serial.println(result >> 2);
+	bricht = map((result >> 2), 0, 255, 0, 100);
+	Serial.print("remap ");
+	Serial.println(bricht);
+	lcd.led(bricht);
+
 }
 
 int main(void)
@@ -32,13 +52,14 @@ int main(void)
 	init();
 	DDRB |= (1<<DDB3);
 	Serial.begin(9600);
+	lcd.begin();
 	init_adc_single_sample();
 	init_pwm_fast();
+	//clear screen
+	lcd.fillScreen(RGB(255,255,255));
+	
 	while(1)
 	{
 		single_sample();
-		//OCR2A = step;
-		//Serial.println(step);
-		//_delay_ms(10);
 	}
 }
