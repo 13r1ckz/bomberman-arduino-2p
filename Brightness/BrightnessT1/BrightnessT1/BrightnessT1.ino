@@ -14,12 +14,10 @@
 
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 
-int step;
 void init_adc_single_sample()
 {
 	ADMUX |= (1<<MUX0);		// input analog A1 Arduino
 	ADMUX |= (1<<REFS0);	// 5 volt
-	ADCSRA = (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0); // clock/128
 	ADCSRA |= (1<<ADEN);	// ADC enable
 }
 void init_pwm_fast()
@@ -36,15 +34,10 @@ void single_sample()
 	ADCSRA |= (1<<ADSC);		// Start conversion
 	while(ADCSRA & (1<<ADSC)) ;	// Wait
 	result = ADC;
-	step = (result >> 2);
-	
-	Serial.print("input ");
-	Serial.println(result >> 2);
-	bricht = map((result >> 2), 0, 255, 0, 100);
-	Serial.print("remap ");
-	Serial.println(bricht);
+	//remap
+	bricht = map((result >> 2), 0, 255, 0, 10);
+	bricht = bricht * 10;
 	lcd.led(bricht);
-
 }
 
 int main(void)
