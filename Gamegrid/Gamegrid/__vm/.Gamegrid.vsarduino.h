@@ -18,7 +18,8 @@
 #define ARDUINO 10804
 #define ARDUINO_AVR_UNO
 #define ARDUINO_ARCH_AVR
-void OuterWall();
+int OuterWall();
+int inergrid();
 int main(void);
 
 #include "pins_arduino.h" 
