@@ -5,9 +5,9 @@
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
 
+
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
-
 
 
 void characterA(int X, int Y) {
@@ -16,7 +16,7 @@ void characterA(int X, int Y) {
 		lcd.drawPixel((X + (i+3)),(Y+0),RGB(2,13,199));
 	}
 	
-	lcd.drawPixel(2,1,RGB(2,13,199));
+	lcd.drawPixel((X+2),(Y+1),RGB(2,13,199));
 	for(i = 0; i < 10; i++){
 		lcd.drawPixel((X+(i+3)),(Y+1),RGB(49,127,236));
 	}
@@ -152,7 +152,7 @@ void characterB(int X, int Y) {
 	
 	lcd.drawPixel((X+1),(Y+2),RGB(194,0,9));
 	for(i = 0; i < 12; i++){
-		lcd.drawPixel((X+(i+2)),(X+2),RGB(255,1,12));
+		lcd.drawPixel((X+(i+2)),(Y+2),RGB(255,1,12));
 	}
 	lcd.drawPixel((X+14),(Y+2),RGB(194,0,9));
 	
@@ -163,7 +163,7 @@ void characterB(int X, int Y) {
 	lcd.drawPixel((X+14),(Y+3),RGB(194,0,9));
 	
 	lcd.drawPixel((X+1),(Y+4),RGB(194,0,9));
-	lcd.drawPixel((X+2),(X+4),RGB(255,1,12));
+	lcd.drawPixel((X+2),(Y+4),RGB(255,1,12));
 	for(i = 0; i < 10; i++){
 		lcd.drawPixel((X+(i+3)),(Y+4),RGB(194,0,9));
 	}
@@ -203,7 +203,7 @@ void characterB(int X, int Y) {
 	}
 	lcd.drawPixel((X+14),(Y+8),RGB(254,204,154));
 	lcd.drawPixel((X+15),(Y+8),RGB(254,204,154));
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	lcd.drawPixel((X+0),(Y+9),RGB(254,204,154));
 	lcd.drawPixel((X+1),(Y+9),RGB(254,204,154));
 	lcd.drawPixel((X+2),(Y+9),RGB(194,0,9));
@@ -264,6 +264,7 @@ void characterB(int X, int Y) {
 	}
 }
 
+
 int main(void)
 {
 	init();
@@ -273,13 +274,15 @@ int main(void)
 
 	//init display
 	lcd.begin();
-
+	
 	//clear screen
 	lcd.fillScreen(RGB(255,255,255));
-	characterA(224,0);
-	characterB(0,0);
+	characterA(224,100);
+	characterB(30,10);
+	characterB(40,150);
+	characterB(50,120);
 	while (1)
 	{
-	
+
 	}
 }
