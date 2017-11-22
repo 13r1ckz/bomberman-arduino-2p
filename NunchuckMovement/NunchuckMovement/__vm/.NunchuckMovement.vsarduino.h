@@ -18,10 +18,8 @@
 #define ARDUINO 10801
 #define ARDUINO_AVR_UNO
 #define ARDUINO_ARCH_AVR
-void characterA(int X, int Y);
-void characterB(int X, int Y);
 int main(void);
 
 #include "pins_arduino.h" 
 #include "Arduino.h"
-#include "Character.ino"
+#include "NunchuckMovement.ino"

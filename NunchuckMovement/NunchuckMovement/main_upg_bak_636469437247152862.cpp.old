@@ -1,0 +1,18 @@
+/*
+ * NunchuckMovement.cpp
+ *
+ * Created: 22-11-2017 10:35:20
+ * Author : Christine
+ */ 
+
+#include <avr/io.h>
+
+
+int main(void)
+{
+    /* Replace with your application code */
+    while (1) 
+    {
+    }
+}
+
