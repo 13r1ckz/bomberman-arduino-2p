@@ -1,0 +1,18 @@
+/*
+ * Startscherm.cpp
+ *
+ * Created: 20-11-2017 14:02:47
+ * Author : Christine
+ */ 
+
+#include <avr/io.h>
+
+
+int main(void)
+{
+    /* Replace with your application code */
+    while (1) 
+    {
+    }
+}
+
