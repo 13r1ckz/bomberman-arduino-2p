@@ -23,6 +23,7 @@ void level2();
 void levelRandom();
 void highScore();
 void characterA(int X, int Y);
+void characterB(int X, int Y);
 int Startscherm();
 int main(void);
 
