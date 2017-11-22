@@ -21,8 +21,20 @@
 void init_adc_single_sample();
 void init_pwm_fast();
 void single_sample();
+void mlevel1();
+void mlevel2();
+void mlevelRandom();
+void mhighScore();
+void characterA(int X, int Y);
+void characterB(int X, int Y);
+int navigate();
+int Startscherm();
+int level1();
+int level2();
+int levelRandom();
+int highScore();
 int main(void);
 
 #include "pins_arduino.h" 
 #include "Arduino.h"
-#include "BrightnessT1.ino"
+#include "MainGame.ino"
