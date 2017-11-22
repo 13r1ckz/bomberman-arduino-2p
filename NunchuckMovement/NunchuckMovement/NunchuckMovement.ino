@@ -11,7 +11,6 @@ int main(void) {
 	nunchuk.init();
 	int nunchukY = 0;
 	int counter = 30;
-	
 	int i = 0;
 	
 	while(1){
@@ -41,14 +40,5 @@ int main(void) {
 		Serial.print(' ');
 		Serial.println(nunchukY, DEC);
 		
-		
-		
-		/*Serial.print(nunchuk.analogX, DEC);
-		Serial.print(' ');
-		
-		
-		Serial.print(nunchuk.zButton, DEC);
-		Serial.print(' ');
-		Serial.println(nunchuk.cButton, DEC);*/
 	}
 }

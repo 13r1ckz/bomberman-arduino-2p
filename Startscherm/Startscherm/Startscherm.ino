@@ -4,10 +4,11 @@
 #include <Wire.h>
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
-
+#include <ArduinoNunchuk.h>
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
+ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 void level1() {
 	lcd.fillRect(60,15,200,50,0xFFFFFF);
@@ -291,6 +292,115 @@ int Startscherm(){
 	characterB(304,0);
 }
 
+int navigate() {
+	int nunchukY = 2;
+	int counter = 5;
+	int i = 0;
+	int q = 0;
+	
+	while(1) {
+	nunchuk.update();
+	if(nunchuk.analogY < 60) {
+		if(i>counter) {
+			i=0;
+		}
+		if(i == 0) {
+			nunchukY++;
+			i++;
+		}
+		i++;
+	}
+	
+	if(nunchuk.analogY > 200) {
+		if(i>counter) {
+			i=0;
+		}
+		if(i == 0) {
+			nunchukY--;
+			i++;
+		}
+		i++;
+	}
+	
+	Serial.print(nunchuk.analogY, DEC);
+	Serial.print(' ');
+	Serial.println(nunchukY, DEC);
+	
+	if(nunchukY == 1){
+		lcd.drawRect(60, 180, 200, 50, RGB(255,255,255));
+		lcd.drawRect(61, 181, 198, 48, RGB(255,255,255));
+		lcd.drawRect(62, 182, 196, 46, RGB(255,255,255));
+		
+		lcd.drawRect(60, 70, 200, 50, RGB(255,255,255));
+		lcd.drawRect(61, 71, 198, 48, RGB(255,255,255));
+		lcd.drawRect(62, 72, 196, 46, RGB(255,255,255));
+		
+		lcd.drawRect(60, 15, 200, 50, RGB(255,0,0));
+		lcd.drawRect(61, 16, 198, 48, RGB(255,0,0));
+		lcd.drawRect(62, 17, 196, 46, RGB(255,0,0));
+		if (nunchuk.zButton) {
+			return 1;
+		}
+	}
+	if(nunchukY == 2){
+		lcd.drawRect(60, 15, 200, 50, RGB(255,255,255));
+		lcd.drawRect(61, 16, 198, 48, RGB(255,255,255));
+		lcd.drawRect(62, 17, 196, 46, RGB(255,255,255));
+		
+		lcd.drawRect(60, 125, 200, 50, RGB(255,255,255));
+		lcd.drawRect(61, 126, 198, 48, RGB(255,255,255));
+		lcd.drawRect(62, 127, 196, 46, RGB(255,255,255));
+		
+		lcd.drawRect(60, 70, 200, 50, RGB(255,0,0));
+		lcd.drawRect(61, 71, 198, 48, RGB(255,0,0));
+		lcd.drawRect(62, 72, 196, 46, RGB(255,0,0));
+		if (nunchuk.zButton) {
+			return 2;
+		}
+	}
+	if(nunchukY == 3){
+		lcd.drawRect(60, 70, 200, 50, RGB(255,255,255));
+		lcd.drawRect(61, 71, 198, 48, RGB(255,255,255));
+		lcd.drawRect(62, 72, 196, 46, RGB(255,255,255));
+		
+		lcd.drawRect(60, 180, 200, 50, RGB(255,255,255));
+		lcd.drawRect(61, 181, 198, 48, RGB(255,255,255));
+		lcd.drawRect(62, 182, 196, 46, RGB(255,255,255));
+		
+		lcd.drawRect(60, 125, 200, 50, RGB(255,0,0));
+		lcd.drawRect(61, 126, 198, 48, RGB(255,0,0));
+		lcd.drawRect(62, 127, 196, 46, RGB(255,0,0));
+		
+		if (nunchuk.zButton) {
+			return 3;
+		}
+	}
+	if(nunchukY == 4){
+		lcd.drawRect(60, 125, 200, 50, RGB(255,255,255));
+		lcd.drawRect(61, 126, 198, 48, RGB(255,255,255));
+		lcd.drawRect(62, 127, 196, 46, RGB(255,255,255));
+		
+		lcd.drawRect(60, 15, 200, 50, RGB(255,255,255));
+		lcd.drawRect(61, 16, 198, 48, RGB(255,255,255));
+		lcd.drawRect(62, 17, 196, 46, RGB(255,255,255));
+		
+		lcd.drawRect(60, 180, 200, 50, RGB(255,0,0));
+		lcd.drawRect(61, 181, 198, 48, RGB(255,0,0));
+		lcd.drawRect(62, 182, 196, 46, RGB(255,0,0));
+		
+		if (nunchuk.zButton) {
+			return 4;
+		}
+	}
+	if(nunchukY == 5){
+		nunchukY = 1;
+	}
+	if(nunchukY == 0){
+		nunchukY = 4;
+	}
+	}
+}
+
 
 int main(void)
 {
@@ -305,8 +415,13 @@ int main(void)
 	//clear screen
 	lcd.fillScreen(RGB(255,255,255));
 	Startscherm();
+	nunchuk.init();
+	navigate();
+	
 	while (1)
 	{
+		
+		
 		
 	}
 }

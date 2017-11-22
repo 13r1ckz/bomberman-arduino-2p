@@ -25,6 +25,7 @@ void highScore();
 void characterA(int X, int Y);
 void characterB(int X, int Y);
 int Startscherm();
+int navigate();
 int main(void);
 
 #include "pins_arduino.h" 
