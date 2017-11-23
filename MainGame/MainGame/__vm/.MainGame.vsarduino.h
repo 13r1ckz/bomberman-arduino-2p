@@ -18,17 +18,17 @@
 #define ARDUINO 10801
 #define ARDUINO_AVR_UNO
 #define ARDUINO_ARCH_AVR
-void init_adc_single_sample();
-void init_pwm_fast();
-void single_sample();
 void mlevel1();
 void mlevel2();
 void mlevelRandom();
 void mhighScore();
 void characterA(int X, int Y);
 void characterB(int X, int Y);
-int navigate();
+int navigateStart();
 int Startscherm();
+int OuterWall();
+int InnerGrid();
+int navigate();
 int level1();
 int level2();
 int levelRandom();
