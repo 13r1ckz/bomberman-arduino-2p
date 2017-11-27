@@ -28,6 +28,16 @@ void mhighScore() {
 	lcd.fillRect(60,180,200,50,0xFFFFFF);
 	lcd.drawText(82,195, "High score", 0x111111, 0xFFFFFF, 2);
 }
+void woodBox(int X, int Y){
+	lcd.fillRect(X, Y, 16, 16, RGB( 150, 111, 51));
+	lcd.drawLine((X+1),(Y+1),(X+1),(Y+15), RGB(218,165,32));
+	lcd.drawLine((X+3),(Y+1),(X+3),(Y+15), RGB(218,165,32));
+	lcd.drawLine((X+5),(Y+1),(X+5),(Y+15), RGB(218,165,32));
+	lcd.drawLine((X+7),(Y+1),(X+7),(Y+15), RGB(218,165,32));
+	lcd.drawLine((X+9),(Y+1),(X+9),(Y+15), RGB(218,165,32));
+	lcd.drawLine((X+11),(Y+1),(X+11),(Y+15), RGB(218,165,32));
+	lcd.drawLine((X+13),(Y+1),(X+13u),(Y+15), RGB(218,165,32));
+}
 void characterA(int X, int Y) {
 	int i,j;
 	for(i = 0; i < 10; i++){
@@ -632,6 +642,9 @@ int level1() {
 	lcd.fillScreen(RGB(255,255,255));
 	OuterWall();
 	InnerGrid();
+	woodBox(Grid(2),Grid(1));
+	woodBox(Grid(6),Grid(3));
+	woodBox(Grid(7),Grid(8));
 	navigate();
 	return;
 }
