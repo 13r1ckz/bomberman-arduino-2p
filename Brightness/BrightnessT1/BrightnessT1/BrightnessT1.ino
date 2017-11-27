@@ -1,44 +1,17 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
-#include <EEPROM.h>
-#include <Wire.h>
 #include <SPI.h>
 #include <SoftwareSerial.h>
 #include <digitalWriteFast.h>
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
-#include <DisplaySPI.h>
-#include <DisplayUART.h>
-#include <DisplayI2C.h>
 
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 
-void init_adc_single_sample()
-{
-	ADMUX |= (1<<MUX0);		// input analog A1 Arduino
-	ADMUX |= (1<<REFS0);	// 5 volt
-	ADCSRA |= (1<<ADEN);	// ADC enable
-}
-void init_pwm_fast()
-{
-	TCCR2A |= (1<<COM0A1);					// Non-inverting mode A
-	TCCR2A |= (1 << WGM01) | (1 << WGM00);	// set fast PWM Mode
-	TCCR2B |= (1 << CS01);					// set prescaler to 8 and start the timer
-}
 
-void single_sample()
-{
-	uint8_t bricht;
-	uint16_t result;
-	ADCSRA |= (1<<ADSC);		// Start conversion
-	while(ADCSRA & (1<<ADSC)) ;	// Wait
-	result = ADC;
-	//remap
-	bricht = map((result >> 2), 0, 255, 0, 10);
-	bricht = bricht * 10;
-	lcd.led(bricht);
-}
+
+
 
 int main(void)
 {
@@ -47,7 +20,6 @@ int main(void)
 	Serial.begin(9600);
 	lcd.begin();
 	init_adc_single_sample();
-	init_pwm_fast();
 	//clear screen
 	lcd.fillScreen(RGB(255,255,255));
 	

@@ -12,6 +12,26 @@
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
+void init_adc_single_sample()
+{
+	ADMUX |= (1<<MUX0);		// input analog A1 Arduino
+	ADMUX |= (1<<REFS0);	// 5 volt
+	ADCSRA |= (1<<ADEN);	// ADC enable
+}
+
+void single_sample()
+{
+	uint8_t bright;
+	uint16_t result;
+	ADCSRA |= (1<<ADSC);		// Start conversion
+	while(ADCSRA & (1<<ADSC)) ;	// Wait
+	result = ADC;
+	//remap
+	bright = map((result >> 2), 0, 255, 0, 10);
+	bright = bright * 10;
+	lcd.led(bright);
+}
+
 void mlevel1() {
 	lcd.fillRect(60,15,200,50,0xFFFFFF);
 	lcd.drawText(82,30, "Level 1", 0x111111, 0xFFFFFF, 3.5);
@@ -288,7 +308,7 @@ int navigateStart() {
 	int i = 0;
 	
 	while(1) {
-		//single_sample();
+		single_sample();
 		nunchuk.update();
 		if(nunchuk.analogY < 60) {
 			if(i>counter) {
@@ -486,6 +506,7 @@ int navigate(){
 	int gridX, gridY;
 	
 	while(1) {
+		single_sample();
 		nunchuk.update();
 		int XA = Grid(nunchukX);
 		int YA = Grid(nunchukY);
@@ -670,10 +691,12 @@ int main(void)
 	//init display
 	lcd.begin();
 	nunchuk.init();
+	init_adc_single_sample();
 	
 	while (1)
 	{
 		level = Startscherm();
+		
 		Serial.println(level, DEC);
 
 		if (level == 1)	{

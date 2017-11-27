@@ -18,6 +18,8 @@
 #define ARDUINO 10801
 #define ARDUINO_AVR_UNO
 #define ARDUINO_ARCH_AVR
+void init_adc_single_sample();
+void single_sample();
 void mlevel1();
 void mlevel2();
 void mlevelRandom();
