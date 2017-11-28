@@ -6,6 +6,7 @@
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
 #include "Grid.h"
+#include "OuterWall.h"
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -13,6 +14,7 @@ MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 //outerGrid gridout;
 
 GridClass gridFH;
+OuterWall wallOut;
 //int Grid(int X){
 	//return (X*16);
 //}
@@ -100,6 +102,7 @@ int main(void)
 //	gridFH.GritPX;
 	lcd.drawInteger (30, 30, gridFH.GridF(5), 20,RGB(2,30,240), RGB(0,0,0), 5);
 	Serial.println(gridFH.GridF(5));
+	wallOut.OuterWallP();
 	//outerGrid.printOuterGrid();
 	
 	//inergrid();
