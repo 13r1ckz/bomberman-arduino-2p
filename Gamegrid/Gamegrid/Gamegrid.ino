@@ -7,6 +7,7 @@
 #include <MI0283QT9.h>
 #include "Grid.h"
 #include "Wall.h"
+#include "Obstacle.h"
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -16,6 +17,7 @@ MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 GridClass gridFH;
 OuterWall wallOut;
 InnerWall wallIn;
+Obstacle OB;
 //int Grid(int X){
 	//return (X*16);
 //}
@@ -105,6 +107,7 @@ int main(void)
 	Serial.println(gridFH.GridF(5));
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
+	OB.ObstacleDR(1);
 	//outerGrid.printOuterGrid();
 	
 	//inergrid();
