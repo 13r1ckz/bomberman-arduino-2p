@@ -6,7 +6,7 @@
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
 #include "Grid.h"
-#include "OuterWall.h"
+#include "Wall.h"
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -15,6 +15,7 @@ MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 
 GridClass gridFH;
 OuterWall wallOut;
+InnerWall wallIn;
 //int Grid(int X){
 	//return (X*16);
 //}
@@ -62,12 +63,12 @@ OuterWall wallOut;
 	//int i, j, X, Y, a;
 	//int x;
 	//int y;
-	//int inner[][2] = {{3,3}, {5,3}, {7,3}, {9,3}, {11,3}, {13,3}, 
-					//{3,5}, {5,5}, {7,5}, {9,5}, {11,5}, {13,5},
-					//{3,7}, {5,7}, {7,7}, {9,7}, {11,7}, {13,7},
-					//{3,9}, {5,9}, {7,9}, {9,9}, {11,9}, {13,9},
-					//{3,11}, {5,11}, {7,11}, {9,11}, {11,11}, {13,11},
-					//{3,13}, {5,13}, {7,13}, {9,13}, {11,13}, {13,13}};
+	//int inner[][2] = {{3,3}, {5,3}, {7,3}, {9,3}, {11,3}, {13,3},
+	//{3,5}, {5,5}, {7,5}, {9,5}, {11,5}, {13,5},
+	//{3,7}, {5,7}, {7,7}, {9,7}, {11,7}, {13,7},
+	//{3,9}, {5,9}, {7,9}, {9,9}, {11,9}, {13,9},
+	//{3,11}, {5,11}, {7,11}, {9,11}, {11,11}, {13,11},
+	//{3,13}, {5,13}, {7,13}, {9,13}, {11,13}, {13,13}};
 	//X = 2;
 	//Y = 2;
 	//for(i = 0; i < 6; i++){
@@ -100,9 +101,10 @@ int main(void)
     lcd.fillScreen(RGB(255,255,255));
 	//OuterWall();
 //	gridFH.GritPX;
-	lcd.drawInteger (30, 30, gridFH.GridF(5), 20,RGB(2,30,240), RGB(0,0,0), 5);
+	//lcd.drawInteger (30, 30, gridFH.GridF(5), 20,RGB(2,30,240), RGB(0,0,0), 5);
 	Serial.println(gridFH.GridF(5));
 	wallOut.OuterWallP();
+	wallIn.InnerWallP();
 	//outerGrid.printOuterGrid();
 	
 	//inergrid();

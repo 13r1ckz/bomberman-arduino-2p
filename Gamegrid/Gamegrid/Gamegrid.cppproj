@@ -275,6 +275,18 @@
     <Compile Include="Grid.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Obstacle.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Obstacle.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Wall.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Wall.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="__vm\.Gamegrid.vsarduino.h">
       <SubType>compile</SubType>
     </Compile>

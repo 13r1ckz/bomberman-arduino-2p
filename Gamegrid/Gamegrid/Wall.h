@@ -11,4 +11,11 @@ public:
 	int OuterWallP();
 }; //OuterWall
 
+class InnerWall
+{
+	public:
+	int InnerWallP();
+}; //OuterWall
+
+
 #endif //__OUTERWALL_H__
