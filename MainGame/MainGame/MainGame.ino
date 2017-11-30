@@ -302,6 +302,19 @@ void characterB(int X, int Y) {
 	}
 }
 
+void bomb(int X, int Y) {
+	lcd.fillRect(X,Y,16,16,RGB(255,255,255));
+	lcd.fillCircle((X+7),(Y+9),5,RGB(0,0,0));
+	lcd.drawPixel((X+11),(Y+5),RGB(75,86,90));
+	lcd.drawPixel((X+13),(Y+5),RGB(254,100,0));
+	lcd.drawPixel((X+12),(Y+4),RGB(254,100,0));
+	lcd.drawPixel((X+13),(Y+3),RGB(254,100,0));
+	lcd.drawPixel((X+14),(Y+4),RGB(254,100,0));
+	lcd.drawPixel((X+13),(Y+4),RGB(255,0,0));
+	lcd.drawPixel((X+6),(Y+6),RGB(255,255,255));
+	lcd.drawPixel((X+5),(Y+7),RGB(255,255,255));
+}
+
 int navigateStart() {
 	int nunchukY = 1;
 	int counter = 5;
@@ -411,6 +424,8 @@ int navigateStart() {
 	}
 }
 
+
+
 int Startscherm(){
 	int level;
 	lcd.fillScreen(RGB(0,0,0));
@@ -422,6 +437,7 @@ int Startscherm(){
 	characterA(0,0);
 	lcd.fillRect(304,0,16,16,RGB(255,255,255));
 	characterB(304,0);
+	bomb(64,0);
 	level = navigateStart();
 	return level;
 }

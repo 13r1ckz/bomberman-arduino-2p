@@ -26,6 +26,7 @@ void mlevelRandom();
 void mhighScore();
 void characterA(int X, int Y);
 void characterB(int X, int Y);
+void bomb(int X, int Y);
 int navigateStart();
 int Startscherm();
 int OuterWall();
