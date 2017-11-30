@@ -6,11 +6,27 @@
 #include <MI0283QT9.h>
 #include <ArduinoNunchuk.h>
 #include <EEPROM.h>
-
+//#include "lib/Grid/Grid.h"
+//#include "lib/Wall/Wall.h"
+//#include "lib/Obstacle/Obstacle.h"
+//#include "lib/Character/Character.h"
+//#include "lib/Bom/Bom.h"
+#include "Grid.h"
+#include "Wall.h"
+#include "Obstacle.h"
+#include "Character.h"
+#include "Bom.h"
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
+
+GridClass gridFH;
+OuterWall wallOut;
+InnerWall wallIn;
+Obstacle OB;
+Character Characters;
+Bom bom;
 
 void init_adc_single_sample()
 {
@@ -355,9 +371,9 @@ int navigateStart() {
 			i++;
 		}
 		
-		Serial.print(nunchuk.analogY, DEC);
-		Serial.print(' ');
-		Serial.println(nunchukY, DEC);
+		//Serial.print(nunchuk.analogY, DEC);
+		//Serial.print(' ');
+		//Serial.println(nunchukY, DEC);
 		
 		if(nunchukY == 1){
 			lcd.drawRect(60, 180, 200, 50, RGB(255,255,255));
@@ -434,8 +450,6 @@ int navigateStart() {
 	}
 }
 
-
-
 int Startscherm(){
 	int level;
 	lcd.fillScreen(RGB(0,0,0));
@@ -452,11 +466,13 @@ int Startscherm(){
 	return level;
 }
 
+/*
 Grid(int X){
 	return (X*16);
 }
+*/
 
-int OuterWall(){
+/*int OuterWall(){
 	int i , j;
 	int X = 0;
 	int Y = 0;
@@ -495,8 +511,9 @@ int OuterWall(){
 		X = X + 1;
 	}
 	return outer;
-}
+}*/
 
+/*
 int InnerGrid(){
 	int i, j, X, Y, a;
 	int inner[][2] = {{3,3}, {5,3}, {7,3}, {9,3}, {11,3}, {13,3},
@@ -522,27 +539,51 @@ int InnerGrid(){
 		Serial.println(Grid(Y));
 	}
 	return inner;
-}
+}*/
 
 int navigate(){
 	int nunchukY = 1;
 	int nunchukX = 1;
 	int counter = 10;
 	int i = 0;
+	int q = 0;
 	int gridX, gridY;
+	int bomb = 0;
+	int bomX, bomY;
+	int bomcounter = 75;
 	
 	while(1) {
 		single_sample();
 		nunchuk.update();
-		int XA = Grid(nunchukX);
-		int YA = Grid(nunchukY);
-		int XB = Grid(13);
-		int YB = Grid(13);
+		int XA = gridFH.GridF(nunchukX);
+		int YA = gridFH.GridF(nunchukY);
+		int XB = gridFH.GridF(13);
+		int YB = gridFH.GridF(13);
 		characterA(XA,YA);
 		characterB(XB,XB);
 		int gridX = 0;
 		int gridY = 0;
-		
+		if (bomb==0){
+			if (nunchuk.cButton)
+			{
+				bomX=XA;
+				bomY=YA;
+				bomb=1;
+				q=0;
+			}
+		}
+		if (bomb==1)
+		{
+			
+			bom.BomXY((bomX/16),(bomY/16));
+		}
+		if(q==bomcounter){
+			lcd.fillRect(bomX,bomY,16,16,RGB(255,255,255));
+			q=0;
+			bomb = 0;
+		}
+		Serial.println(q);
+		q++;
 		//omlaag lopen
 		if(nunchuk.analogY < 60) {
 			if(i>counter) {
@@ -565,7 +606,7 @@ int navigate(){
 					}
 				}
 				if (trueX == 0){
-					lcd.fillRect((Grid(nunchukX)),(Grid(nunchukY)-16), 16, 16, RGB(255,255,255)); //wist vorige positie
+					lcd.fillRect((gridFH.GridF(nunchukX)),(gridFH.GridF(nunchukY)-16), 16, 16, RGB(255,255,255)); //wist vorige positie
 				}
 				i++;
 			}
@@ -594,7 +635,7 @@ int navigate(){
 					}
 				}
 				if (trueX == 0){
-					lcd.fillRect((Grid(nunchukX)),(Grid(nunchukY)+16), 16, 16, RGB(255,255,255)); //wist vorige positie
+					lcd.fillRect((gridFH.GridF(nunchukX)),(gridFH.GridF(nunchukY)+16), 16, 16, RGB(255,255,255)); //wist vorige positie
 				}
 				i++;
 			}
@@ -623,7 +664,7 @@ int navigate(){
 					}
 				}
 				if (trueY == 0){
-					lcd.fillRect((Grid(nunchukX)+16),(Grid(nunchukY)), 16, 16, RGB(255,255,255)); //wist vorige positie
+					lcd.fillRect((gridFH.GridF(nunchukX)+16),(gridFH.GridF(nunchukY)), 16, 16, RGB(255,255,255)); //wist vorige positie
 				}
 				i++;
 			}
@@ -652,7 +693,7 @@ int navigate(){
 					}
 				}
 				if (trueY == 0){
-					lcd.fillRect((Grid(nunchukX)-16),(Grid(nunchukY)), 16, 16, RGB(255,255,255)); //wist vorige positie
+					lcd.fillRect((gridFH.GridF(nunchukX)-16),(gridFH.GridF(nunchukY)), 16, 16, RGB(255,255,255)); //wist vorige positie
 				}
 				i++;
 			}
@@ -677,29 +718,37 @@ int navigate(){
 
 int level1() {
 	lcd.fillScreen(RGB(255,255,255));
-	OuterWall();
-	InnerGrid();
-	woodBox(Grid(2),Grid(1));
-	woodBox(Grid(6),Grid(3));
-	woodBox(Grid(7),Grid(8));
+	wallOut.OuterWallP();
+	wallIn.InnerWallP();
+	OB.ObstacleDR(1);
 	navigate();
-	return;
+	while(1){}
+	//woodBox(Grid(2),Grid(1));
+	//woodBox(Grid(6),Grid(3));
+	//woodBox(Grid(7),Grid(8));
+	//navigate();
+	
 }
 
 int level2() {
-	lcd.fillScreen(RGB(0,255,0));
-	OuterWall();
-	InnerGrid();
-	navigate();
-	return;
+	lcd.fillScreen(RGB(255,255,255));
+	wallOut.OuterWallP();
+	wallIn.InnerWallP();
+	OB.ObstacleDR(2);
+	while(1){}
+	//lcd.fillScreen(RGB(0,255,0));
+	//OuterWall();
+	//InnerGrid();
+	//navigate();
+	//return;
 }
 
 int levelRandom() {
-	lcd.fillScreen(RGB(0,0,255));
-	OuterWall();
-	InnerGrid();
-	navigate();
-	return;
+	//lcd.fillScreen(RGB(0,0,255));
+	//OuterWall.OuterWallP();
+	//();
+	//navigate();
+	//return;
 }
 
 int highScore() {
@@ -726,7 +775,7 @@ int main(void)
 	{
 		level = Startscherm();
 		
-		Serial.println(level, DEC);
+		//Serial.println(level, DEC);
 
 		if (level == 1)	{
 			level1();
