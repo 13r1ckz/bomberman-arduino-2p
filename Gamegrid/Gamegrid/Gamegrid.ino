@@ -1,27 +1,31 @@
-/*
- * Gamegrid.ino
- *
- * Created: 11/20/2017 12:42:59 PM
- * Author : gerjon
- */ 
-
+#include "Test.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
 #include <Wire.h>
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
+#include "Grid.h"
+#include "Wall.h"
+#include "Obstacle.h"
+#include "Character.h"
+#include "Bom.h"
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 
-Grid(int X){
-	return (X*16);
-}
+//outerGrid gridout;
 
-
-
-int OuterWall(){
+GridClass gridFH;
+OuterWall wallOut;
+InnerWall wallIn;
+Obstacle OB;
+Character Characters;
+Bom bom;
+//int Grid(int X){
+	//return (X*16);
+//}
+/*int OuterWall(){
 	int i , j;
 	int X = 0;
 	int Y = 0;
@@ -60,51 +64,63 @@ int OuterWall(){
 		X = X + 1;
 	}
 	return outer;
-}
-
-int inergrid(){
-	int i, j, X, Y, a;
-	int x;
-	int y;
-	int inner[][2] = {{3,3}, {5,3}, {7,3}, {9,3}, {11,3}, {13,3}, 
-					{3,5}, {5,5}, {7,5}, {9,5}, {11,5}, {13,5},
-					{3,7}, {5,7}, {7,7}, {9,7}, {11,7}, {13,7},
-					{3,9}, {5,9}, {7,9}, {9,9}, {11,9}, {13,9},
-					{3,11}, {5,11}, {7,11}, {9,11}, {11,11}, {13,11},
-					{3,13}, {5,13}, {7,13}, {9,13}, {11,13}, {13,13}};
-	X = 2;
-	Y = 2;
-	for(i = 0; i < 6; i++){
-		for(j = 0; j < 6; j++){
-			lcd.fillRect((Grid(X)),(Grid(Y)),16,16, 0x000);
-			X = X + 2;
-			Serial.print("x: ");
-			Serial.println(X);
-			Serial.println(Grid(X));
-		}
-		X = 2;
-		Y = Y + 2;
-		Serial.print("y: ");
-		Serial.println(Y);
-		Serial.println(Grid(Y));
-	}
-	return inner;
-}
-
+}*/
+//int inergrid(){
+	//int i, j, X, Y, a;
+	//int x;
+	//int y;
+	//int inner[][2] = {{3,3}, {5,3}, {7,3}, {9,3}, {11,3}, {13,3},
+	//{3,5}, {5,5}, {7,5}, {9,5}, {11,5}, {13,5},
+	//{3,7}, {5,7}, {7,7}, {9,7}, {11,7}, {13,7},
+	//{3,9}, {5,9}, {7,9}, {9,9}, {11,9}, {13,9},
+	//{3,11}, {5,11}, {7,11}, {9,11}, {11,11}, {13,11},
+	//{3,13}, {5,13}, {7,13}, {9,13}, {11,13}, {13,13}};
+	//X = 2;
+	//Y = 2;
+	//for(i = 0; i < 6; i++){
+		//for(j = 0; j < 6; j++){
+			//lcd.fillRect((Grid(X)),(Grid(Y)),16,16, 0x000);
+			//X = X + 2;
+			//Serial.print("x: ");
+			//Serial.println(X);
+			//Serial.println(Grid(X));
+		//}
+		//X = 2;
+		//Y = Y + 2;
+		//Serial.print("y: ");
+		//Serial.println(Y);
+		//Serial.println(Grid(Y));
+	//}
+	//return inner;
+//}
 int main(void)
 {
     init();
     Serial.begin(9600);   
     //	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
     uint8_t clear_bg=0x00; //0x80 = dont clear background for fonts (only for DisplayXXX)
-
+	
     //init display
     lcd.begin();
 
     //clear screen
     lcd.fillScreen(RGB(255,255,255));
-	OuterWall();
-	inergrid();
+	//OuterWall();
+//	gridFH.GritPX;
+	//lcd.drawInteger (30, 30, gridFH.GridF(5), 20,RGB(2,30,240), RGB(0,0,0), 5);
+	Serial.println(gridFH.GridF(5));
+	wallOut.OuterWallP();
+	wallIn.InnerWallP();
+	OB.ObstacleDR(2);
+	Characters.MoveA(2, 1);
+	Characters.MoveA(3, 3);
+	Characters.MoveB(11, 11);
+	Characters.MoveB(13, 12);
+	bom.BomXY(1,3);
+	bom.BomXY(11,13);
+	//outerGrid.printOuterGrid();
+	
+	//inergrid();
     while (1) 
     {
 		
