@@ -20,6 +20,7 @@ ISR(TIMER2_COMPB_vect){
 
 ISR(TIMER1_OVF_vect) {		//macro met interrupt vector
 	teller++;
+	Serial.println(teller);
 	//PORTD ^= (1<<PORTD6);		//...toggle LED D6
 }
 
@@ -27,14 +28,16 @@ int main(void){
 
 	Serial.begin(9600);
 	
-	setPWM38();
+	//setPWM38();
 	setInterrupt();
-	//setPWM56();
+	setPWM56();
 	
+	sendByte('q');
 	while(1){
-		sendByte('c');
-		Serial.println(" ");
-		_delay_ms(1000);
+		
+		Serial.println("");
+		//sendPulse();
+		//_delay_ms(500);
 	}
 	//while(1);
 	
@@ -43,8 +46,10 @@ int main(void){
 void sendByte(uint8_t command){
 	uint8_t temporaryCommand = command;
 	sendStartBit();
+	int i;
 	
-	while(temporaryCommand){
+	for(i = 0; i < 8; i++){
+		Serial.print("--");
 		Serial.println(temporaryCommand, BIN);
 		
 		if(temporaryCommand & (1<<7)){
@@ -121,7 +126,7 @@ void setPWM56(){
 
 void setInterrupt(){
 	DDRD |= (1<<DDD6);		//setup (digital pen 6 = PD6)
-	TCCR1B |= (1 << CS11);// | (1<<CS20);
+	TCCR1B |= (1 << CS11);
 	TIMSK1 |= (1<<TOIE1);
 	TCNT1 = 0;
 	sei();
