@@ -107,7 +107,7 @@ int main(void)
 	Serial.println(gridFH.GridF(5));
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
-	OB.ObstacleDR(1);
+	OB.ObstacleDR(2);
 	//outerGrid.printOuterGrid();
 	
 	//inergrid();
