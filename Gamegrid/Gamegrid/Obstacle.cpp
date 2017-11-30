@@ -200,5 +200,19 @@ Obstacle::ObstacleDR(int level)
 } //Obstacle
 
 Obstacle::OBcheck(int L, int X, int Y){
-	
+	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
+	GridClass gridFH;
+	if(L == 1){
+		
+	}
+	else if(L == 2){
+		
+	}
+	else if (L == 3)
+	{
+		
+	}
+	else{
+		lcd.drawText(20,20,"OW help some thing whent wrong pleas try again", RGB(255,0,0), RGB(255,255,255),5);
+	}
 }

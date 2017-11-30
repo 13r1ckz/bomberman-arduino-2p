@@ -8,6 +8,8 @@
 #include "Grid.h"
 #include "Wall.h"
 #include "Obstacle.h"
+#include "Character.h"
+#include "Bom.h"
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -18,6 +20,8 @@ GridClass gridFH;
 OuterWall wallOut;
 InnerWall wallIn;
 Obstacle OB;
+Character Characters;
+Bom bom;
 //int Grid(int X){
 	//return (X*16);
 //}
@@ -108,6 +112,12 @@ int main(void)
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
 	OB.ObstacleDR(2);
+	Characters.MoveA(2, 1);
+	Characters.MoveA(3, 3);
+	Characters.MoveB(11, 11);
+	Characters.MoveB(13, 12);
+	bom.BomXY(1,3);
+	bom.BomXY(11,13);
 	//outerGrid.printOuterGrid();
 	
 	//inergrid();

@@ -266,6 +266,18 @@
     </VisualMicroSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bom.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Bom.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Character.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Character.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Gamegrid.ino">
       <SubType>compile</SubType>
     </Compile>
