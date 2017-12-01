@@ -2,13 +2,14 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
+uint8_t command= 0x00;
 uint16_t teller = 0;
 uint16_t tempteller = 0;
 int recievedPulse = 1;
 int startbit = 0;
 int stopbit = 0;
 
-ISR(TIMER1_OVF_vect) {	//macro met interrupt vector
+ISR(TIMER1_OVF_vect) {//macro met interrupt vector
 	teller++;
 }
 
@@ -38,7 +39,7 @@ ISR(INT0_vect){
 		}else if ((teller - tempteller)>=30)
 		{	tempteller=teller;
 			Serial.println("1");
-		} 
+		}
 		else if((teller - tempteller)>=20)
 		{	tempteller=teller;
 			Serial.println("0");
