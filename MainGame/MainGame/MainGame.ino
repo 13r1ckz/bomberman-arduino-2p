@@ -6,16 +6,11 @@
 #include <MI0283QT9.h>
 #include <ArduinoNunchuk.h>
 #include <EEPROM.h>
-//#include "lib/Grid/Grid.h"
-//#include "lib/Wall/Wall.h"
-//#include "lib/Obstacle/Obstacle.h"
-//#include "lib/Character/Character.h"
-//#include "lib/Bom/Bom.h"
-#include "Grid.h"
-#include "Wall.h"
-#include "Obstacle.h"
-#include "Character.h"
-#include "Bom.h"
+#include "lib/Grid/Grid.h"
+#include "lib/Wall/Wall.h"
+#include "lib/Obstacle/Obstacle.h"
+#include "lib/Character/Character.h"
+#include "lib/Bom/Bom.h"
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -73,272 +68,6 @@ void woodBox(int X, int Y){
 	lcd.drawLine((X+9),(Y+1),(X+9),(Y+15), RGB(218,165,32));
 	lcd.drawLine((X+11),(Y+1),(X+11),(Y+15), RGB(218,165,32));
 	lcd.drawLine((X+13),(Y+1),(X+13u),(Y+15), RGB(218,165,32));
-}
-void characterA(int X, int Y) {
-	int i,j;
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((X + (i+3)),(Y+0),RGB(2,13,199));
-	}
-	
-	lcd.drawPixel((X+2),(Y+1),RGB(2,13,199));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((X+(i+3)),(Y+1),RGB(49,127,236));
-	}
-	lcd.drawPixel((X+13),(Y+1),RGB(2,13,199));
-	
-	lcd.drawPixel((X+ 1),(Y+2),RGB(2,13,199));
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((X+(i+2)),(Y+2),RGB(49,127,236));
-	}
-	lcd.drawPixel((X+14),(Y+2),RGB(2,13,199));
-	
-	lcd.drawPixel((X+1),(Y+3),RGB(2,13,199));
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((X+(i+2)),(Y+3),RGB(49,127,236));
-	}
-	lcd.drawPixel((X+14),(Y+3),RGB(2,13,199));
-	
-	lcd.drawPixel((X+1),(Y+4),RGB(2,13,199));
-	lcd.drawPixel((X+2),(Y+4),RGB(49,127,236));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((X+(i+3)),(Y+4),RGB(2,13,199));
-	}
-	lcd.drawPixel((X+13),(Y+4),RGB(49,127,236));
-	lcd.drawPixel((X+14),(Y+4),RGB(2,13,199));
-	
-	lcd.drawPixel((X+2),(Y+5),RGB(2,13,199));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((X+(i+3)),(Y+5),RGB(49,127,236));
-	}
-	lcd.drawPixel((X+13),(Y+5),RGB(2,13,199));
-	
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((X+(i+2)),(Y+6),RGB(2,13,199));
-	}
-	
-	lcd.drawPixel((X+3),(Y+7),RGB(254,204,154));
-	lcd.drawPixel((X+4),(Y+7),RGB(255,255,255));
-	lcd.drawPixel((X+5),(Y+7),RGB(0,0,0));
-	lcd.drawPixel((X+6),(Y+7),RGB(255,255,255));
-	lcd.drawPixel((X+7),(Y+7),RGB(254,204,154));
-	lcd.drawPixel((X+8),(Y+7),RGB(254,204,154));
-	lcd.drawPixel((X+9),(Y+7),RGB(255,255,255));
-	lcd.drawPixel((X+10),(Y+7),RGB(0,0,0));
-	lcd.drawPixel((X+11),(Y+7),RGB(255,255,255));
-	lcd.drawPixel((X+12),(Y+7),RGB(254,204,154));
-	
-	lcd.drawPixel((X+0),(Y+8),RGB(254,204,154));
-	lcd.drawPixel((X+1),(Y+8),RGB(254,204,154));
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((X+(i+3)),(Y+8),RGB(254,204,154));
-	}
-	lcd.drawPixel((X+7),(Y+8),RGB(253,154,102));
-	lcd.drawPixel((X+8),(Y+8),RGB(253,154,102));
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((X+(i+9)),(Y+8),RGB(254,204,154));
-	}
-
-	lcd.drawPixel((X+14),(Y+8),RGB(254,204,154));
-	lcd.drawPixel((X+15),(Y+8),RGB(254,204,154));
-	
-	lcd.drawPixel((X+0),(Y+9),RGB(254,204,154));
-	lcd.drawPixel((X+1),(Y+9),RGB(254,204,154));
-	lcd.drawPixel((X+2),(Y+9),RGB(2,13,199));
-	lcd.drawPixel((X+4),(Y+9),RGB(2,13,199));
-	for(i = 0; i < 6; i++){
-		lcd.drawPixel((X+(i+5)),(Y+9),RGB(49,127,236));
-	}
-	lcd.drawPixel((X+11),(Y+9),RGB(2,13,199));
-	lcd.drawPixel((X+13),(Y+9),RGB(2,13,199));
-	lcd.drawPixel((X+14),(Y+9),RGB(254,204,154));
-	lcd.drawPixel((X+15),(Y+9),RGB(254,204,154));
-	
-	lcd.drawPixel((X+1),(Y+10),RGB(2,13,199));
-	lcd.drawPixel((X+2),(Y+10),RGB(49,127,236));
-	lcd.drawPixel((X+3),(Y+10),RGB(2,13,199));
-	for(i = 0; i < 8; i++){
-		lcd.drawPixel((X+(i+4)),(Y+10),RGB(49,127,236));
-	}
-	lcd.drawPixel((X+12),(Y+10),RGB(2,13,199));
-	lcd.drawPixel((X+12),(Y+10),RGB(49,127,236));
-	lcd.drawPixel((X+12),(Y+10),RGB(2,13,199));
-
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((X+(i+2)),(Y+11),RGB(2,13,199));
-	}
-	for(i = 0; i < 6; i++){
-		lcd.drawPixel((X+(i+5)),(Y+11),RGB(49,127,236));
-	}
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((X+(i+11)),(Y+11),RGB(2,13,199));
-	}
-	
-	for(i = 0; i < 8; i++){
-		lcd.drawPixel((X+(i+4)),(Y+12),RGB(2,13,199));
-	}
-	
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((X+(i+3)),(Y+13),RGB(2,13,199));
-	}
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((X+(i+9)),(Y+13),RGB(2,13,199));
-	}
-	
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((X+(i+2)),(Y+14),RGB(0,0,0));
-	}
-	lcd.drawPixel((X+5),(Y+14),RGB(2,13,199));
-	lcd.drawPixel((X+10),(Y+14),RGB(2,13,199));
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((X+(i+11)),(Y+14),RGB(0,0,0));
-	}
-	
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((X+(i+2)),(Y+15),RGB(0,0,0));
-	}
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((X+(i+10)),(Y+15),RGB(0,0,0));
-	}
-	
-}
-
-void characterB(int X, int Y) {
-	int i,j;
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((X+(i+3)),(Y+0),RGB(194,0,9));
-	}
-	
-	lcd.drawPixel((X+2),(Y+1),RGB(194,0,9));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((X+(i+3)),(Y+1),RGB(255,1,12));
-	}
-	lcd.drawPixel((X+13),(Y+1),RGB(194,0,9));
-	
-	lcd.drawPixel((X+1),(Y+2),RGB(194,0,9));
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((X+(i+2)),(Y+2),RGB(255,1,12));
-	}
-	lcd.drawPixel((X+14),(Y+2),RGB(194,0,9));
-	
-	lcd.drawPixel((X+1),(Y+3),RGB(194,0,9));
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((X+(i+2)),(Y+3),RGB(255,1,12));
-	}
-	lcd.drawPixel((X+14),(Y+3),RGB(194,0,9));
-	
-	lcd.drawPixel((X+1),(Y+4),RGB(194,0,9));
-	lcd.drawPixel((X+2),(Y+4),RGB(255,1,12));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((X+(i+3)),(Y+4),RGB(194,0,9));
-	}
-	lcd.drawPixel((X+13),(Y+4),RGB(255,1,12));
-	lcd.drawPixel((X+14),(Y+4),RGB(194,0,9));
-	
-	lcd.drawPixel((X+2),(Y+5),RGB(194,0,9));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((X+(i+3)),(Y+5),RGB(255,1,12));
-	}
-	lcd.drawPixel((X+13),(Y+5),RGB(194,0,9));
-	
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((X+(i+2)),(Y+6),RGB(194,0,9));
-	}
-	
-	lcd.drawPixel((X+3),(Y+7),RGB(254,204,154));
-	lcd.drawPixel((X+4),(Y+7),RGB(255,255,255));
-	lcd.drawPixel((X+5),(Y+7),RGB(0,0,0));
-	lcd.drawPixel((X+6),(Y+7),RGB(255,255,255));
-	lcd.drawPixel((X+7),(Y+7),RGB(254,204,154));
-	lcd.drawPixel((X+8),(Y+7),RGB(254,204,154));
-	lcd.drawPixel((X+9),(Y+7),RGB(255,255,255));
-	lcd.drawPixel((X+10),(Y+7),RGB(0,0,0));
-	lcd.drawPixel((X+11),(Y+7),RGB(255,255,255));
-	lcd.drawPixel((X+12),(Y+7),RGB(254,204,154));
-	
-	lcd.drawPixel((X+0),(Y+8),RGB(254,204,154));
-	lcd.drawPixel((X+1),(Y+8),RGB(254,204,154));
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((X+(i+3)),(Y+8),RGB(254,204,154));
-	}
-	lcd.drawPixel((X+7),(Y+8),RGB(253,154,102));
-	lcd.drawPixel((X+8),(Y+8),RGB(253,154,102));
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((X+(i+9)),(Y+8),RGB(254,204,154));
-	}
-	lcd.drawPixel((X+14),(Y+8),RGB(254,204,154));
-	lcd.drawPixel((X+15),(Y+8),RGB(254,204,154));
-	
-	lcd.drawPixel((X+0),(Y+9),RGB(254,204,154));
-	lcd.drawPixel((X+1),(Y+9),RGB(254,204,154));
-	lcd.drawPixel((X+2),(Y+9),RGB(194,0,9));
-	lcd.drawPixel((X+4),(Y+9),RGB(194,0,9));
-	for(i = 0; i < 6; i++){
-		lcd.drawPixel((X+(i+5)),(Y+9),RGB(255,1,12));
-	}
-	lcd.drawPixel((X+11),(Y+9),RGB(194,0,9));
-	lcd.drawPixel((X+13),(Y+9),RGB(194,0,9));
-	lcd.drawPixel((X+14),(Y+9),RGB(254,204,154));
-	lcd.drawPixel((X+15),(Y+9),RGB(254,204,154));
-	
-	lcd.drawPixel((X+1),(Y+10),RGB(194,0,9));
-	lcd.drawPixel((X+2),(Y+10),RGB(255,1,12));
-	lcd.drawPixel((X+3),(Y+10),RGB(194,0,9));
-	for(i = 0; i < 8; i++){
-		lcd.drawPixel((X+(i+4)),(Y+10),RGB(255,1,12));
-	}
-	lcd.drawPixel((X+12),(Y+10),RGB(194,0,9));
-	lcd.drawPixel((X+13),(Y+10),RGB(255,1,12));
-	lcd.drawPixel((X+14),(Y+10),RGB(194,0,9));
-	
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((X+(i+2)),(Y+11),RGB(194,0,9));
-	}
-	for(i = 0; i < 6; i++){
-		lcd.drawPixel((X+(i+5)),(Y+11),RGB(255,1,12));
-	}
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((X+(i+11)),(Y+11),RGB(194,0,9));
-	}
-	
-	for(i = 0; i < 8; i++){
-		lcd.drawPixel((X+(i+4)),(Y+12),RGB(194,0,9));
-	}
-	
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((X+(i+3)),(Y+13),RGB(194,0,9));
-	}
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((X+(i+9)),(Y+13),RGB(194,0,9));
-	}
-	
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((X+(i+2)),(Y+14),RGB(0,0,0));
-	}
-	lcd.drawPixel((X+5),(Y+14),RGB(194,0,9));
-	lcd.drawPixel((X+10),(Y+14),RGB(194,0,9));
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((X+(i+11)),(Y+14),RGB(0,0,0));
-	}
-	
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((X+(i+2)),(Y+15),RGB(0,0,0));
-	}
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((X+(i+10)),(Y+15),RGB(0,0,0));
-	}
-}
-
-void bomb(int X, int Y) {
-	lcd.fillRect(X,Y,16,16,RGB(255,255,255));
-	lcd.fillCircle((X+7),(Y+9),5,RGB(0,0,0));
-	lcd.drawPixel((X+11),(Y+5),RGB(75,86,90));
-	lcd.drawPixel((X+13),(Y+5),RGB(254,100,0));
-	lcd.drawPixel((X+12),(Y+4),RGB(254,100,0));
-	lcd.drawPixel((X+13),(Y+3),RGB(254,100,0));
-	lcd.drawPixel((X+14),(Y+4),RGB(254,100,0));
-	lcd.drawPixel((X+13),(Y+4),RGB(255,0,0));
-	lcd.drawPixel((X+6),(Y+6),RGB(255,255,255));
-	lcd.drawPixel((X+5),(Y+7),RGB(255,255,255));
 }
 
 int navigateStart() {
@@ -458,88 +187,15 @@ int Startscherm(){
 	mlevelRandom();
 	mhighScore();
 	lcd.fillRect(0,0,16,16,RGB(255,255,255));
-	characterA(0,0);
+	Characters.MoveA(0,0);
 	lcd.fillRect(304,0,16,16,RGB(255,255,255));
-	characterB(304,0);
-	bomb(64,0);
+	Characters.MoveB(19,0);
+	bom.BomXY(1,0);
+	bom.BomXY(18,0);
 	level = navigateStart();
 	return level;
 }
 
-/*
-Grid(int X){
-	return (X*16);
-}
-*/
-
-/*int OuterWall(){
-	int i , j;
-	int X = 0;
-	int Y = 0;
-	int outer[][2] = {{1,1}, {2,1}, {3,1}, {4,1}, {5,1}, {6,1},	{7,1}, {8,1}, {9,1}, {10,1}, {11,1}, {12,1}, {13,1}, {14,1}, {15,1},
-	{2,2}, {2,15},
-	{3,2}, {3,15},
-	{4,2}, {4,15},
-	{5,2}, {5,15},
-	{6,2}, {6,15},
-	{7,2}, {7,15},
-	{8,2}, {8,15},
-	{9,2}, {9,15},
-	{10,2}, {10,15},
-	{11,2}, {11,15},
-	{12,2}, {12,15},
-	{13,2}, {13,15},
-	{14,2}, {14,15},
-	{1,15}, {2,15}, {3,15}, {4,15}, {5,15}, {6,15},	{7,15}, {8,15}, {9,15}, {10,15}, {11,15}, {12,15}, {13,15}, {14,15}, {15,15}};
-	
-	for(i = 0; i < 15; i++){
-		lcd.fillRect(Grid(X),Grid(Y),16,16, 0xFFFFFF);
-		lcd.fillRect((Grid(X)+1),(Grid(Y)+1),14,14, 0x000);
-		X = X + 1;
-	}
-	for(i = 0; i < 16; i++){
-		lcd.fillRect(0,Grid(Y),16,16, 0xFFFFFF);
-		lcd.fillRect(1,(Grid(Y)+1),14,14, 0x000);
-		lcd.fillRect(224,Grid(Y),16,16, 0xFFFFFF);
-		lcd.fillRect(225,(Grid(Y)+1),14,14, 0x000);
-		Y = Y + 1;
-	}
-	X = 0;
-	for(i = 0; i < 15; i++){
-		lcd.fillRect(Grid(X),224,16,16, 0xFFFFFF);
-		lcd.fillRect((Grid(X)+1),(225),14,14, 0x000);
-		X = X + 1;
-	}
-	return outer;
-}*/
-
-/*
-int InnerGrid(){
-	int i, j, X, Y, a;
-	int inner[][2] = {{3,3}, {5,3}, {7,3}, {9,3}, {11,3}, {13,3},
-	{3,5}, {5,5}, {7,5}, {9,5}, {11,5}, {13,5},
-	{3,7}, {5,7}, {7,7}, {9,7}, {11,7}, {13,7},
-	{3,9}, {5,9}, {7,9}, {9,9}, {11,9}, {13,9},
-	{3,11}, {5,11}, {7,11}, {9,11}, {11,11}, {13,11},
-	{3,13}, {5,13}, {7,13}, {9,13}, {11,13}, {13,13}};
-	X = 2;
-	Y = 2;
-	for(i = 0; i < 6; i++){
-		for(j = 0; j < 6; j++){
-			lcd.fillRect((Grid(X)),(Grid(Y)),16,16, 0x000);
-			X = X + 2;
-			Serial.print("x: ");
-			Serial.println(X);
-			Serial.println(Grid(X));
-		}
-		X = 2;
-		Y = Y + 2;
-		Serial.print("y: ");
-		Serial.println(Y);
-		Serial.println(Grid(Y));
-	}
-	return inner;
-}*/
 
 int navigate(){
 	int nunchukY = 1;
@@ -559,8 +215,8 @@ int navigate(){
 		int YA = gridFH.GridF(nunchukY);
 		int XB = gridFH.GridF(13);
 		int YB = gridFH.GridF(13);
-		characterA(XA,YA);
-		characterB(XB,XB);
+		Characters.MoveA((XA/16),(YA/16));
+		Characters.MoveB((XB/16),(XB/16));
 		int gridX = 0;
 		int gridY = 0;
 		if (bomb==0){
@@ -576,14 +232,101 @@ int navigate(){
 		{
 			
 			bom.BomXY((bomX/16),(bomY/16));
+			q++;
 		}
 		if(q==bomcounter){
+			Serial.print("X: ");
+			Serial.println(bomX);
+			Serial.print("Y: ");
+			Serial.println(bomY);
+			if(bomX == 16 && bomY == 16){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl((bomX+16), bomY);
+				bom.BomExpl(bomX, (bomY+16));
+			}
+			else if(bomX == 16 && bomY == 208){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl((bomX+16), bomY);
+				bom.BomExpl(bomX, (bomY-16));
+			}
+			else if(bomX == 208 && bomY == 16){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl((bomX-16), bomY);
+				bom.BomExpl(bomX, (bomY+16));
+			}
+			else if(bomX == 208 && bomY == 208){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl((bomX-16), bomY);
+				bom.BomExpl(bomX, (bomY-16));
+			}
+			else if(bomX == 16 && bomY == 32 || bomY == 64 || bomY == 96 || bomY == 128 || bomY == 160 || bomY == 162 && bomY == 208){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl(bomX, (bomY+16));
+				bom.BomExpl(bomX, (bomY-16));
+			}
+			else if(bomY == 16 && bomX == 32 || bomX == 64 || bomX == 96 || bomX == 128 || bomX == 160 || bomX == 162 && bomY == 208){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl((bomX+16), bomY);
+				bom.BomExpl((bomX-16), bomY);
+			}
+			else if(bomX == 208 && bomY == 32 || bomY == 64 || bomY == 96 || bomY == 128 || bomY == 160 || bomY == 162 && bomY == 208){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl(bomX, (bomY+16));
+				bom.BomExpl(bomX, (bomY-16));
+			}
+			else if(bomY == 208 && bomX == 32 || bomX == 64 || bomX == 96 || bomX == 128 || bomX == 160 || bomX == 162 && bomY == 208){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl((bomX+16), bomY);
+				bom.BomExpl((bomX-16), bomY);
+			}
+			else if(bomX == 16){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl((bomX+16), bomY);
+				bom.BomExpl(bomX, (bomY+16));
+				bom.BomExpl(bomX, (bomY-16));
+			}
+			else if(bomY == 16){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl((bomX+16), bomY);
+				bom.BomExpl((bomX-16), bomY);
+				bom.BomExpl(bomX, (bomY+16));
+			}
+			else if(bomX == 208){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl((bomX-16), bomY);
+				bom.BomExpl(bomX, (bomY+16));
+				bom.BomExpl(bomX, (bomY-16));
+			}
+			else if(bomY == 208){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl((bomX-16), bomY);
+				bom.BomExpl((bomX+16), bomY);
+				bom.BomExpl(bomX, (bomY-16));
+			}
+			else if(bomX == 32 || bomX == 64 || bomX == 96 || bomX == 128 || bomX == 160 || bomX == 162 && bomY == 208){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl((bomX-16), bomY);
+				bom.BomExpl((bomX+16), bomY);
+			}
+			else if(bomY == 32 || bomY == 64 || bomY == 96 || bomY == 128 || bomY == 160 || bomY == 162 && bomY == 208){
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl(bomX, (bomY-16));
+				bom.BomExpl(bomX, (bomY+16));
+			}
+			else{
+				bom.BomExpl(bomX, bomY);
+				bom.BomExpl((bomX+16), bomY);
+				bom.BomExpl(bomX, (bomY+16));
+				bom.BomExpl((bomX-16), bomY);
+				bom.BomExpl(bomX, (bomY-16));
+			}
+			_delay_ms(1000);
 			lcd.fillRect(bomX,bomY,16,16,RGB(255,255,255));
+			wallIn.InnerWallP();
 			q=0;
 			bomb = 0;
 		}
 		Serial.println(q);
-		q++;
 		//omlaag lopen
 		if(nunchuk.analogY < 60) {
 			if(i>counter) {

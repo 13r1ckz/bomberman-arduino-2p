@@ -1,7 +1,7 @@
 #ifndef __BOM_H__
 #define __BOM_H__
 
-#include "Grid.h"
+#include "../Grid/Grid.h"
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
 
@@ -15,6 +15,7 @@ private:
 //functions
 public:
 	BomXY(int X, int Y);
+	BomExpl(int X, int Y);
 protected:
 private:
 

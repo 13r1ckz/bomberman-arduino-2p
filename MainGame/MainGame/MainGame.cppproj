@@ -56,7 +56,7 @@
     <ListValues>
       <Value>__AVR_ATmega328p__</Value>
       <Value>__AVR_ATmega328P__</Value>
-      <Value>ARDUINO=10801</Value>
+      <Value>ARDUINO=10804</Value>
       <Value>ARDUINO_MAIN</Value>
       <Value>F_CPU=16000000L</Value>
       <Value>__AVR__</Value>
@@ -77,7 +77,7 @@
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
-      <Value>C:/Users/Christine/Documents/Arduino/libraries</Value>
+      <Value>C:/Users/gerjo/OneDrive/Documents/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/</Value>
@@ -99,7 +99,7 @@
     <ListValues>
       <Value>__AVR_ATmega328p__</Value>
       <Value>__AVR_ATmega328P__</Value>
-      <Value>ARDUINO=10801</Value>
+      <Value>ARDUINO=10804</Value>
       <Value>ARDUINO_MAIN</Value>
       <Value>F_CPU=16000000L</Value>
       <Value>__AVR__</Value>
@@ -120,7 +120,7 @@
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
-      <Value>C:/Users/Christine/Documents/Arduino/libraries</Value>
+      <Value>C:/Users/gerjo/OneDrive/Documents/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/</Value>
@@ -153,7 +153,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM6</arduino.upload.port>
+        <arduino.upload.port>COM4</arduino.upload.port>
         <arduino.board.name>uno</arduino.board.name>
         <arduino.board.desc>Arduino/Genuino Uno</arduino.board.desc>
         <arduino.board.property_bag>name=Arduino/Genuino Uno
@@ -173,7 +173,7 @@ upload.speed=115200
 bootloader.tool=avrdude
 bootloader.low_fuses=0xFF
 bootloader.high_fuses=0xDE
-bootloader.extended_fuses=0x05
+bootloader.extended_fuses=0xFD
 bootloader.unlock_bits=0x3F
 bootloader.lock_bits=0x0F
 bootloader.file=optiboot/optiboot_atmega328.hex
@@ -185,7 +185,7 @@ build.variant=standard
 runtime.ide.path=C:\Program Files (x86)\Arduino
 runtime.os=windows
 build.system.path=C:\Program Files (x86)\Arduino\hardware\arduino\avr\system
-runtime.ide.version=10801
+runtime.ide.version=10804
 target_package=arduino
 target_platform=avr
 runtime.hardware.path=C:\Program Files (x86)\Arduino\hardware\arduino
@@ -203,7 +203,7 @@ tools.atprogram.erase.params.quiet=-q
 tools.atprogram.bootloader.params.verbose=-v
 tools.atprogram.bootloader.params.quiet=-q
 tools.atprogram.bootloader.pattern="{cmd.path}" -d {build.mcu} {bootloader.verbose}  program -c -f "{runtime.ide.path}\hardware\arduino\avr\bootloaders\{bootloader.file}"
-version=1.6.17
+version=1.6.20
 compiler.warning_flags=-w
 compiler.warning_flags.none=-w
 compiler.warning_flags.default=
@@ -259,7 +259,7 @@ tools.avrdude.upload.params.verbose=-v
 tools.avrdude.upload.params.quiet=-q -q
 tools.avrdude.upload.verify=
 tools.avrdude.upload.params.noverify=-V
-tools.avrdude.upload.pattern="{cmd.path}" "-C{config.path}" {upload.verbose} {upload.verify} -p{build.mcu} -c{upload.protocol} -P{serial.port} -b{upload.speed} -D "-Uflash:w:{build.path}/{build.project_name}.hex:i"
+tools.avrdude.upload.pattern="{cmd.path}" "-C{config.path}" {upload.verbose} {upload.verify} -p{build.mcu} -c{upload.protocol} "-P{serial.port}" -b{upload.speed} -D "-Uflash:w:{build.path}/{build.project_name}.hex:i"
 tools.avrdude.program.params.verbose=-v
 tools.avrdude.program.params.quiet=-q -q
 tools.avrdude.program.verify=
@@ -275,7 +275,7 @@ tools.avrdude_remote.upload.pattern=/usr/bin/run-avrdude /tmp/sketch.hex {upload
 tools.avrdude.upload.network_pattern="{network_cmd}" -address {serial.port} -port {upload.network.port} -sketch "{build.path}/{build.project_name}.hex" -upload {upload.network.endpoint_upload} -sync {upload.network.endpoint_sync} -reset {upload.network.endpoint_reset} -sync_exp {upload.network.sync_return}
 build.usb_manufacturer="Unknown"
 build.usb_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid} '-DUSB_MANUFACTURER={build.usb_manufacturer}' '-DUSB_PRODUCT={build.usb_product}'
-vm.platform.root.path=C:\Program Files (x86)\Atmel\Studio\7.0\Extensions\byzpvpmq.wtq\Micro Platforms\arduino16x
+vm.platform.root.path=C:\Program Files (x86)\Atmel\Studio\7.0\Extensions\gpiq2gnh.ajb\Micro Platforms\arduino16x
 avrisp.name=AVR ISP
 avrisp.communication=serial
 avrisp.protocol=stk500v1
@@ -324,25 +324,53 @@ usbGemma.protocol=arduinogemma
 usbGemma.program.tool=avrdude
 usbGemma.program.extra_params=
 usbGemma.config.path={runtime.platform.path}/bootloaders/gemma/avrdude.conf
-stk500.name=Atmel STK500 development board
-stk500.communication=serial
-stk500.protocol=stk500
-stk500.program.protocol=stk500
-stk500.program.tool=avrdude
-stk500.program.extra_params=-P{serial.port}
 buspirate.name=BusPirate as ISP
 buspirate.communication=serial
 buspirate.protocol=buspirate
 buspirate.program.protocol=buspirate
 buspirate.program.tool=avrdude
 buspirate.program.extra_params=-P{serial.port}
+stk500.name=Atmel STK500 development board
+stk500.communication=serial
+stk500.protocol=stk500
+stk500.program.protocol=stk500
+stk500.program.tool=avrdude
+stk500.program.extra_params=-P{serial.port}
+jtag3isp.name=Atmel JTAGICE3 (ISP mode)
+jtag3isp.communication=usb
+jtag3isp.protocol=jtag3isp
+jtag3isp.program.protocol=jtag3isp
+jtag3isp.program.tool=avrdude
+jtag3isp.program.extra_params=
+jtag3.name=Atmel JTAGICE3 (JTAG mode)
+jtag3.communication=usb
+jtag3.protocol=jtag3
+jtag3.program.protocol=jtag3
+jtag3.program.tool=avrdude
+jtag3.program.extra_params=-B0.1
+atmel_ice.name=Atmel-ICE (AVR)
+atmel_ice.communication=usb
+atmel_ice.protocol=atmelice_isp
+atmel_ice.program.protocol=atmelice_isp
+atmel_ice.program.tool=avrdude
+atmel_ice.program.extra_params=-Pusb
+tools.avrdude.cmd.path.linux={runtime.ide.path}/hardware/tools/avrdude
+tools.avrdude.config.path.linux={runtime.ide.path}/hardware/tools/avrdude.conf
 runtime.tools.avr-gcc.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
-runtime.tools.avr-gcc-4.9.2-atmel3.5.3-arduino2.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
+runtime.tools.avr-gcc-4.9.2-atmel3.5.4-arduino2.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
 runtime.tools.tools-avr.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
 runtime.tools.avrdude.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
-runtime.tools.avrdude-6.3.0-arduino8.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
+runtime.tools.avrdude-6.3.0-arduino9.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
 runtime.tools.arduinoOTA.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
-runtime.tools.arduinoOTA-1.0.0.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
+runtime.tools.arduinoOTA-1.1.1.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
+runtime.tools.bossac.path=C:\Users\gerjo\AppData\Local\arduino15\packages\SparkFun\tools\bossac\1.4.0
+runtime.tools.bossac-1.4.0.path=C:\Users\gerjo\AppData\Local\arduino15\packages\SparkFun\tools\bossac\1.4.0
+runtime.tools.esptool.path=C:\Users\gerjo\AppData\Local\arduino15\packages\esp8266\tools\esptool\0.4.8
+runtime.tools.esptool-0.4.8.path=C:\Users\gerjo\AppData\Local\arduino15\packages\esp8266\tools\esptool\0.4.8
+runtime.tools.mkspiffs.path=C:\Users\gerjo\AppData\Local\arduino15\packages\esp8266\tools\mkspiffs\0.1.2
+runtime.tools.mkspiffs-0.1.2.path=C:\Users\gerjo\AppData\Local\arduino15\packages\esp8266\tools\mkspiffs\0.1.2
+runtime.tools.xtensa-lx106-elf-gcc.path=C:\Users\gerjo\AppData\Local\arduino15\packages\esp8266\tools\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2
+runtime.tools.xtensa-lx106-elf-gcc-1.20.0-26-gb404fb9-2.path=C:\Users\gerjo\AppData\Local\arduino15\packages\esp8266\tools\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2
 runtime.vm.boardinfo.id=uno
 runtime.vm.boardinfo.name=uno
 runtime.vm.boardinfo.desc=Arduino/Genuino Uno
@@ -390,7 +418,7 @@ ssh.user.default.password=arduino
 ssh.host.wwwfiles.path=/www/sd
 build.working_directory={runtime.ide.path}\java\bin
 ide.appid=arduino16x
-location.sketchbook=C:\Users\Christine\Documents\Arduino
+location.sketchbook=C:\Users\gerjo\OneDrive\Documents\Arduino
 build.core.path=C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino
 vm.core.include=Arduino.h
 vm.boardsource.path=C:\Program Files (x86)\Arduino\hardware\arduino\avr
@@ -401,10 +429,10 @@ builder.noino=false
 build.architecture=avr
 vmresolved.compiler.path=C:\Program Files (x86)\Arduino\hardware\tools\avr\bin\
 vmresolved.tools.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
-build.path=C:\Users\Christine\AppData\Local\Temp\VMBuilds\MainGame\uno\Debug
+build.path=C:\Users\gerjo\AppData\Local\Temp\VMBuilds\MainGame\uno\Debug
 build.project_name=MainGame.ino
-build.project_path=C:\Users\Christine\Documents\GitHub\Ictesa-2017-s1\MainGame\MainGame
-ProjectDir=C:\Users\Christine\Documents\GitHub\Ictesa-2017-s1\MainGame\MainGame\
+build.project_path=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainGame
+ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainGame\
 </arduino.board.property_bag>
         <arduino.build.mcu>atmega328p</arduino.build.mcu>
         <arduino.build.f_cpu>16000000L</arduino.build.f_cpu>
@@ -433,7 +461,7 @@ ProjectDir=C:\Users\Christine\Documents\GitHub\Ictesa-2017-s1\MainGame\MainGame\
     <ListValues>
       <Value>__AVR_ATmega328p__</Value>
       <Value>__AVR_ATmega328P__</Value>
-      <Value>ARDUINO=10801</Value>
+      <Value>ARDUINO=10804</Value>
       <Value>ARDUINO_MAIN</Value>
       <Value>F_CPU=16000000L</Value>
       <Value>__AVR__</Value>
@@ -454,7 +482,7 @@ ProjectDir=C:\Users\Christine\Documents\GitHub\Ictesa-2017-s1\MainGame\MainGame\
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
-      <Value>C:/Users/Christine/Documents/Arduino/libraries</Value>
+      <Value>C:/Users/gerjo/OneDrive/Documents/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/</Value>
@@ -476,7 +504,7 @@ ProjectDir=C:\Users\Christine\Documents\GitHub\Ictesa-2017-s1\MainGame\MainGame\
     <ListValues>
       <Value>__AVR_ATmega328p__</Value>
       <Value>__AVR_ATmega328P__</Value>
-      <Value>ARDUINO=10801</Value>
+      <Value>ARDUINO=10804</Value>
       <Value>ARDUINO_MAIN</Value>
       <Value>F_CPU=16000000L</Value>
       <Value>__AVR__</Value>
@@ -497,7 +525,7 @@ ProjectDir=C:\Users\Christine\Documents\GitHub\Ictesa-2017-s1\MainGame\MainGame\
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
-      <Value>C:/Users/Christine/Documents/Arduino/libraries</Value>
+      <Value>C:/Users/gerjo/OneDrive/Documents/Arduino/libraries</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/</Value>
@@ -530,7 +558,7 @@ ProjectDir=C:\Users\Christine\Documents\GitHub\Ictesa-2017-s1\MainGame\MainGame\
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM6</arduino.upload.port>
+        <arduino.upload.port>COM4</arduino.upload.port>
         <arduino.board.name>uno</arduino.board.name>
         <arduino.board.desc>Arduino/Genuino Uno</arduino.board.desc>
         <arduino.board.property_bag>name=Arduino/Genuino Uno
@@ -550,7 +578,7 @@ upload.speed=115200
 bootloader.tool=avrdude
 bootloader.low_fuses=0xFF
 bootloader.high_fuses=0xDE
-bootloader.extended_fuses=0x05
+bootloader.extended_fuses=0xFD
 bootloader.unlock_bits=0x3F
 bootloader.lock_bits=0x0F
 bootloader.file=optiboot/optiboot_atmega328.hex
@@ -562,7 +590,7 @@ build.variant=standard
 runtime.ide.path=C:\Program Files (x86)\Arduino
 runtime.os=windows
 build.system.path=C:\Program Files (x86)\Arduino\hardware\arduino\avr\system
-runtime.ide.version=10801
+runtime.ide.version=10804
 target_package=arduino
 target_platform=avr
 runtime.hardware.path=C:\Program Files (x86)\Arduino\hardware\arduino
@@ -580,7 +608,7 @@ tools.atprogram.erase.params.quiet=-q
 tools.atprogram.bootloader.params.verbose=-v
 tools.atprogram.bootloader.params.quiet=-q
 tools.atprogram.bootloader.pattern="{cmd.path}" -d {build.mcu} {bootloader.verbose}  program -c -f "{runtime.ide.path}\hardware\arduino\avr\bootloaders\{bootloader.file}"
-version=1.6.17
+version=1.6.20
 compiler.warning_flags=-w
 compiler.warning_flags.none=-w
 compiler.warning_flags.default=
@@ -636,7 +664,7 @@ tools.avrdude.upload.params.verbose=-v
 tools.avrdude.upload.params.quiet=-q -q
 tools.avrdude.upload.verify=
 tools.avrdude.upload.params.noverify=-V
-tools.avrdude.upload.pattern="{cmd.path}" "-C{config.path}" {upload.verbose} {upload.verify} -p{build.mcu} -c{upload.protocol} -P{serial.port} -b{upload.speed} -D "-Uflash:w:{build.path}/{build.project_name}.hex:i"
+tools.avrdude.upload.pattern="{cmd.path}" "-C{config.path}" {upload.verbose} {upload.verify} -p{build.mcu} -c{upload.protocol} "-P{serial.port}" -b{upload.speed} -D "-Uflash:w:{build.path}/{build.project_name}.hex:i"
 tools.avrdude.program.params.verbose=-v
 tools.avrdude.program.params.quiet=-q -q
 tools.avrdude.program.verify=
@@ -652,7 +680,7 @@ tools.avrdude_remote.upload.pattern=/usr/bin/run-avrdude /tmp/sketch.hex {upload
 tools.avrdude.upload.network_pattern="{network_cmd}" -address {serial.port} -port {upload.network.port} -sketch "{build.path}/{build.project_name}.hex" -upload {upload.network.endpoint_upload} -sync {upload.network.endpoint_sync} -reset {upload.network.endpoint_reset} -sync_exp {upload.network.sync_return}
 build.usb_manufacturer="Unknown"
 build.usb_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid} '-DUSB_MANUFACTURER={build.usb_manufacturer}' '-DUSB_PRODUCT={build.usb_product}'
-vm.platform.root.path=C:\Program Files (x86)\Atmel\Studio\7.0\Extensions\byzpvpmq.wtq\Micro Platforms\arduino16x
+vm.platform.root.path=C:\Program Files (x86)\Atmel\Studio\7.0\Extensions\gpiq2gnh.ajb\Micro Platforms\arduino16x
 avrisp.name=AVR ISP
 avrisp.communication=serial
 avrisp.protocol=stk500v1
@@ -701,25 +729,53 @@ usbGemma.protocol=arduinogemma
 usbGemma.program.tool=avrdude
 usbGemma.program.extra_params=
 usbGemma.config.path={runtime.platform.path}/bootloaders/gemma/avrdude.conf
-stk500.name=Atmel STK500 development board
-stk500.communication=serial
-stk500.protocol=stk500
-stk500.program.protocol=stk500
-stk500.program.tool=avrdude
-stk500.program.extra_params=-P{serial.port}
 buspirate.name=BusPirate as ISP
 buspirate.communication=serial
 buspirate.protocol=buspirate
 buspirate.program.protocol=buspirate
 buspirate.program.tool=avrdude
 buspirate.program.extra_params=-P{serial.port}
+stk500.name=Atmel STK500 development board
+stk500.communication=serial
+stk500.protocol=stk500
+stk500.program.protocol=stk500
+stk500.program.tool=avrdude
+stk500.program.extra_params=-P{serial.port}
+jtag3isp.name=Atmel JTAGICE3 (ISP mode)
+jtag3isp.communication=usb
+jtag3isp.protocol=jtag3isp
+jtag3isp.program.protocol=jtag3isp
+jtag3isp.program.tool=avrdude
+jtag3isp.program.extra_params=
+jtag3.name=Atmel JTAGICE3 (JTAG mode)
+jtag3.communication=usb
+jtag3.protocol=jtag3
+jtag3.program.protocol=jtag3
+jtag3.program.tool=avrdude
+jtag3.program.extra_params=-B0.1
+atmel_ice.name=Atmel-ICE (AVR)
+atmel_ice.communication=usb
+atmel_ice.protocol=atmelice_isp
+atmel_ice.program.protocol=atmelice_isp
+atmel_ice.program.tool=avrdude
+atmel_ice.program.extra_params=-Pusb
+tools.avrdude.cmd.path.linux={runtime.ide.path}/hardware/tools/avrdude
+tools.avrdude.config.path.linux={runtime.ide.path}/hardware/tools/avrdude.conf
 runtime.tools.avr-gcc.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
-runtime.tools.avr-gcc-4.9.2-atmel3.5.3-arduino2.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
+runtime.tools.avr-gcc-4.9.2-atmel3.5.4-arduino2.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
 runtime.tools.tools-avr.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
 runtime.tools.avrdude.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
-runtime.tools.avrdude-6.3.0-arduino8.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
+runtime.tools.avrdude-6.3.0-arduino9.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
 runtime.tools.arduinoOTA.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
-runtime.tools.arduinoOTA-1.0.0.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
+runtime.tools.arduinoOTA-1.1.1.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
+runtime.tools.bossac.path=C:\Users\gerjo\AppData\Local\arduino15\packages\SparkFun\tools\bossac\1.4.0
+runtime.tools.bossac-1.4.0.path=C:\Users\gerjo\AppData\Local\arduino15\packages\SparkFun\tools\bossac\1.4.0
+runtime.tools.esptool.path=C:\Users\gerjo\AppData\Local\arduino15\packages\esp8266\tools\esptool\0.4.8
+runtime.tools.esptool-0.4.8.path=C:\Users\gerjo\AppData\Local\arduino15\packages\esp8266\tools\esptool\0.4.8
+runtime.tools.mkspiffs.path=C:\Users\gerjo\AppData\Local\arduino15\packages\esp8266\tools\mkspiffs\0.1.2
+runtime.tools.mkspiffs-0.1.2.path=C:\Users\gerjo\AppData\Local\arduino15\packages\esp8266\tools\mkspiffs\0.1.2
+runtime.tools.xtensa-lx106-elf-gcc.path=C:\Users\gerjo\AppData\Local\arduino15\packages\esp8266\tools\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2
+runtime.tools.xtensa-lx106-elf-gcc-1.20.0-26-gb404fb9-2.path=C:\Users\gerjo\AppData\Local\arduino15\packages\esp8266\tools\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2
 runtime.vm.boardinfo.id=uno
 runtime.vm.boardinfo.name=uno
 runtime.vm.boardinfo.desc=Arduino/Genuino Uno
@@ -767,7 +823,7 @@ ssh.user.default.password=arduino
 ssh.host.wwwfiles.path=/www/sd
 build.working_directory={runtime.ide.path}\java\bin
 ide.appid=arduino16x
-location.sketchbook=C:\Users\Christine\Documents\Arduino
+location.sketchbook=C:\Users\gerjo\OneDrive\Documents\Arduino
 build.core.path=C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino
 vm.core.include=Arduino.h
 vm.boardsource.path=C:\Program Files (x86)\Arduino\hardware\arduino\avr
@@ -778,10 +834,10 @@ builder.noino=false
 build.architecture=avr
 vmresolved.compiler.path=C:\Program Files (x86)\Arduino\hardware\tools\avr\bin\
 vmresolved.tools.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
-build.path=C:\Users\Christine\AppData\Local\Temp\VMBuilds\MainGame\uno\Debug
+build.path=C:\Users\gerjo\AppData\Local\Temp\VMBuilds\MainGame\uno\Debug
 build.project_name=MainGame.ino
-build.project_path=C:\Users\Christine\Documents\GitHub\Ictesa-2017-s1\MainGame\MainGame
-ProjectDir=C:\Users\Christine\Documents\GitHub\Ictesa-2017-s1\MainGame\MainGame\
+build.project_path=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainGame
+ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainGame\
 </arduino.board.property_bag>
         <arduino.build.mcu>atmega328p</arduino.build.mcu>
         <arduino.build.f_cpu>16000000L</arduino.build.f_cpu>
@@ -796,37 +852,37 @@ ProjectDir=C:\Users\Christine\Documents\GitHub\Ictesa-2017-s1\MainGame\MainGame\
     </VisualMicroSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Bom.cpp">
+    <Compile Include="lib\Bom\Bom.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Bom.h">
+    <Compile Include="lib\Bom\Bom.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Character.cpp">
+    <Compile Include="lib\Character\Character.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Character.h">
+    <Compile Include="lib\Character\Character.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Grid.cpp">
+    <Compile Include="lib\Grid\Grid.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Grid.h">
+    <Compile Include="lib\Grid\Grid.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\Obstacle\Obstacle.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\Obstacle\Obstacle.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\Wall\Wall.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\Wall\Wall.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MainGame.ino">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Obstacle.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Obstacle.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Wall.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Wall.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="__vm\.MainGame.vsarduino.h">
@@ -834,6 +890,12 @@ ProjectDir=C:\Users\Christine\Documents\GitHub\Ictesa-2017-s1\MainGame\MainGame\
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="lib\" />
+    <Folder Include="lib\Bom\" />
+    <Folder Include="lib\Character\" />
+    <Folder Include="lib\Grid\" />
+    <Folder Include="lib\Obstacle\" />
+    <Folder Include="lib\Wall\" />
     <Folder Include="__vm\" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />

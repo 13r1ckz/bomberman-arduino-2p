@@ -1,4 +1,4 @@
-#include "OuterWall.h"
+#include "Wall.h"
 
 // default constructor
 int OuterWall::OuterWallP()
