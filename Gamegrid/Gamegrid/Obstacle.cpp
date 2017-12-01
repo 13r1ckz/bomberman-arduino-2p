@@ -100,6 +100,12 @@ Obstacle::ObstacleDR(int level)
 		woodBox(1,13);
 		woodBox(10,13);
 		woodBox(11,13);
+		//for(int q =0; q < 169;q++){
+		//Locations[q][0] = 1;
+		//Locations[q][1] = 1;
+		//Locations[q][2] = 0;
+		//}
+			
 	}
 	else if (level == 2){
 			woodBox(6,1);
@@ -199,20 +205,25 @@ Obstacle::ObstacleDR(int level)
 	}
 } //Obstacle
 
-Obstacle::OBcheck(int L, int X, int Y){
-	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
-	GridClass gridFH;
-	if(L == 1){
-		
-	}
-	else if(L == 2){
-		
-	}
-	else if (L == 3)
-	{
-		
-	}
-	else{
-		lcd.drawText(20,20,"OW help some thing whent wrong pleas try again", RGB(255,0,0), RGB(255,255,255),5);
-	}
-}
+//Obstacle::OBcheck(int L, int X, int Y){
+	//MI0283QT9 lcd;  //MI0283QT9 Adapter v1
+	//GridClass gridFH;
+	//if(L == 1){
+		////int i, j;
+		////for(i = 0; i < 13; i++){
+			////for(j = 0; j < 13; j++){
+			////}
+		////}
+		//lcd.drawText(20,20,"No one cares", RGB(255,0,0), RGB(255,255,255),5);
+	//}
+	//else if(L == 2){
+		//lcd.drawText(20,20,"Burn me down", RGB(255,0,0), RGB(255,255,255),5);
+	//}
+	//else if (L == 3)
+	//{
+		//lcd.drawText(20,20,"Sent Help", RGB(255,0,0), RGB(255,255,255),5);
+	//}
+	//else{
+		//lcd.drawText(20,20,"OW help some thing whent wrong pleas try again", RGB(255,0,0), RGB(255,255,255),5);
+	//}
+//}

@@ -9,6 +9,7 @@ class Obstacle
 {
 //variables
 public:
+	//unsigned char Locations[169][2] PROGMEM;
 protected:
 private:
 
@@ -16,7 +17,7 @@ private:
 public:
 	woodBox(int X, int Y);
 	ObstacleDR(int Level);
-	OBcheck(int L, int X, int Y);
+	//OBcheck(int L, int X, int Y);
 protected:
 private:
 
