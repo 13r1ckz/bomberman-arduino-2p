@@ -8,6 +8,8 @@ uint16_t tempteller = 0;
 int recievedPulse = 1;
 int startbit = 0;
 int stopbit = 0;
+signed char bitteller = 7;
+char letter;
 
 ISR(TIMER1_OVF_vect) {//macro met interrupt vector
 	teller++;
@@ -16,7 +18,6 @@ ISR(TIMER1_OVF_vect) {//macro met interrupt vector
 
 ISR(INT0_vect){
 
-	
 	if((PIND &(1<<PIND2))){
 		
 		teller = 0;
@@ -26,10 +27,10 @@ ISR(INT0_vect){
 		{
 			
 			if(!startbit){
-				Serial.println("startbit");
+				//Serial.println("startbit");
 				startbit = 1;
 				}else{
-				Serial.println("stopbit");
+				//Serial.println("stopbit");
 				teller = 0;
 				startbit = 0;
 				
@@ -38,13 +39,27 @@ ISR(INT0_vect){
 			
 		}else if ((teller - tempteller)>=30)
 		{	tempteller=teller;
-			Serial.println("1");
+			//Serial.println("1");
+			command |=(1<<bitteller);
+			bitteller--;
+			
+		
+			
 		}
 		else if((teller - tempteller)>=20)
 		{	tempteller=teller;
-			Serial.println("0");
+			//Serial.println("0");
+			command &=~(1<<bitteller);
+			bitteller--;
+			
+			
 		}
 		//Serial.println(teller);
+		if(bitteller == -1){
+			bitteller =7;
+			letter = command;
+		Serial.print(letter);
+		}
 	}
 }
 
@@ -75,6 +90,7 @@ int main(void){
 	sei();
 	while(1){
 		Serial.print("");
+		
 	}
 }
 
