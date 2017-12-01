@@ -1,8 +1,7 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
-int teller, currentTime;
-char pwmOn;
+int teller;
 
 void setPWM38();
 void setPWM56();
@@ -20,8 +19,6 @@ ISR(TIMER2_COMPB_vect){
 
 ISR(TIMER1_OVF_vect) {		//macro met interrupt vector
 	teller++;
-	//Serial.println(teller);
-	//PORTD ^= (1<<PORTD6);		//...toggle LED D6
 }
 
 int main(void){
@@ -32,30 +29,23 @@ int main(void){
 	setInterrupt();
 	setPWM56();
 	
-	//_delay_ms(500);
-	
 	while(1){
 		
 		if(Serial.available()){
 			char letter = Serial.read();
 			sendByte(letter);
 		}
-		//sendPulse();
-		//_delay_ms(500);
 	}
-	//while(1);
-	
 }
 
 void sendByte(uint8_t command){
 	uint8_t temporaryCommand = command;
 	sendStartBit();
-	int i;
+	char i;
 	
-	for(i = 0; i < 8; i++){
-		Serial.print("--");
-		Serial.println(temporaryCommand, BIN);
-		
+	Serial.println(temporaryCommand, BIN);
+	
+	for(i = 0; i < 8; i++){				
 		if(temporaryCommand & (1<<7)){
 			sendBit(1);
 			} else {
@@ -117,7 +107,6 @@ void setPWM38(){
 	TIMSK2 |= (1<<OCIE2B);
 
 	DDRD |= (1<<DDD3) ; //pin 3
-	pwmOn = 1;
 }
 
 void setPWM56(){
@@ -128,7 +117,6 @@ void setPWM56(){
 	TIMSK2 |= (1<<OCIE2B);
 
 	DDRD |= (1<<DDD3) ; //pin 3
-	pwmOn = 1;
 }
 
 void setInterrupt(){
