@@ -20,7 +20,7 @@ ISR(TIMER2_COMPB_vect){
 
 ISR(TIMER1_OVF_vect) {		//macro met interrupt vector
 	teller++;
-	Serial.println(teller);
+	//Serial.println(teller);
 	//PORTD ^= (1<<PORTD6);		//...toggle LED D6
 }
 
@@ -32,10 +32,15 @@ int main(void){
 	setInterrupt();
 	setPWM56();
 	
-	sendByte('q');
+	//_delay_ms(500);
+	
 	while(1){
 		
-		Serial.println("");
+		if(Serial.available()){
+			if(Serial.read() == 's'){
+				sendByte('q');
+			}
+		}
 		//sendPulse();
 		//_delay_ms(500);
 	}
@@ -63,6 +68,8 @@ void sendByte(uint8_t command){
 }
 
 void sendStartBit(){
+	TCCR2A &= ~(1 << COM2B1);
+	
 	sendPulse();
 
 	teller = 0;
@@ -75,6 +82,7 @@ void sendStopBit(){
 	sendStartBit();
 	teller = 0;
 	sendPulse();
+	TCCR2A |= (1 << COM2B1);
 }
 
 void sendBit(char b){
