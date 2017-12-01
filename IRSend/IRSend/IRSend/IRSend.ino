@@ -37,9 +37,8 @@ int main(void){
 	while(1){
 		
 		if(Serial.available()){
-			if(Serial.read() == 's'){
-				sendByte('q');
-			}
+			char letter = Serial.read();
+			sendByte(letter);
 		}
 		//sendPulse();
 		//_delay_ms(500);
