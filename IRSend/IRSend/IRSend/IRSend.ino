@@ -1,7 +1,7 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
-int teller;
+int tellerZender;
 
 void setPWM38();
 void setPWM56();
@@ -18,7 +18,7 @@ ISR(TIMER2_COMPB_vect){
 }
 
 ISR(TIMER1_OVF_vect) {		//macro met interrupt vector
-	teller++;
+	tellerZender++;
 }
 
 int main(void){
@@ -61,15 +61,15 @@ void sendStartBit(){
 	
 	sendPulse();
 
-	teller = 0;
-	while(!(teller == 30)){
+	tellerZender = 0;
+	while(!(tellerZender == 30)){
 		Serial.print("");
 	}
 }
 
 void sendStopBit(){
 	sendStartBit();
-	teller = 0;
+	tellerZender = 0;
 	sendPulse();
 	TCCR2A |= (1 << COM2B1);
 }
@@ -77,23 +77,23 @@ void sendStopBit(){
 void sendBit(char b){
 	sendPulse();
 	
-	teller = 0;
+	tellerZender = 0;
 	
 	if(b == 1){
-		while(!(teller == 20)){
+		while(!(tellerZender == 20)){
 			Serial.print("");
 		}
 		} else {
-		while(!(teller == 10)){
+		while(!(tellerZender == 10)){
 			Serial.print("");
 		}
 	}
 }
 
 void sendPulse(){
-	teller = 0;
+	tellerZender = 0;
 	TCCR2A |= (1 << COM2B1);
-	while(!(teller == 10)){
+	while(!(tellerZender == 10)){
 		Serial.print("");
 	}
 	TCCR2A &= ~(1 << COM2B1);
