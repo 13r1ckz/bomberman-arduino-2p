@@ -121,7 +121,7 @@ void setPWM56(){
 
 void setInterrupt(){
 	DDRD |= (1<<DDD6);		//setup (digital pen 6 = PD6)
-	TCCR1B |= (1 << CS11);
+	TCCR1B |= (1 << CS10);
 	TIMSK1 |= (1<<TOIE1);
 	TCNT1 = 0;
 	sei();
