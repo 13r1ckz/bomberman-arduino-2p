@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Atmel Studio Solution File, Format Version 11.00
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "IR ontvang", "IR ontvang\IR ontvang.cppproj", "{C81EAF1A-0A54-410B-B45E-6B0DB2E92897}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "IR_ontvanger", "..\..\..\..\..\..\..\..\Documents\Arduino\IR_ontvanger\IR_ontvanger.cppproj", "{C3DE62F7-95A8-4673-B23C-789616398762}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "IR_sensorv2", "..\IR_sensorv2\IR_sensorv2.cppproj", "{AF2FC271-DF16-4207-83BD-B3A36C1BADEF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C81EAF1A-0A54-410B-B45E-6B0DB2E92897}.Debug|AVR.ActiveCfg = Debug|AVR
+		{C81EAF1A-0A54-410B-B45E-6B0DB2E92897}.Debug|AVR.Build.0 = Debug|AVR
+		{C81EAF1A-0A54-410B-B45E-6B0DB2E92897}.Release|AVR.ActiveCfg = Release|AVR
+		{C81EAF1A-0A54-410B-B45E-6B0DB2E92897}.Release|AVR.Build.0 = Release|AVR
+		{C3DE62F7-95A8-4673-B23C-789616398762}.Debug|AVR.ActiveCfg = Debug|AVR
+		{C3DE62F7-95A8-4673-B23C-789616398762}.Debug|AVR.Build.0 = Debug|AVR
+		{C3DE62F7-95A8-4673-B23C-789616398762}.Release|AVR.ActiveCfg = Release|AVR
+		{C3DE62F7-95A8-4673-B23C-789616398762}.Release|AVR.Build.0 = Release|AVR
+		{AF2FC271-DF16-4207-83BD-B3A36C1BADEF}.Debug|AVR.ActiveCfg = Debug|AVR
+		{AF2FC271-DF16-4207-83BD-B3A36C1BADEF}.Debug|AVR.Build.0 = Debug|AVR
+		{AF2FC271-DF16-4207-83BD-B3A36C1BADEF}.Release|AVR.ActiveCfg = Release|AVR
+		{AF2FC271-DF16-4207-83BD-B3A36C1BADEF}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

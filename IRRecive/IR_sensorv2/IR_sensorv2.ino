@@ -2,62 +2,52 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
-uint8_t command= 0x00;
-uint16_t teller = 0;
+uint8_t ontvangenbericht= 0x00;
+uint16_t tellerontvanger = 0;
 uint16_t tempteller = 0;
-int recievedPulse = 1;
 int startbit = 0;
-int stopbit = 0;
 signed char bitteller = 7;
 char letter;
 
 ISR(TIMER1_OVF_vect) {//macro met interrupt vector
-	teller++;
+	tellerontvanger++;
 }
 
 
 ISR(INT0_vect){
 
 	if((PIND &(1<<PIND2))){
-		
-		teller = 0;
-
+		tellerontvanger = 0;
+		Serial.println("test");
 		} else {
-		if ((teller - tempteller) >= 40)
+		if ((tellerontvanger - tempteller) >= 40)
 		{
-			
 			if(!startbit){
 				//Serial.println("startbit");
 				startbit = 1;
 				}else{
 				//Serial.println("stopbit");
-				teller = 0;
+				tellerontvanger = 0;
 				startbit = 0;
-				
 			}
-			tempteller=teller;
-			
-		}else if ((teller - tempteller)>=30)
-		{	tempteller=teller;
+			tempteller=tellerontvanger;
+		}else if ((tellerontvanger - tempteller)>=30)
+		{	tempteller=tellerontvanger;
 			//Serial.println("1");
-			command |=(1<<bitteller);
-			bitteller--;
-			
-		
-			
+			ontvangenbericht |=(1<<bitteller);
+			bitteller--;			
 		}
-		else if((teller - tempteller)>=20)
-		{	tempteller=teller;
+		else if((tellerontvanger - tempteller)>=20)
+		{	tempteller=tellerontvanger;
 			//Serial.println("0");
-			command &=~(1<<bitteller);
-			bitteller--;
-			
-			
+			ontvangenbericht &=~(1<<bitteller);
+			bitteller--;	
 		}
+		
 		//Serial.println(teller);
 		if(bitteller == -1){
 			bitteller =7;
-			letter = command;
+			letter = ontvangenbericht;
 		Serial.print(letter);
 		}
 	}
@@ -65,7 +55,7 @@ ISR(INT0_vect){
 
 
 void timer() {
-	TCCR1B |= (1 << CS11);
+	TCCR1B |= (1 << CS10);
 	TIMSK1 |= (1<<TOIE1);
 	TCNT1 = 0;
 }
@@ -83,7 +73,6 @@ void initInterrupt0()
 int main(void){
 	DDRD  |=(1<<DDD4);
 	DDRD  |=(1<<DDD6);
-	//init();
 	Serial.begin(9600);
 	timer();
 	initInterrupt0();
