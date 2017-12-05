@@ -8,6 +8,8 @@ Obstacle::woodBox(int X, int Y){
 	lcd.drawRect((gridFH.GridF(X)+7), gridFH.GridF(Y), 2, 16, RGB(218,165,32));
 	lcd.drawRect((gridFH.GridF(X)+11), gridFH.GridF(Y), 2, 16, RGB(218,165,32));
 	lcd.drawRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, RGB(111, 82, 20));
+	a[Y][X] = 3;
+	
 }
 
 Obstacle::ObstacleDR(int level)

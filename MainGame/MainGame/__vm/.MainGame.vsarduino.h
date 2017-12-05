@@ -10,21 +10,16 @@
 
 #define __AVR_ATmega328p__
 #define __AVR_ATmega328P__
-#define ARDUINO 10804
+#define ARDUINO 10801
 #define ARDUINO_MAIN
 #define F_CPU 16000000L
 #define __AVR__
 #define F_CPU 16000000L
-#define ARDUINO 10804
+#define ARDUINO 10801
 #define ARDUINO_AVR_UNO
 #define ARDUINO_ARCH_AVR
 void init_adc_single_sample();
 void single_sample();
-void mlevel1();
-void mlevel2();
-void mlevelRandom();
-void mhighScore();
-void woodBox(int X, int Y);
 int navigateStart();
 int Startscherm();
 int navigate();
