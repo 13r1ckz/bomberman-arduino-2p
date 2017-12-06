@@ -187,16 +187,24 @@ int Startscherm(){
 int navigate(){
 	int nunchukY = 1;
 	int nunchukX = 1;
-	int counter = 10;
+	int counter = 8;
 	int i = 0;
 	int q = 0;
 	int gridX, gridY;
 	int bomb = 0;
 	int bomX, bomY;
 	int bomcounter = 75;
-	
-	
-	
+	int bomcounter2 = 50;
+	int bomMidden = 0;
+	int bomLinks = 0;
+	int bomRechts = 0;
+	int bomOnder = 0;
+	int bomBoven = 0;
+	int cBomMidden = 0;
+	int cBomLinks = 0;
+	int cBomRechts = 0;
+	int cBomOnder = 0;
+	int cBomBoven = 0;
 	
 	while(1) {
 		single_sample();
@@ -209,7 +217,7 @@ int navigate(){
 		Characters.MoveB((XB/16),(XB/16));
 		int gridX = 0;
 		int gridY = 0;
-		if (bomb==0){
+		if (bomb==0){				//als er geen bom ligt
 			if (nunchuk.zButton)
 			{
 				bomX=XA;
@@ -218,9 +226,7 @@ int navigate(){
 				q=0;
 			}
 		}
-		if (bomb==1)
-		{
-			
+		if (bomb==1){
 			bom.BomXY((bomX/16),(bomY/16));
 			q++;
 			/*Serial.print(bomX);
@@ -232,100 +238,91 @@ int navigate(){
 			Serial.println(bomX);
 			Serial.print("Y: ");
 			Serial.println(bomY);
-			if(bomX == 16 && bomY == 16){
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl((bomX+16), bomY);
-				bom.BomExpl(bomX, (bomY+16));
-			}
-			else if(bomX == 16 && bomY == 208){
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl((bomX+16), bomY);
-				bom.BomExpl(bomX, (bomY-16));
-			}
-			else if(bomX == 208 && bomY == 16){
-				bom.BomExpl(bomX, bomY);
+			
+			bomMidden = 1;
+			
+			bom.BomExpl(bomX, bomY);
+			if(!(a[bomY/16][bomX/16-1] == 2)){		//links van de bom
 				bom.BomExpl((bomX-16), bomY);
-				bom.BomExpl(bomX, (bomY+16));
+				bomLinks = 1;
+				if (a[bomY/16][bomX/16-1] == 3){	//verwijderd krat
+					a[bomY/16][bomX/16-1] = 1;
+				}				
 			}
-			else if(bomX == 208 && bomY == 208){
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl((bomX-16), bomY);
-				bom.BomExpl(bomX, (bomY-16));
-			}
-			else if(bomX == 16 && bomY == 32 || bomY == 64 || bomY == 96 || bomY == 128 || bomY == 160 || bomY == 162 && bomY == 208){
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl(bomX, (bomY+16));
-				bom.BomExpl(bomX, (bomY-16));
-			}
-			else if(bomY == 16 && bomX == 32 || bomX == 64 || bomX == 96 || bomX == 128 || bomX == 160 || bomX == 162 && bomY == 208){
-				bom.BomExpl(bomX, bomY);
+			if(!(a[bomY/16][bomX/16+1] == 2)){		//rechts van de bom
 				bom.BomExpl((bomX+16), bomY);
-				bom.BomExpl((bomX-16), bomY);
+				bomRechts = 1;
+				if (a[bomY/16][bomX/16+1] == 3){	//verwijderd krat
+					a[bomY/16][bomX/16+1] = 1;
+				}
 			}
-			else if(bomX == 208 && bomY == 32 || bomY == 64 || bomY == 96 || bomY == 128 || bomY == 160 || bomY == 162 && bomY == 208){
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl(bomX, (bomY+16));
+			if(!(a[bomY/16-1][bomX/16] == 2)){		//boven van de bom
 				bom.BomExpl(bomX, (bomY-16));
+				bomBoven = 1;
+				if (a[bomY/16-1][bomX/16] == 3){	//verwijderd krat
+					a[bomY/16-1][bomX/16] = 1;
+				}
+				
 			}
-			else if(bomY == 208 && bomX == 32 || bomX == 64 || bomX == 96 || bomX == 128 || bomX == 160 || bomX == 162 && bomY == 208){
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl((bomX+16), bomY);
-				bom.BomExpl((bomX-16), bomY);
-			}
-			else if(bomX == 16){
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl((bomX+16), bomY);
+			if(!(a[bomY/16+1][bomX/16] == 2)){		//onder van de bom
 				bom.BomExpl(bomX, (bomY+16));
-				bom.BomExpl(bomX, (bomY-16));
+				bomOnder = 1;
+				if (a[bomY/16+1][bomX/16] == 3){	//verwijderd krat
+					a[bomY/16+1][bomX/16] = 1;
+				}
 			}
-			else if(bomY == 16){
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl((bomX+16), bomY);
-				bom.BomExpl((bomX-16), bomY);
-				bom.BomExpl(bomX, (bomY+16));
-			}
-			else if(bomX == 208){
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl((bomX-16), bomY);
-				bom.BomExpl(bomX, (bomY+16));
-				bom.BomExpl(bomX, (bomY-16));
-			}
-			else if(bomY == 208){
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl((bomX-16), bomY);
-				bom.BomExpl((bomX+16), bomY);
-				bom.BomExpl(bomX, (bomY-16));
-			}
-			else if(bomX == 32 || bomX == 64 || bomX == 96 || bomX == 128 || bomX == 160 || bomX == 162 && bomY == 208){
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl((bomX-16), bomY);
-				bom.BomExpl((bomX+16), bomY);
-			}
-			else if(bomY == 32 || bomY == 64 || bomY == 96 || bomY == 128 || bomY == 160 || bomY == 162 && bomY == 208){
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl(bomX, (bomY-16));
-				bom.BomExpl(bomX, (bomY+16));
-			}
-			else{
-				bom.BomExpl(bomX, bomY);
-				bom.BomExpl((bomX+16), bomY);
-				bom.BomExpl(bomX, (bomY+16));
-				bom.BomExpl((bomX-16), bomY);
-				bom.BomExpl(bomX, (bomY-16));
-			}
-			_delay_ms(1000);
-			lcd.fillRect(bomX,bomY,16,16,RGB(255,255,255));
-			wallIn.InnerWallP();
 			q=0;
-			bomb = 0;
+			bomb = 2;
 		}
-		//Serial.println(q);
+		
+		if (bomMidden == 1){		//verwijdert explosie midden
+			cBomMidden++;
+			if (cBomMidden == (bomcounter2+2)){
+				lcd.fillRect(bomX,bomY,16,16,RGB(255,255,255));
+				cBomMidden = 0;
+				bomMidden = 0;
+				bomb = 0;
+			}
+		}
+		if (bomLinks == 1){			//verwijdert explosie links
+			cBomLinks++;
+			if (cBomLinks == bomcounter2){
+				lcd.fillRect(bomX-16,bomY,16,16,RGB(255,255,255));
+				cBomLinks = 0;
+				bomLinks = 0;
+			}
+		}
+		if (bomRechts == 1){		//verwijdert explosie rechts
+			cBomRechts++;
+			if (cBomRechts == bomcounter2){
+				lcd.fillRect(bomX+16,bomY,16,16,RGB(255,255,255));
+				cBomRechts = 0;
+				bomRechts = 0;
+			}
+		}
+		if (bomBoven == 1){			//verwijdert explosie boven
+			cBomBoven++;
+			if (cBomBoven == bomcounter2){
+				lcd.fillRect(bomX,bomY-16,16,16,RGB(255,255,255));
+				cBomBoven = 0;
+				bomBoven = 0;
+			}
+		}
+		if (bomOnder == 1){			//verwijdert explosie onder
+			cBomOnder++;
+			if (cBomOnder == bomcounter2){
+				lcd.fillRect(bomX,bomY+16,16,16,RGB(255,255,255));
+				cBomOnder = 0;
+				bomOnder = 0;
+			}
+		}
+		
 		//omlaag lopen
 		if(nunchuk.analogY < 60) {
 			if(i>counter) {
 				i=0;
 			}
-			if(i == 0) {	//zorgt dat hij niet te snel loopt
+			if(i == 0) {		//zorgt dat hij niet te snel loopt
 				if (a[YA/16+1][XA/16] == 1)
 				{
 					nunchukY++;
@@ -428,6 +425,7 @@ int level2() {
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
 	OB.ObstacleDR(2);
+	navigate();
 	while(1){}
 	//lcd.fillScreen(RGB(0,255,0));
 	//OuterWall();
