@@ -187,7 +187,7 @@ int Startscherm(){
 
 int loseScreen(){
 	lcd.fillScreen(RGB(0,0,0));
-	lcd.drawText(50,50,"You lose", RGB(255,0,0), RGB(0,0,0), 4);
+	lcd.drawText(38,50,"You lose", RGB(255,0,0), RGB(0,0,0), 4);
 	return;
 }
 
@@ -250,7 +250,17 @@ int navigate(){
 			/*Serial.print(bomX);
 			Serial.print(" ");
 			Serial.println(bomY);*/
-		}
+	}
+	harts.HartS(levensA, 16, 2);
+	harts.HartS(levensB, 16, 14);
+	if (levensA == 0) {
+		loseScreen();
+		return;
+	}
+	if (levensB == 0) {
+		winScreen();
+		return;
+	}
 		
 		if(q==bomcounter){
 			Serial.print("X: ");
@@ -296,16 +306,7 @@ int navigate(){
 			}
 			q=0;
 			bomb = 2;
-			harts.HartS(levensA, 16, 2);
-			harts.HartS(levensB, 16, 14);
-			if (levensA == 0) {
-				loseScreen();
-				return;
-			}
-			if (levensB == 0) {
-				winScreen();
-				return;
-			}
+			
 		}
 		
 		if (bomMidden == 1){		//verwijdert explosie midden
