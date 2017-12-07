@@ -22,6 +22,8 @@ void init_adc_single_sample();
 void single_sample();
 int navigateStart();
 int Startscherm();
+int loseScreen();
+int winScreen();
 int navigate();
 int level1();
 int level2();
