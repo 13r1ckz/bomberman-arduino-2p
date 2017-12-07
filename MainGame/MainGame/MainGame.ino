@@ -26,8 +26,6 @@ Character Characters;
 Bom bom;
 hart harts;
 
-
-
 void init_adc_single_sample()	//init brightness
 {
 	ADMUX |= (1<<MUX0);		// input analog A1 Arduino
@@ -200,8 +198,8 @@ int winScreen(){
 int navigate(){
 	int levensA = 3;
 	int levensB = 3;
-	int nunchukY = 1;
-	int nunchukX = 1;
+	int nunchukY = 1;	//beginpositie Y
+	int nunchukX = 1;	//beginpositie X
 	int counter = 8;
 	int i = 0;
 	int q = 0;
@@ -224,17 +222,15 @@ int navigate(){
 	while(1) {
 		single_sample();
 		nunchuk.update();
-		int XA = gridFH.GridF(nunchukX);
+		int XA = gridFH.GridF(nunchukX);	// hier move character A
 		int YA = gridFH.GridF(nunchukY);
-		int XB = gridFH.GridF(13);
+		int XB = gridFH.GridF(13);			// hier move character B
 		int YB = gridFH.GridF(13);
 		Characters.MoveA((XA/16),(YA/16));
-		Characters.MoveB((XB/16),(XB/16));
+		Characters.MoveB((XB/16),(YB/16));
 		int gridX = 0;
 		int gridY = 0;
 		
-		Serial.print("levensA: ");
-		Serial.println(levensA);
 		if (bomb==0){				//als er geen bom ligt
 			if (nunchuk.zButton)
 			{
@@ -247,9 +243,6 @@ int navigate(){
 		if (bomb==1){
 			bom.BomXY((bomX/16),(bomY/16));
 			q++;
-			/*Serial.print(bomX);
-			Serial.print(" ");
-			Serial.println(bomY);*/
 	}
 	harts.HartS(levensA, 16, 2);
 	harts.HartS(levensB, 16, 14);
@@ -262,12 +255,7 @@ int navigate(){
 		return;
 	}
 		
-		if(q==bomcounter){
-			Serial.print("X: ");
-			Serial.println(bomX);
-			Serial.print("Y: ");
-			Serial.println(bomY);
-			
+		if(q==bomcounter){	
 			bomMidden = 1;
 			
 			bom.BomExpl(bomX, bomY);
@@ -460,10 +448,6 @@ int level1() {
 	OB.ObstacleDR(1);
 	navigate();
 	while(1){}
-	//woodBox(Grid(2),Grid(1));
-	//woodBox(Grid(6),Grid(3));
-	//woodBox(Grid(7),Grid(8));
-	//navigate();
 	
 }
 
@@ -474,19 +458,14 @@ int level2() {
 	OB.ObstacleDR(2);
 	navigate();
 	while(1){}
-	//lcd.fillScreen(RGB(0,255,0));
-	//OuterWall();
-	//InnerGrid();
-	//navigate();
-	//return;
 }
 
 int levelRandom() {
-	//lcd.fillScreen(RGB(0,0,255));
-	//OuterWall.OuterWallP();
-	//();
-	//navigate();
-	//return;
+lcd.fillScreen(RGB(255,255,255));
+wallOut.OuterWallP();
+wallIn.InnerWallP();
+navigate();
+while(1){}
 }
 
 int highScore() {
@@ -501,7 +480,6 @@ int main(void)
 	int level;
 	init();
 	Serial.begin(9600);
-	//	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	uint8_t clear_bg=0x00; //0x80 = dont clear background for fonts (only for DisplayXXX)
 
 	//init display
@@ -513,8 +491,6 @@ int main(void)
 	{
 		
 		level = Startscherm();
-		
-		//Serial.println(level, DEC);
 
 		if (level == 1)	{
 			level1();

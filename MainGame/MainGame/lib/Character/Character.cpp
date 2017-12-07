@@ -14,27 +14,19 @@ Character::MoveA(int X, int Y)
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	GridClass gridFH;
 	int i,j;
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((gridFH.GridF(X) + (i+3)),(gridFH.GridF(Y)+0),RGB(2,13,199));
-	}
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y), gridFH.GridF(X)+12, gridFH.GridF(Y), RGB(2,13,199));
 	
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+1),RGB(2,13,199));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+1),RGB(49,127,236));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+1),RGB(2,13,199));
+	lcd.drawPixel(gridFH.GridF(X)+2, gridFH.GridF(Y)+1, RGB(2,13,199));
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+1, gridFH.GridF(X)+12, gridFH.GridF(Y)+1, RGB(49,127,236));
+	lcd.drawPixel(gridFH.GridF(X)+13, gridFH.GridF(Y)+1, RGB(2,13,199));
 	
-	lcd.drawPixel((gridFH.GridF(X)+ 1),(gridFH.GridF(Y)+2),RGB(2,13,199));
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+2),RGB(49,127,236));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+2),RGB(2,13,199));
+	lcd.drawPixel(gridFH.GridF(X)+1, gridFH.GridF(Y)+2, RGB(2,13,199));
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y) +2, gridFH.GridF(X)+13, gridFH.GridF(Y)+2, RGB(49,127,236));
+	lcd.drawPixel(gridFH.GridF(X)+14 , gridFH.GridF(Y)+2, RGB(2,13,199));
 	
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+3),RGB(2,13,199));
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+3),RGB(49,127,236));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+3),RGB(2,13,199));
+	lcd.drawPixel(gridFH.GridF(X)+1, gridFH.GridF(Y)+3, RGB(2,13,199));
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y) +3, (gridFH.GridF(X)+13), gridFH.GridF(Y)+3, RGB(49,127,236));
+	lcd.drawPixel(gridFH.GridF(X)+14, gridFH.GridF(Y)+3, RGB(2,13,199));
 	
 	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+4),RGB(2,13,199));
 	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+4),RGB(49,127,236));
