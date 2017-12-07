@@ -12,6 +12,7 @@
 #include "lib/Character/Character.h"
 #include "lib/Bom/Bom.h"
 #include "lib/Data/Data.h"
+#include "lib/hart/hart.h"
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -23,6 +24,7 @@ InnerWall wallIn;
 Obstacle OB;
 Character Characters;
 Bom bom;
+hart harts;
 
 
 
@@ -294,6 +296,8 @@ int navigate(){
 			}
 			q=0;
 			bomb = 2;
+			harts.HartS(levensA, 16, 2);
+			harts.HartS(levensB, 16, 14);
 			if (levensA == 0) {
 				loseScreen();
 				return;
