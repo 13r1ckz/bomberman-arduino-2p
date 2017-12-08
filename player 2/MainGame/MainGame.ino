@@ -6,6 +6,7 @@
 #include <MI0283QT9.h>
 #include <ArduinoNunchuk.h>
 #include <EEPROM.h>
+#include <SoftwareSerial.h>
 #include "lib/Grid/Grid.h"
 #include "lib/Wall/Wall.h"
 #include "lib/Obstacle/Obstacle.h"
@@ -17,6 +18,7 @@
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
+SoftwareSerial chat(2, 3); // RX, TX
 
 GridClass gridFH;
 OuterWall wallOut;
@@ -78,10 +80,12 @@ int navigateStart() { //navigates through start
 			i++;
 		}
 		
-		//Serial.print(nunchuk.analogY, DEC);
-		//Serial.print(' ');
-		//Serial.println(nunchukY, DEC);
-		
+		if (chat.available()){
+			Serial.print("send help - ");
+			Serial.println(chat.read());	
+			//return chat.read();
+		}
+		else{
 		if(nunchukY == 1){
 			lcd.drawRect(60, 180, 200, 50, RGB(255,255,255));
 			lcd.drawRect(61, 181, 198, 48, RGB(255,255,255));
@@ -95,6 +99,7 @@ int navigateStart() { //navigates through start
 			lcd.drawRect(61, 16, 198, 48, RGB(255,0,0));
 			lcd.drawRect(62, 17, 196, 46, RGB(255,0,0));
 			if (nunchuk.zButton) {
+				chat.println(1,DEC);
 				return 1;
 			}
 		}
@@ -113,6 +118,7 @@ int navigateStart() { //navigates through start
 			lcd.drawRect(61, 71, 198, 48, RGB(255,0,0));
 			lcd.drawRect(62, 72, 196, 46, RGB(255,0,0));
 			if (nunchuk.zButton) {
+				chat.println(2,DEC);
 				return 2;
 			}
 		}
@@ -130,6 +136,7 @@ int navigateStart() { //navigates through start
 			lcd.drawRect(62, 127, 196, 46, RGB(255,0,0));
 			
 			if (nunchuk.zButton) {
+				chat.println(3,DEC);
 				return 3;
 			}
 		}
@@ -155,6 +162,7 @@ int navigateStart() { //navigates through start
 		}
 		if(nunchukY == 0){
 			nunchukY = 4;
+		}
 		}
 	}
 }
@@ -222,6 +230,8 @@ int navigate(){
 	int cBomBoven = 0;
 	
 	while(1) {
+		  if (chat.available())
+		  Serial.write(chat.read());
 		single_sample();
 		nunchuk.update();
 		int XA = gridFH.GridF(1); // hier move character a
@@ -239,14 +249,13 @@ int navigate(){
 				bomY=YB;
 				bomb=1;
 				q=0;
+				Serial.println(255, BIN);
+				chat.println(255, BIN);
 			}
 		}
 		if (bomb==1){
 			bom.BomXY((bomX/16),(bomY/16));
 			q++;
-			/*Serial.print(bomX);
-			Serial.print(" ");
-			Serial.println(bomY);*/
 	}
 	harts.HartS(levensA, 16, 2);
 	harts.HartS(levensB, 16, 14);
@@ -260,11 +269,7 @@ int navigate(){
 	}
 		
 		if(q==bomcounter){
-			Serial.print("X: ");
-			Serial.println(bomX);
-			Serial.print("Y: ");
-			Serial.println(bomY);
-			
+		
 			bomMidden = 1;
 			
 			bom.BomExpl(bomX, bomY);
@@ -498,6 +503,7 @@ int main(void)
 	int level;
 	init();
 	Serial.begin(9600);
+	chat.begin(9600);
 	//	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	uint8_t clear_bg=0x00; //0x80 = dont clear background for fonts (only for DisplayXXX)
 
@@ -510,8 +516,6 @@ int main(void)
 	{
 		
 		level = Startscherm();
-		
-		//Serial.println(level, DEC);
 
 		if (level == 1)	{
 			level1();
