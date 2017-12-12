@@ -21,30 +21,24 @@ Character::MoveA(int X, int Y)
 	lcd.drawPixel(gridFH.GridF(X)+13, gridFH.GridF(Y)+1, RGB(2,13,199));
 	
 	lcd.drawPixel(gridFH.GridF(X)+1, gridFH.GridF(Y)+2, RGB(2,13,199));
-	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y) +2, gridFH.GridF(X)+13, gridFH.GridF(Y)+2, RGB(49,127,236));
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+2, gridFH.GridF(X)+13, gridFH.GridF(Y)+2, RGB(49,127,236));
 	lcd.drawPixel(gridFH.GridF(X)+14 , gridFH.GridF(Y)+2, RGB(2,13,199));
 	
 	lcd.drawPixel(gridFH.GridF(X)+1, gridFH.GridF(Y)+3, RGB(2,13,199));
-	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y) +3, (gridFH.GridF(X)+13), gridFH.GridF(Y)+3, RGB(49,127,236));
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+3, (gridFH.GridF(X)+13), gridFH.GridF(Y)+3, RGB(49,127,236));
 	lcd.drawPixel(gridFH.GridF(X)+14, gridFH.GridF(Y)+3, RGB(2,13,199));
 	
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+4),RGB(2,13,199));
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+4),RGB(49,127,236));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+4),RGB(2,13,199));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+4),RGB(49,127,236));
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+4),RGB(2,13,199));
+	lcd.drawPixel(gridFH.GridF(X)+1, gridFH.GridF(Y)+4, RGB(2,13,199));
+	lcd.drawPixel(gridFH.GridF(X)+2, gridFH.GridF(Y)+4, RGB(49,127,236));
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+4, gridFH.GridF(X)+12, gridFH.GridF(Y)+4, RGB(2,13,199));
+	lcd.drawPixel(gridFH.GridF(X)+13, gridFH.GridF(Y)+4, RGB(49,127,236));
+	lcd.drawPixel(gridFH.GridF(X)+14, gridFH.GridF(Y)+4, RGB(2,13,199));
 	
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+5),RGB(2,13,199));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+5),RGB(49,127,236));
-	}
+	lcd.drawPixel(gridFH.GridF(X)+2, gridFH.GridF(Y)+5, RGB(2,13,199));
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+5, (gridFH.GridF(X)+12), gridFH.GridF(Y)+5, RGB(49,127,236));
 	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+5),RGB(2,13,199));
 	
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+6),RGB(2,13,199));
-	}
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+6, gridFH.GridF(X)+13, gridFH.GridF(Y)+6, RGB(2,13,199));
 	
 	lcd.drawPixel((gridFH.GridF(X)+3),(gridFH.GridF(Y)+7),RGB(254,204,154));
 	lcd.drawPixel((gridFH.GridF(X)+4),(gridFH.GridF(Y)+7),RGB(255,255,255));

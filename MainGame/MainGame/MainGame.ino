@@ -52,6 +52,8 @@ int navigateStart() { //navigates through start
 	int nunchukY = 1;
 	int counter = 5;
 	int i = 0;
+	char msg;
+	Serial.println("NavigatieStart");
 	
 	while(1) {
 		single_sample();
@@ -79,10 +81,13 @@ int navigateStart() { //navigates through start
 		}
 		
 		if (chat.available()){
-			Serial.print("send help - ");
-			Serial.println(chat.read(), DEC);
-			return chat.read();
+				msg = chat.read();
+				Serial.print(msg);
+				Serial.println(" - send help");		
+				msg = msg-48;		
+				return msg;
 		}
+		
 		else{
 			if(nunchukY == 1){
 				lcd.drawRect(60, 180, 200, 50, RGB(255,255,255));
@@ -163,9 +168,11 @@ int navigateStart() { //navigates through start
 			}
 		}
 	}
+	return msg;
 }
 
 int Startscherm(){
+	Serial.println("Startscherm");
 	int level;
 	lcd.fillScreen(RGB(0,0,0));
 	
@@ -204,23 +211,23 @@ int winScreen(){
 }
 
 int navigate(){
-	int levensA = 3;
-	int levensB = 3;
-	int nunchukY = 1;	//beginpositie Y
-	int nunchukX = 1;	//beginpositie X
-	int counter = 8;
+	uint8_t levensA = 3;
+	uint8_t levensB = 3;
+	uint8_t nunchukY = 1;	//beginpositie Y
+	uint8_t nunchukX = 1;	//beginpositie X
+	uint8_t counter = 8;
 	int i = 0;
 	int q = 0;
 	int gridX, gridY;
-	int bomb = 0;
-	int bomX, bomY;
+	uint8_t bomb = 0;
+	uint8_t bomX, bomY;
 	int bomcounter = 75;
 	int bomcounter2 = 50;
-	int bomMidden = 0;
-	int bomLinks = 0;
-	int bomRechts = 0;
-	int bomOnder = 0;
-	int bomBoven = 0;
+	uint8_t bomMidden = 0;
+	uint8_t bomLinks = 0;
+	uint8_t bomRechts = 0;
+	uint8_t bomOnder = 0;
+	uint8_t bomBoven = 0;
 	int cBomMidden = 0;
 	int cBomLinks = 0;
 	int cBomRechts = 0;
@@ -258,16 +265,16 @@ int navigate(){
 			bom.BomXY((bomX/16),(bomY/16));
 			q++;
 		}
-	harts.HartS(levensA, 16, 2);
-	harts.HartS(levensB, 16, 14);
-	if (levensA == 0) {
-		loseScreen();
-		return;
-	}
-	if (levensB == 0) {
-		winScreen();
-		return;
-	}
+		harts.HartS(levensA, 16, 2);
+		harts.HartS(levensB, 16, 14);
+		if (levensA == 0) {
+			loseScreen();
+			return;
+		}
+		if (levensB == 0) {
+			winScreen();
+			return;
+		}
 		
 		if(q==bomcounter){	
 			bomMidden = 1;
@@ -369,7 +376,7 @@ int navigate(){
 				if ((XA == bomX)&&(YA == (bomY+16)))	{
 					levensA--;
 				}
-				if ((XB == bomX)&&(YB == (bomY-16)))	{
+				if ((XB == bomX)&&(YB == (bomY+16)))	{
 					levensB--;
 				}
 			}
@@ -400,6 +407,13 @@ int navigate(){
 				if (a[YA/16+1][XA/16] == 1)
 				{
 					nunchukY++;
+					chat.println(nunchukX, BIN);
+					Serial.print("X: ");
+					Serial.println(nunchukX, BIN);
+					chat.println(nunchukY, BIN);
+					Serial.print("Y: ");
+					Serial.println(nunchukY, BIN);
+					
 					lcd.fillRect((gridFH.GridF(nunchukX)),(gridFH.GridF(nunchukY)-16), 16, 16, RGB(255,255,255)); //wist vorige positie
 				}
 			}
@@ -415,6 +429,12 @@ int navigate(){
 				if (a[YA/16-1][XA/16] == 1)
 				{
 					nunchukY--;
+					chat.println(nunchukX, BIN);
+					Serial.print("X: ");
+					Serial.println(nunchukX, BIN);
+					chat.println(nunchukY, BIN);
+					Serial.print("Y: ");
+					Serial.println(nunchukY, BIN);
 					lcd.fillRect((gridFH.GridF(nunchukX)),(gridFH.GridF(nunchukY)+16), 16, 16, RGB(255,255,255)); //wist vorige positie
 				}
 			}
@@ -430,6 +450,12 @@ int navigate(){
 				if (a[YA/16][XA/16-1] == 1)
 				{
 					nunchukX--;
+					chat.println(nunchukX, BIN);
+					Serial.print("X: ");
+					Serial.println(nunchukX, BIN);
+					chat.println(nunchukY, BIN);
+					Serial.print("Y: ");
+					Serial.println(nunchukY, BIN);
 					lcd.fillRect((gridFH.GridF(nunchukX)+16),(gridFH.GridF(nunchukY)), 16, 16, RGB(255,255,255)); //wist vorige positie
 				}
 			}
@@ -445,6 +471,12 @@ int navigate(){
 				if (a[YA/16][XA/16+1] == 1)
 				{
 					nunchukX++;
+					chat.println(nunchukX, BIN);
+					Serial.print("X: ");
+					Serial.println(nunchukX, BIN);
+					chat.println(nunchukY, BIN);
+					Serial.print("Y: ");
+					Serial.println(nunchukY, BIN);
 					lcd.fillRect((gridFH.GridF(nunchukX)-16),(gridFH.GridF(nunchukY)), 16, 16, RGB(255,255,255)); //wist vorige positie
 				}
 			}
@@ -505,6 +537,8 @@ int main(void)
 	{
 		
 		level = Startscherm();
+		Serial.print("main: level ");
+		Serial.println(level);
 		
 		if (level == 1)	{
 			level1();
@@ -517,6 +551,8 @@ int main(void)
 		}
 		if (level == 4)	{
 			highScore();
+		} else {
+			Serial.println("FAIL");
 		}
 	}
 }
