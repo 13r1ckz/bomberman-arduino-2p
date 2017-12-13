@@ -886,6 +886,12 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
     <Compile Include="lib\hart\hart.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="lib\Navigate\Navigate.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\Navigate\Navigate.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="lib\Obstacle\Obstacle.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -912,6 +918,7 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
     <Folder Include="lib\Grid\" />
     <Folder Include="lib\Data" />
     <Folder Include="lib\hart" />
+    <Folder Include="lib\Navigate" />
     <Folder Include="lib\Obstacle\" />
     <Folder Include="lib\Wall\" />
     <Folder Include="__vm\" />

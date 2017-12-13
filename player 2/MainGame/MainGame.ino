@@ -14,6 +14,7 @@
 #include "lib/Bom/Bom.h"
 #include "lib/Data/Data.h"
 #include "lib/hart/hart.h"
+#include "lib/Navigate/Navigate.h"
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -27,6 +28,7 @@ Obstacle OB;
 Character Characters;
 Bom bom;
 hart harts;
+Navigate nav;
 
 
 
@@ -54,6 +56,7 @@ int navigateStart() { //navigates through start
 	int nunchukY = 1;
 	int counter = 5;
 	int i = 0;
+	char msg;
 	
 	while(1) {
 		single_sample();
@@ -81,23 +84,15 @@ int navigateStart() { //navigates through start
 		}
 		
 		if (chat.available()){
-			Serial.print("send help - ");
-			Serial.println(chat.read());	
-			//return chat.read();
+			msg = chat.read();
+			msg = msg - 48;
+			if(msg == 1 || msg == 2 || msg == 3 ){
+			return msg;
+			}
 		}
 		else{
 		if(nunchukY == 1){
-			lcd.drawRect(60, 180, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 181, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 182, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 70, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 71, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 72, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 15, 200, 50, RGB(255,0,0));
-			lcd.drawRect(61, 16, 198, 48, RGB(255,0,0));
-			lcd.drawRect(62, 17, 196, 46, RGB(255,0,0));
+			nav.navigatestart(1);
 			if (nunchuk.zButton) {
 				chat.println(1,DEC);
 				return 1;
@@ -106,34 +101,14 @@ int navigateStart() { //navigates through start
 		
 		//tekent rode rand om geselecteerde level
 		if(nunchukY == 2){
-			lcd.drawRect(60, 15, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 16, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 17, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 125, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 126, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 127, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 70, 200, 50, RGB(255,0,0));
-			lcd.drawRect(61, 71, 198, 48, RGB(255,0,0));
-			lcd.drawRect(62, 72, 196, 46, RGB(255,0,0));
+			nav.navigatestart(2);
 			if (nunchuk.zButton) {
 				chat.println(2,DEC);
 				return 2;
 			}
 		}
 		if(nunchukY == 3){
-			lcd.drawRect(60, 70, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 71, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 72, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 180, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 181, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 182, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 125, 200, 50, RGB(255,0,0));
-			lcd.drawRect(61, 126, 198, 48, RGB(255,0,0));
-			lcd.drawRect(62, 127, 196, 46, RGB(255,0,0));
+			nav.navigatestart(3);
 			
 			if (nunchuk.zButton) {
 				chat.println(3,DEC);
@@ -141,17 +116,7 @@ int navigateStart() { //navigates through start
 			}
 		}
 		if(nunchukY == 4){
-			lcd.drawRect(60, 125, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 126, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 127, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 15, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 16, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 17, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 180, 200, 50, RGB(255,0,0));
-			lcd.drawRect(61, 181, 198, 48, RGB(255,0,0));
-			lcd.drawRect(62, 182, 196, 46, RGB(255,0,0));
+			nav.navigatestart(4);
 			
 			if (nunchuk.zButton) {
 				return 4;
@@ -190,6 +155,7 @@ int Startscherm(){
 	bom.BomXY(1,0);
 	bom.BomXY(18,0);
 	level = navigateStart();
+	Serial.println(level);
 	return level;
 }
 
@@ -497,7 +463,6 @@ int highScore() {
 	return;
 }
 
-
 int main(void)
 {
 	int level;
@@ -516,7 +481,6 @@ int main(void)
 	{
 		
 		level = Startscherm();
-
 		if (level == 1)	{
 			level1();
 		}
