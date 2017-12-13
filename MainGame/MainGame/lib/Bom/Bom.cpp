@@ -39,13 +39,3 @@ Bom::BomExpl(int X, int Y)
 		lcd.fillRect((X+6), (Y+6), 4, 4, RGB(255,255,255));
 				
 }//explosion
-
-/*
-			lcd.fillRect((X-16), (Y-16), 16, 16, RGB(164,0,0));
-			lcd.fillRect(((X+1)-16), ((Y+1)-16), 14, 14, RGB(214,0,0));
-			lcd.fillRect(((X+2)-16), ((Y+2)-16), 12, 12, RGB(255,80,10));
-			lcd.fillRect(((X+3)-16), ((Y+3)-16), 10, 10, RGB(255,120,50));
-			lcd.fillRect(((X+4)-16), ((Y+4)-16), 8, 8, RGB(255,170,90));
-			lcd.fillRect(((X+5)-16), ((Y+5)-16), 6, 6, RGB(255,255,170));
-			lcd.fillRect(((X+6)-16), ((Y+6)-16), 4, 4, RGB(255,255,255));
-*/
