@@ -34,20 +34,20 @@ ISR(TIMER1_OVF_vect) {    //macro met interrupt vector
 }
  
 ISR(INT0_vect){
-	teller2++;
-	Serial.println(teller2);
+	//teller2++;
+	//Serial.println(teller2);
 	verschil = tellerontvanger - tempteller;
 	if(!startbit){
 		if(verschil >= 45){
 			startbit = 1;
-			//Serial.println("Startbit");
+			Serial.println("Startbit");
 			ontvangeraantal++;
 			tempteller = tellerontvanger;
 		}
 	} else {		
 		if(verschil >= 40){
 			startbit = 0;
-			//Serial.println("Stopbit");
+			Serial.println("Stopbit");
 			tellerontvanger = 0;
 			tempteller = 0;
 			ontvangeraantal++;
@@ -66,20 +66,22 @@ ISR(INT0_vect){
 		}		
 	}
 	
+	if(ontvangeraantal != 0){
 	if(ontvangeraantal % 10 == 0){
 		if(bitteller == -1){
 			bitteller =7;
 			letter = ontvangenbericht;
-			Serial.print("\t");
-			Serial.println(letter);
+			//Serial.print("\t");
+			//Serial.println(letter);
 			ontvangenbericht = 0x00;
 			//Serial.print("\t");
 			//Serial.println(bitteller);
 		}else{
-			Serial.println("fout");
+			//Serial.println("fout");
 			bitteller =7;
 			ontvangenbericht = 0x00;
 		}
+	}
 	}
 	
 		
@@ -88,16 +90,12 @@ int main(void){
 	
 	Serial.begin(9600);
 	
-	setPWM38();
+	//setPWM38();
 	setTimer();
-	//setPWM56();
-	initInterrupt0();
+	setPWM56();
+	initInterrupt();
+	
 	while(1){
-		//TCCR2A |= (1 << COM2B1);
-		//sendByte('a');
-	//	_delay_ms(1000);
-		//TCCR2A &= ~(1 << COM2B1);
-		//_delay_ms(1000);
 		if(Serial.available()){
 			char letter = Serial.read();
 			 sendByte(letter);
