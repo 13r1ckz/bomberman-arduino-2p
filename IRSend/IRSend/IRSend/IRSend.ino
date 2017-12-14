@@ -34,36 +34,36 @@ ISR(TIMER1_OVF_vect) {    //macro met interrupt vector
 }
  
 ISR(INT0_vect){
-	//teller2++;
-	//Serial.println(teller2);
 	verschil = tellerontvanger - tempteller;
+	
 	if(!startbit){
 		if(verschil >= 45){
 			startbit = 1;
-			Serial.println("Startbit");
+			//Serial.println("Startbit");
 			ontvangeraantal++;
-			tempteller = tellerontvanger;
+			
 		}
 	} else {		
 		if(verschil >= 40){
 			startbit = 0;
-			Serial.println("Stopbit");
+			//Serial.println("Stopbit");
 			tellerontvanger = 0;
 			tempteller = 0;
 			ontvangeraantal++;
 		} else if((verschil) >= 30 && (verschil) < 40){
-			Serial.print("1");
+			//Serial.print("1");
 			ontvangenbericht |=(1<<bitteller);
 			bitteller--;
 			ontvangeraantal++;
-			tempteller = tellerontvanger;
+			
 		} else if((verschil) >= 20 && (verschil) < 30){
-			Serial.print("0");
+			//Serial.print("0");
 			ontvangenbericht &=~(1<<bitteller);
 			bitteller--;
 			ontvangeraantal++;
-			tempteller = tellerontvanger;
+			
 		}		
+		
 	}
 	
 	if(ontvangeraantal != 0){
@@ -72,25 +72,21 @@ ISR(INT0_vect){
 			bitteller =7;
 			letter = ontvangenbericht;
 			//Serial.print("\t");
-			//Serial.println(letter);
+			Serial.println(letter);
 			ontvangenbericht = 0x00;
-			//Serial.print("\t");
-			//Serial.println(bitteller);
 		}else{
 			//Serial.println("fout");
 			bitteller =7;
 			ontvangenbericht = 0x00;
 		}
 	}
-	}
-	
-		
+	}	
+	tempteller = tellerontvanger;	
 }
 int main(void){
 	
 	Serial.begin(9600);
-	
-	//setPWM38();
+
 	setTimer();
 	setPWM56();
 	initInterrupt();
@@ -108,7 +104,7 @@ int main(void){
 	 sendStartBit();
 	 char i;
 	 
-	 Serial.println(temporaryCommand, BIN);
+	 //Serial.println(temporaryCommand, BIN);
 	 
 	 for(i = 0; i < 8; i++){
 		 if(temporaryCommand & (1<<7)){
@@ -119,14 +115,15 @@ int main(void){
 		 temporaryCommand <<= 1;
 	 }
 	 sendStopBit();
+	 TCCR2A |= (1 << COM2B1);
  }
  
  void sendStartBit(){
-	 TCCR2A &= ~(1 << COM2B1);
+	 //TCCR2A &= ~(1 << COM2B1);
 	 sendPulse();
 	 
 	 tellerZender = 0;
-	 while(!(tellerZender == 30)){
+	 while(!(tellerZender == 32)){
 		 Serial.print("");
 	 }
  }
