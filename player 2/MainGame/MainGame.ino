@@ -1,5 +1,3 @@
-#include <avr/io.h>
-#include <avr/interrupt.h>
 #include <stdint.h>
 #include <Wire.h>
 #include <GraphicsLib.h>
@@ -15,6 +13,7 @@
 #include "lib/Data/Data.h"
 #include "lib/hart/hart.h"
 #include "lib/Navigate/Navigate.h"
+#include "lib/init/initRW.h"
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -29,7 +28,7 @@ Character Characters;
 Bom bom;
 hart harts;
 Navigate nav;
-
+initRW initrw;
 
 
 void init_adc_single_sample()	//init brightness
@@ -466,7 +465,7 @@ int highScore() {
 int main(void)
 {
 	int level;
-	init();
+	initrw.init();
 	Serial.begin(9600);
 	chat.begin(9600);
 	//	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
