@@ -39,3 +39,60 @@ Bom::BomExpl(int X, int Y)
 		lcd.fillRect((X+6), (Y+6), 4, 4, RGB(255,255,255));
 				
 }//explosion
+
+Bom::BomTrack(int bomX, int bomY) 
+{
+	BomExpl(bomX, bomY);
+	if(!(a[bomY/16][bomX/16-1] == 2)) {		//links van de bom
+		BomExpl(bomX-16, bomY);
+		
+		if (a[bomY/16][bomX/16-1] == 3) {	//verwijderd krat
+			a[bomY/16][bomX/16-1] = 1;
+		}
+	}
+	if(!(a[bomY/16][bomX/16+1] == 2)) {		//rechts van de bom
+		BomExpl(bomX+16, bomY);
+		
+		if (a[bomY/16][bomX/16+1] == 3) {	//verwijderd krat
+			a[bomY/16][bomX/16+1] = 1;
+		}
+	}
+	if(!(a[bomY/16-1][bomX/16] == 2)) {		//boven van de bom
+		BomExpl(bomX, bomY-16);
+		
+		if (a[bomY/16-1][bomX/16] == 3) {	//verwijderd krat
+			a[bomY/16-1][bomX/16] = 1;
+		}
+		
+	}
+	if(!(a[bomY/16+1][bomX/16] == 2)) {		//onder van de bom
+		BomExpl(bomX, bomY+16);
+		
+		if (a[bomY/16+1][bomX/16] == 3) {	//verwijderd krat
+			a[bomY/16+1][bomX/16] = 1;
+		}
+	}
+}
+
+Bom::BomDelete(int bomX, int bomY) 
+{
+	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
+	#define WHITE 0xFFFFFFFF
+	lcd.fillRect(bomX, bomY, 16, 16, WHITE); //midden van de bom
+	
+	if(!(a[bomY/16][bomX/16-1] == 2)) {		//links van de bom
+		lcd.fillRect(bomX-16, bomY, 16, 16, WHITE);
+	}
+	
+	if(!(a[bomY/16][bomX/16+1] == 2)) {		//rechts van de bom
+		lcd.fillRect(bomX+16, bomY, 16, 16, WHITE);
+	}
+	
+	if(!(a[bomY/16-1][bomX/16] == 2)) {		//boven van de bom
+		lcd.fillRect(bomX, bomY-16, 16, 16, WHITE);
+	}
+	
+	if(!(a[bomY/16+1][bomX/16] == 2)) {		//onder van de bom
+		lcd.fillRect(bomX, bomY+16, 16, 16, WHITE);
+	}
+}

@@ -1,5 +1,3 @@
-#include <avr/io.h>
-#include <avr/interrupt.h>
 #include <stdint.h>
 #include <Wire.h>
 #include <GraphicsLib.h>
@@ -55,11 +53,19 @@ int navigateStart() { //navigates through start
 	int counter = 5;
 	int i = 0;
 	char msg;
-	Serial.println("NavigatieStart");
 	
 	while(1) {
 		single_sample();
 		nunchuk.update();
+		
+		if (chat.available()){
+				msg = chat.read();
+				Serial.print(msg);
+				Serial.println(" - send help");		
+				msg = msg-48;		
+				return msg;
+		}
+		
 		if(nunchuk.analogY < 60) {
 			if(i > counter) {
 				i = 0;
@@ -80,17 +86,7 @@ int navigateStart() { //navigates through start
 				i++;
 			}
 			i++;
-		}
-		
-		if (chat.available()){
-				msg = chat.read();
-				Serial.print(msg);
-				Serial.println(" - send help");		
-				msg = msg-48;		
-				return msg;
-		}
-		
-		else{
+		} else {
 			if(nunchukY == 1){
 				lcd.drawRect(60, 180, 200, 50, WHITE);
 				lcd.drawRect(61, 181, 198, 48, WHITE);
@@ -174,8 +170,6 @@ int navigateStart() { //navigates through start
 }
 
 int Startscherm(){
-	Serial.println("Startscherm");
-	Serial.println(RGB(255,1,12),HEX);
 	int level;
 	lcd.fillScreen(BLACK);
 	
@@ -225,13 +219,13 @@ int navigate(){
 	uint8_t bomb = 0;
 	uint8_t bomX, bomY;
 	int bomcounter = 75;
-	int bomcounter2 = 50;
+	int bomDelete = 50;
 	uint8_t bomMidden = 0;
 	uint8_t bomLinks = 0;
 	uint8_t bomRechts = 0;
 	uint8_t bomOnder = 0;
 	uint8_t bomBoven = 0;
-	int cBomMidden = 0;
+	int counterBomDelete = 0;
 	int cBomLinks = 0;
 	int cBomRechts = 0;
 	int cBomOnder = 0;
@@ -253,6 +247,17 @@ int navigate(){
 			Serial.write(chat.read());
 		}
 		
+		harts.HartS(levensA, 16, 2);
+		harts.HartS(levensB, 16, 14);
+		if (levensA == 0) {
+			loseScreen();
+			return;
+		}
+		if (levensB == 0) {
+			winScreen();
+			return;
+		}
+
 		if (bomb==0){				//als er geen bom ligt
 			if (nunchuk.zButton) {
 				bomX=XA;
@@ -266,63 +271,35 @@ int navigate(){
 		if (bomb==1) {
 			bom.BomXY(bomX/16, bomY/16);
 			q++;
-		}
-		harts.HartS(levensA, 16, 2);
-		harts.HartS(levensB, 16, 14);
-		if (levensA == 0) {
-			loseScreen();
-			return;
-		}
-		if (levensB == 0) {
-			winScreen();
-			return;
+			Serial.println("q++");
 		}
 		
-		if(q==bomcounter) {	
+		if(q==bomcounter) {
+				
 			bomMidden = 1;
-			
-			bom.BomExpl(bomX, bomY);
-			if(!(a[bomY/16][bomX/16-1] == 2)) {		//links van de bom
-				bom.BomExpl(bomX-16, bomY);
-				bomLinks = 1;
-				
-				if (a[bomY/16][bomX/16-1] == 3) {	//verwijderd krat
-					a[bomY/16][bomX/16-1] = 1;
-				}				
-			}
-			if(!(a[bomY/16][bomX/16+1] == 2)) {		//rechts van de bom
-				bom.BomExpl(bomX+16, bomY);
-				bomRechts = 1;
-				
-				if (a[bomY/16][bomX/16+1] == 3) {	//verwijderd krat
-					a[bomY/16][bomX/16+1] = 1;
-				}
-			}
-			if(!(a[bomY/16-1][bomX/16] == 2)) {		//boven van de bom
-				bom.BomExpl(bomX, bomY-16);
-				bomBoven = 1;
-				
-				if (a[bomY/16-1][bomX/16] == 3) {	//verwijderd krat
-					a[bomY/16-1][bomX/16] = 1;
-				}
-				
-			}
-			if(!(a[bomY/16+1][bomX/16] == 2)) {		//onder van de bom
-				bom.BomExpl(bomX, bomY+16);
-				bomOnder = 1;
-				
-				if (a[bomY/16+1][bomX/16] == 3) {	//verwijderd krat
-					a[bomY/16+1][bomX/16] = 1;
-				}
-			}
+			bom.BomTrack(bomX, bomY);
 			q=0;
 			bomb = 2;
+			Serial.println("q = bomcounter");
 			
 		}
 		
+		if (bomb == 2) {
+			counterBomDelete++;
+			Serial.println(counterBomDelete);
+			if (counterBomDelete == bomDelete) {
+				Serial.println("BomDelete");
+				bom.BomDelete(bomX, bomY);
+				bomb = 0;
+				counterBomDelete = 0;
+			}
+		}
+		
+
+		/*
 		if (bomMidden == 1){		//verwijdert explosie midden
 			cBomMidden++;
-			if (cBomMidden == (bomcounter2+2)){
+			if (cBomMidden == (bomcounterDelete+2)){
 				lcd.fillRect(bomX, bomY, 16, 16, WHITE);
 				cBomMidden = 0;
 				bomMidden = 0;
@@ -338,7 +315,7 @@ int navigate(){
 		}
 		if (bomLinks == 1){			//verwijdert explosie links
 			cBomLinks++;
-			if (cBomLinks == bomcounter2){
+			if (cBomLinks == bomcounterDelete){
 				lcd.fillRect(bomX-16, bomY, 16, 16, WHITE);
 				cBomLinks = 0;
 				bomLinks = 0;
@@ -354,7 +331,7 @@ int navigate(){
 		}
 		if (bomRechts == 1){		//verwijdert explosie rechts
 			cBomRechts++;
-			if (cBomRechts == bomcounter2){
+			if (cBomRechts == bomcounterDelete){
 				lcd.fillRect(bomX+16, bomY, 16, 16, WHITE);
 				cBomRechts = 0;
 				bomRechts = 0;
@@ -370,7 +347,7 @@ int navigate(){
 		
 		if (bomOnder == 1){			//verwijdert explosie onder
 			cBomOnder++;
-			if (cBomOnder == bomcounter2){
+			if (cBomOnder == bomcounterDelete){
 				lcd.fillRect(bomX, bomY+16, 16, 16, WHITE);
 				cBomOnder = 0;
 				bomOnder = 0;
@@ -386,7 +363,7 @@ int navigate(){
 		
 		if (bomBoven == 1){			//verwijdert explosie boven
 			cBomBoven++;
-			if (cBomBoven == bomcounter2){
+			if (cBomBoven == bomcounterDelete){
 				lcd.fillRect(bomX, bomY-16, 16, 16, WHITE);
 				cBomBoven = 0;
 				bomBoven = 0;
@@ -398,7 +375,7 @@ int navigate(){
 					levensB--;
 				}
 			}
-		}
+		} */
 		
 		//omlaag lopen
 		if(nunchuk.analogY < 60) {
@@ -539,8 +516,8 @@ int main(void)
 	{
 		
 		level = Startscherm();
-		Serial.print("main: level ");
-		Serial.println(level);
+		//Serial.print("main: level ");
+		//Serial.println(level);
 		
 		if (level == 1)	{
 			level1();
