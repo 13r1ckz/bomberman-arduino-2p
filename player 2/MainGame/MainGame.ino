@@ -56,6 +56,13 @@ int navigateStart() { //navigates through start
 	int counter = 5;
 	int i = 0;
 	char msg;
+	uint8_t seed;
+	
+	Serial.print("random int  ");
+	Serial.println(seed);
+	randomSeed(seed);
+	Serial.println(random());
+	Serial.println(random());
 	
 	while(1) {
 		single_sample();
