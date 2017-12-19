@@ -162,12 +162,27 @@ int Startscherm(){
 int loseScreen(){
 	lcd.fillScreen(BLACK);
 	lcd.drawText(38, 50, "You lose", RGB(255,0,0), BLACK, 4);
-	return;
+	Serial.println("lose screen");
+	while(1) {
+		Serial.println("while");
+		nunchuk.update();
+		Serial.println(nunchuk.zButton);	
+		if (nunchuk.zButton) {
+			//Serial.println("zButton");
+			main();
+			return;
+		}
+		
+	}
 }
 
 int winScreen(){
 	lcd.fillScreen(BLACK);
 	lcd.drawText(50, 50, "You win", RGB(0,255,0), BLACK, 4);
+	nunchuk.update();
+	if (nunchuk.zButton) {
+		main();	
+	}
 	return;
 }
 
@@ -182,11 +197,12 @@ int navigate(){
 	int bomDelete = 50;
 	int counterBomDelete = 0;
 	int XA, XB, YA, YB;
+	//nunchukX = 1;
+	//nunchukY = 1;
 	
 	while(1) {
 		single_sample();
 		nunchuk.update();
-		//
 		XA = gridFH.GridF(nunchukX);	// hier move character A
 		YA = gridFH.GridF(nunchukY);
 		XB = gridFH.GridF(13);			// hier move character B
@@ -194,7 +210,7 @@ int navigate(){
 		Characters.MoveB(XB/16, YB/16);
 		int gridX = 0;
 		int gridY = 0;
-		
+		nav.navigate();
 		if (chat.available()) {
 			Serial.write(chat.read());
 		}
@@ -245,20 +261,17 @@ int navigate(){
 				counterBomDelete = 0;
 			}
 		}
-		nav.navigate();
+		
 	}
 }
 
 int level1() {
-	
 	lcd.fillScreen(WHITE);
-
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
 	OB.ObstacleDR(1);
 	navigate();
 	while(1){}
-	
 }
 
 int level2() {
@@ -271,11 +284,11 @@ int level2() {
 }
 
 int levelRandom() {
-lcd.fillScreen(WHITE);
-wallOut.OuterWallP();
-wallIn.InnerWallP();
-navigate();
-while(1){}
+	lcd.fillScreen(WHITE);
+	wallOut.OuterWallP();
+	wallIn.InnerWallP();
+	navigate();
+	while(1){}
 }
 
 int highScore() {
