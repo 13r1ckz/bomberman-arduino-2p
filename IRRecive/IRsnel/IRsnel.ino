@@ -5,9 +5,9 @@
 int tellerZender;
 //ontvanger
 uint8_t ontvangenbericht= 0x00;
-uint16_t tellerontvanger = 0;
-uint16_t tempteller = 0;
-uint8_t startbit = 0;
+int tellerontvanger = 0;
+int tempteller = 0;
+int startbit = 0;
 signed char bitteller = 7;
 char letter;
 int ontvangeraantal=0;
@@ -37,7 +37,7 @@ ISR(INT0_vect){
 	//Serial.println(verschil);
 	
 	if(startbit == 0){
-		if(verschil >= 4){
+		if(verschil >= 40){
 			startbit = 1;
 			//Serial.println("Startbit");
 			ontvangeraantal++;
@@ -46,19 +46,19 @@ ISR(INT0_vect){
 	
 	{
 		
-		if(verschil >= 4){
+		if(verschil >= 40){
 			startbit = 0;
 			//Serial.println("Stopbit");
 			tellerontvanger = 0;
 			tempteller = 0;
 			ontvangeraantal++;
-			} else if(verschil >= 3 && verschil <4){
+			} else if(verschil >= 30 && verschil <40){
 			//Serial.print("1");
 			ontvangenbericht |=(1<<bitteller);
 			bitteller--;
 			ontvangeraantal++;
 			
-			} else if(verschil >= 2 && verschil <3){
+			} else if(verschil >= 20 && verschil <30){
 			//Serial.print("0");
 			ontvangenbericht &=~(1<<bitteller);
 			bitteller--;
@@ -115,7 +115,7 @@ void sendByte(uint8_t command){
 void sendStartBit(){
 	sendPulse();
 	tellerZender = 0;
-	while(!(tellerZender == 3)){
+	while(!(tellerZender == 30)){
 		Serial.print("");
 	}
 }
@@ -130,11 +130,11 @@ void sendBit(char b){
 	sendPulse();
 	tellerZender = 0;
 	if(b == 1){
-		while(!(tellerZender ==2)){
+		while(!(tellerZender ==20)){
 			Serial.print("");
 		}
 		} else {
-		while(!(tellerZender == 1)){
+		while(!(tellerZender == 10)){
 			Serial.print("");
 		}
 	}
@@ -143,7 +143,7 @@ void sendBit(char b){
 void sendPulse(){
 	tellerZender = 0;
 	TCCR2A |= (1 << COM2B1);
-	while(!(tellerZender == 1)){
+	while(!(tellerZender == 10)){
 		Serial.print("");
 	}
 	TCCR2A &= ~(1 << COM2B1);
