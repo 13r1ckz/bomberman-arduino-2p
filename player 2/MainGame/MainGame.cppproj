@@ -431,10 +431,6 @@ builder.noino=false
 build.architecture=avr
 vmresolved.compiler.path=C:\Program Files (x86)\Arduino\hardware\tools\avr\bin\
 vmresolved.tools.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
-build.path=C:\Users\gerjo\AppData\Local\Temp\VMBuilds\MainGame\uno\Debug
-build.project_name=MainGame.ino
-build.project_path=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\player 2\MainGame
-ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\player 2\MainGame\
 </arduino.board.property_bag>
         <arduino.build.mcu>atmega328p</arduino.build.mcu>
         <arduino.build.f_cpu>16000000L</arduino.build.f_cpu>
@@ -838,10 +834,6 @@ builder.noino=false
 build.architecture=avr
 vmresolved.compiler.path=C:\Program Files (x86)\Arduino\hardware\tools\avr\bin\
 vmresolved.tools.path=C:\Program Files (x86)\Arduino\hardware\tools\avr
-build.path=C:\Users\gerjo\AppData\Local\Temp\VMBuilds\MainGame\uno\Debug
-build.project_name=MainGame.ino
-build.project_path=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\player 2\MainGame
-ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\player 2\MainGame\
 </arduino.board.property_bag>
         <arduino.build.mcu>atmega328p</arduino.build.mcu>
         <arduino.build.f_cpu>16000000L</arduino.build.f_cpu>

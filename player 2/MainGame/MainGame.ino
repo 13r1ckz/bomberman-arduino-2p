@@ -56,13 +56,6 @@ int navigateStart() { //navigates through start
 	int counter = 5;
 	int i = 0;
 	char msg;
-	uint8_t seed;
-	
-	Serial.print("random int  ");
-	Serial.println(seed);
-	randomSeed(seed);
-	Serial.println(random());
-	Serial.println(random());
 	
 	while(1) {
 		single_sample();
@@ -456,6 +449,12 @@ int level2() {
 }
 
 int levelRandom() {
+	lcd.fillScreen(RGB(255,255,255));
+	wallOut.OuterWallP();
+	wallIn.InnerWallP();
+	OB.ObstacleDR(3);
+	navigate();
+	while(1){}
 	//lcd.fillScreen(RGB(0,0,255));
 	//OuterWall.OuterWallP();
 	//();
