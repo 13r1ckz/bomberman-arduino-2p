@@ -19,6 +19,8 @@
 #define ARDUINO_AVR_UNO
 #define ARDUINO_ARCH_AVR
 int main(void);
+void sendByte(uint8_t command);
+void sendBit(char b);
 
 #include "pins_arduino.h" 
 #include "Arduino.h"
