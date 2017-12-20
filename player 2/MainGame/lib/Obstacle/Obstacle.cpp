@@ -216,7 +216,7 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 			Serial.print("send: ");
 			Serial.print("Seed: ");
 			Serial.println(seed);
-			chat.print(seed);
+			chat.println(seed);
 		}
 		for(uint8_t QX = 0; QX < 123; QX++){
 			x = random(1,14);
