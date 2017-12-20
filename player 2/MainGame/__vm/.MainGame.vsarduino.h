@@ -27,7 +27,7 @@ int winScreen();
 int navigate();
 int level1();
 int level2();
-int levelRandom();
+int levelRandom(uint8_t SL);
 int highScore();
 int main(void);
 
