@@ -22,12 +22,13 @@ void init_adc_single_sample();
 void single_sample();
 int navigateStart();
 int Startscherm();
+int resetGrid();
 int loseScreen();
 int winScreen();
 int navigate();
 int level1();
 int level2();
-int levelRandom();
+int levelRandom(uint8_t SL);
 int highScore();
 int main(void);
 

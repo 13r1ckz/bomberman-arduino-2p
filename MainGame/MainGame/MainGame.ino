@@ -58,17 +58,18 @@ int navigateStart() { //navigates through start
 	int i = 0;
 	char msg;
 	
-	while(1) {
-		single_sample();
-		nunchuk.update();
-		Serial.println(nunchukY);
+	nunchuk.update();
+	
+	while(nunchuk.zButton == 0) {
 		
+		nunchuk.update();
+		single_sample();
 		
 		if(nunchuk.analogY < 60) {
 			if(i>counter) {
 				i=0;
 			}
-			if(i == 0) {
+			if(i == 0 && nunchukY < 4) {
 				nunchukY++;
 				i++;
 			}
@@ -79,7 +80,7 @@ int navigateStart() { //navigates through start
 			if(i>counter) {
 				i=0;
 			}
-			if(i == 0) {
+			if(i == 0 && nunchukY > 1) {
 				nunchukY--;
 				i++;
 			}
@@ -89,90 +90,71 @@ int navigateStart() { //navigates through start
 		if (chat.available()){
 			msg = chat.read();
 			msg = msg - 48;
-			if(msg == 1 || msg == 2 || msg == 3 ){
+			if(msg >= 1 || msg <= 5){
 				return msg;
 			}
 		}
 		else{
 			if(nunchukY == 1){
 				nav.navigatestart(1);
-				if (nunchuk.zButton) {
-					chat.println(1,DEC);
-					return 1;
-				}
+
 			}
 			if(nunchukY == 2){
 				nav.navigatestart(2); //tekent rode rand om geselecteerde level
-				if (nunchuk.zButton) {
-					chat.println(2,DEC);
-					return 2;
-				}
+
 			}
 			if(nunchukY == 3){
 				nav.navigatestart(3);
-				
-				if (nunchuk.zButton) {
-					chat.println(3,DEC);
-					return 3;
-				}
+		
 			}
 			if(nunchukY == 4){
 				nav.navigatestart(4);
 				
-				if (nunchuk.zButton) {
-					return 4;
-				}
-			}
-			if(nunchukY == 5){
-				nunchukY = 1;
-			}
-			if(nunchukY == 0){
-				nunchukY = 4;
 			}
 		}
 	}
+	chat.println(nunchukY,DEC);
+	return nunchukY;
 }
 
 int Startscherm(){
-	int level = 0;
-	lcd.fillScreen(BLACK);
+	//int level;
+	lcd.fillScreen(RGB(0,0,0));
 	
-	lcd.fillRect(60, 15, 200, 50, WHITE);		//print knop Level 1
-	lcd.drawText(82, 30, "Level 1", 0x111111, WHITE, 3.5);
+	lcd.fillRect(60,15,200,50,0xFFFFFF);		//print knop Level 1
+	lcd.drawText(82,30, "Level 1", 0x111111, 0xFFFFFF, 3.5);
 	
-	lcd.fillRect(60, 70, 200, 50, WHITE);		//print knop Level 2
-	lcd.drawText(82, 85, "Level 2", 0x111111, WHITE, 3.5);
+	lcd.fillRect(60,70,200,50,0xFFFFFF);		//print knop Level 2
+	lcd.drawText(82,85, "Level 2", 0x111111, 0xFFFFFF, 3.5);
 	
-	lcd.fillRect(60, 125, 200, 50, WHITE);		//print knop Random
-	lcd.drawText(89, 140, "Random", 0x111111, WHITE, 3.5);
+	lcd.fillRect(60,125,200,50,0xFFFFFF);		//print knop Random
+	lcd.drawText(89,140, "Random", 0x111111, 0xFFFFFF, 3.5);
 	
-	lcd.fillRect(60, 180, 200, 50, WHITE);		//print knop High score
-	lcd.drawText(82, 195, "High score", 0x111111, WHITE, 2);
-		
-	lcd.fillRect(0, 0, 32, 16, WHITE);
-	Characters.MoveA(0, 0);
-	lcd.fillRect(288, 0, 32, 16, WHITE);
-	Characters.MoveB(19, 0);
-	bom.BomXY(1, 0);
-	bom.BomXY(18, 0);
-	level = navigateStart();
+	lcd.fillRect(60,180,200,50,0xFFFFFF);		//print knop High score
+	lcd.drawText(82,195, "High score", 0x111111, 0xFFFFFF, 2);
 	
-	Serial.print("level :");
-	Serial.println(level);
-	
-	if (level == 1)	{
-		level1();
+	lcd.fillRect(0,0,32,16,RGB(255,255,255));
+	Characters.MoveA(0,0);
+	lcd.fillRect(288,0,32,16,RGB(255,255,255));
+	Characters.MoveB(19,0);
+	bom.BomXY(1,0);
+	bom.BomXY(18,0);
+	//level = navigateStart();
+	//Serial.println(level);
+	//return level;
+	return;
+}
+
+int resetGrid(){
+	for (int i = 1; i < 14; i++) {		//leegt veld
+		for (int j = 1; j < 14; j++) {
+			a[i][j] = 1;
+		}
 	}
-	if (level == 2)	{
-		level2();
-	}
-	if (level == 3)	{
-		levelRandom();
-	}
-	if (level == 4)	{
-		highScore();
-		} else {
-		Serial.println("FAIL");
+	for (int i = 2; i < 13; i+=2) {		//zet binnenmuren
+		for (int j = 2; j < 13; j+=2) {
+			a[i][j] = 2;
+		}
 	}
 }
 
@@ -180,49 +162,25 @@ int loseScreen(){
 	lcd.fillScreen(BLACK);
 	lcd.drawText(38, 50, "You lose", RGB(255,0,0), BLACK, 4);
 	Serial.println("lose screen");
-	for (int i = 1; i < 14; i++) {		//leegt veld
-		for (int j = 1; j < 14; j++) {
-			a[i][j] = 1;
-		}
-	}
-	for (int i = 2; i < 13; i+=2) {		//zet binnenmuren
-		for (int j = 2; j < 13; j+=2) {
-			a[i][j] = 2;
-		}
-	}
-	while(1) {
-		Serial.println("while");
+	
+	nunchuk.update();
+	
+	while(!nunchuk.zButton) {
 		nunchuk.update();
-		Serial.println(nunchuk.zButton);	
-		if (nunchuk.zButton) {
-			Startscherm();
-		}
+		Serial.println("");	
 	}
+	return;
 }
 
 int winScreen(){
 	lcd.fillScreen(BLACK);
 	lcd.drawText(50, 50, "You win", RGB(0,255,0), BLACK, 4);
-	for (int i = 1; i < 14; i++) {		//leegt veld
-		for (int j = 1; j < 14; j++) {
-			a[i][j] = 1;
-		}
-	}
-	for (int i = 2; i < 13; i+=2) {		//zet binnenmuren
-		for (int j = 2; j < 13; j+=2) {
-			a[i][j] = 2;
-		}
-	}
-	
-	while(1) {
-		Serial.println("while");
+
+	while(!nunchuk.zButton) {
 		nunchuk.update();
-		Serial.println(nunchuk.zButton);
-		if (nunchuk.zButton) {
-			Startscherm();
-		}
+		Serial.println("");
 	}
-	
+	return;
 }
 
 int navigate(){
@@ -257,12 +215,10 @@ int navigate(){
 		harts.HartS(levensA, 16, 2);
 		harts.HartS(levensB, 16, 14);
 		if (levensA == 0) {
-			loseScreen();
-			return;
+			return 1;
 		}
 		if (levensB == 0) {
-			winScreen();
-			return;
+			return 2;
 		}
 
 		if (bomb==0){				//als er geen bom ligt
@@ -304,29 +260,44 @@ int navigate(){
 }
 
 int level1() {
+	int life;
 	lcd.fillScreen(WHITE);
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
-	OB.ObstacleDR(1);
-	navigate();
-	while(1){}
+	OB.ObstacleDR(1, 0);
+	life = navigate();
+	resetGrid();
+	if(life == 2) {
+		winScreen();
+		
+	}
+	if(life == 1) {
+		loseScreen();
+	}
+	return;
 }
 
 int level2() {
 	lcd.fillScreen(WHITE);
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
-	OB.ObstacleDR(2);
+	OB.ObstacleDR(2, 0);
 	navigate();
-	while(1){}
+	return;
 }
 
-int levelRandom() {
+int levelRandom(uint8_t SL) {
 	lcd.fillScreen(WHITE);
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
+	if (SL == 1)
+	{
+		OB.ObstacleDR(3,1);
+	} else {
+		OB.ObstacleDR(3,0);
+	}
 	navigate();
-	while(1){}
+	return;
 }
 
 int highScore() {
@@ -337,9 +308,11 @@ int highScore() {
 
 int main(void)
 {
+	int level;
 	initrw.init();
 	Serial.begin(9600);
 	chat.begin(9600);
+	//	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	uint8_t clear_bg=0x00; //0x80 = dont clear background for fonts (only for DisplayXXX)
 
 	//init display
@@ -347,9 +320,37 @@ int main(void)
 	nunchuk.init();
 	init_adc_single_sample();
 	
-	Serial.println("main");
 	while (1)
 	{
 		Startscherm();
+		level = navigateStart();
+		if (level == 1)	{
+			level1();
+		}
+		if (level == 2)	{
+			level2();
+			int life;
+			lcd.fillScreen(WHITE);
+			wallOut.OuterWallP();
+			wallIn.InnerWallP();
+			OB.ObstacleDR(2, 0);
+			life = navigate();
+			if(life == 2) {
+				winScreen();
+				
+			}
+			if(life == 1) {
+				loseScreen();
+			}
+		}
+		if (level == 3)	{
+			levelRandom(0);
+		}
+		if (level == 4)	{
+			highScore();
+		}
+		if (level == 5)	{
+			levelRandom(1);
+		}
 	}
 }
