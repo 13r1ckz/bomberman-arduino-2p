@@ -12,7 +12,7 @@ Obstacle::woodBox(int X, int Y){
 	
 }
 
-Obstacle::ObstacleDR(int level)
+Obstacle::ObstacleDR(int level, uint8_t SR)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	GridClass gridFH;
@@ -196,13 +196,23 @@ Obstacle::ObstacleDR(int level)
 			woodBox(8,13);
 	}
 	else if (level == 3){
-		uint8_t seed = random();
+		uint8_t seed;
 		uint8_t x;
 		uint8_t y;
+		if(SR == 1){
+			if(chat.available()){
+			seed = chat.read();	
+			randomSeed(seed);
+			Serial.print("Seed: ");
+			Serial.println(seed);
+			}
+		}else{
+		seed = random(TCNT0);
 		randomSeed(seed);
 		Serial.print("Seed: ");
 		Serial.println(seed);
 		chat.write(seed);
+		}
 		for(uint8_t QX = 0; QX < 123; QX++){
 			x = random(1,14);
 			y = random(1,14);
@@ -211,7 +221,7 @@ Obstacle::ObstacleDR(int level)
 				QX--;	
 			}
 			else if((x & 0x01) == 0 && (y & 0x01) == 0){
-				
+				QX--;
 			}
 			else{
 			//Serial.println(x);
@@ -227,20 +237,3 @@ Obstacle::ObstacleDR(int level)
 	}
 } //Obstacle
 
-Obstacle::OBcheck(int L, int X, int Y){
-	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
-	GridClass gridFH;
-	if(L == 1){
-		
-	}
-	else if(L == 2){
-		
-	}
-	else if (L == 3)
-	{
-		
-	}
-	else{
-		lcd.drawText(20,20,"OW help some thing whent wrong pleas try again", RGB(255,0,0), RGB(255,255,255),5);
-	}
-}

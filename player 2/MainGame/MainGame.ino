@@ -85,7 +85,7 @@ int navigateStart() { //navigates through start
 		if (chat.available()){
 			msg = chat.read();
 			msg = msg - 48;
-			if(msg == 1 || msg == 2 || msg == 3 ){
+			if(msg >= 1 || msg <= 5 ){
 			return msg;
 			}
 		}
@@ -110,7 +110,7 @@ int navigateStart() { //navigates through start
 			nav.navigatestart(3);
 			
 			if (nunchuk.zButton) {
-				chat.println(3,DEC);
+				chat.println(5,DEC);
 				return 3;
 			}
 		}
@@ -424,7 +424,7 @@ int level1() {
 
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
-	OB.ObstacleDR(1);
+	OB.ObstacleDR(1, 0);
 	navigate();
 	while(1){}
 	//woodBox(Grid(2),Grid(1));
@@ -438,7 +438,7 @@ int level2() {
 	lcd.fillScreen(RGB(255,255,255));
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
-	OB.ObstacleDR(2);
+	OB.ObstacleDR(2, 0);
 	navigate();
 	while(1){}
 	//lcd.fillScreen(RGB(0,255,0));
@@ -448,11 +448,16 @@ int level2() {
 	//return;
 }
 
-int levelRandom() {
+int levelRandom(uint8_t SL) {
 	lcd.fillScreen(RGB(255,255,255));
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
-	OB.ObstacleDR(3);
+	if(SL == 1){
+		OB.ObstacleDR(3,1);
+	}
+	else{
+		OB.ObstacleDR(3,0);
+	}
 	navigate();
 	while(1){}
 	//lcd.fillScreen(RGB(0,0,255));
@@ -493,10 +498,13 @@ int main(void)
 			level2();
 		}
 		if (level == 3)	{
-			levelRandom();
+			levelRandom(0);
 		}
 		if (level == 4)	{
 			highScore();
+		}
+		if (level == 5)	{
+			levelRandom(1);
 		}
 	}
 }
