@@ -30,7 +30,7 @@ private:
 public:
 	void setIR(); //zetten van timers en interrupts
 	
-	void sendByte(uint8_t command);
+	void sendByte(uint8_t command);//byte versturen
 	
 	//functies voor tellen
 	void setTellerOntvanger(uint16_t teller);
@@ -38,9 +38,10 @@ public:
 	void setTellerVerzender(uint16_t teller);
 	uint16_t getTellerVerzender();
 	
+	void sendBit(char b);
 protected:
 private:
-	void sendBit(char b);
+	
 	void sendPulse();
 	void sendStartBit();
 	void sendStopBit();

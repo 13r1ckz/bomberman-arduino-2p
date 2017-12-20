@@ -13,11 +13,12 @@ void IRcom::setIR(){
 	setTimer();
 } 
 
-void IRcom::sendByte(uint8_t command){
+void IRcom::sendByte(uint8_t command){	
 	uint8_t temporaryCommand = command;
+	
 	sendStartBit();
-	char i;
-		
+
+	char i;	
 	for(i = 0; i < 8; i++){
 		if(temporaryCommand & (1<<7)){
 			sendBit(1);
@@ -57,7 +58,7 @@ void IRcom::sendBit(char b){
 	sendPulse();
 	setTellerVerzender(0);
 	if(b == 1){
-		while(!(getTellerVerzender() ==20)){
+		while(!(getTellerVerzender() == 20)){
 			Serial.print("");
 		}
 	} else {

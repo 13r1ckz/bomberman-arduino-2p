@@ -1,4 +1,4 @@
-#include <Arduino.h>
+#include <avr/io.h>
 #include <avr/interrupt.h>
 #include "lib/IRcom/IRcom.h"
 
@@ -21,17 +21,17 @@ ISR(INT0_vect){
 			ir.startbit = 1;
 			ir.ontvangeraantal++;
 		}
-		} else if (ir.startbit == 1){
+	} else if (ir.startbit == 1){
 		if(ir.verschil >= 40){
 			ir.startbit = 0;
 			ir.setTellerOntvanger(0);
 			ir.tempteller = 0;
 			ir.ontvangeraantal++;
-			} else if(ir.verschil >= 30 && ir.verschil <40){
+		} else if(ir.verschil >= 30 && ir.verschil <40){
 			ir.ontvangenbericht |=(1<<ir.bitteller);
 			ir.bitteller--;
 			ir.ontvangeraantal++;
-			} else if(ir.verschil >= 20 && ir.verschil <30){
+		} else if(ir.verschil >= 20 && ir.verschil <30){
 			ir.ontvangenbericht &=~(1<<ir.bitteller);
 			ir.bitteller--;
 			ir.ontvangeraantal++;
@@ -54,6 +54,7 @@ ISR(INT0_vect){
 
 int main(void){
 	Serial.begin(9600);
+	sei();
 	
 	ir.setIR();
 	
