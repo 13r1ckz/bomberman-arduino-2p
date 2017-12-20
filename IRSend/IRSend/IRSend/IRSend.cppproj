@@ -135,7 +135,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM7</arduino.upload.port>
+        <arduino.upload.port>COM9</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -233,7 +233,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM7</arduino.upload.port>
+        <arduino.upload.port>COM9</arduino.upload.port>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -241,11 +241,19 @@
     <Compile Include="IRSend.ino">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="lib\IRcom\IRcom.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\IRcom\IRcom.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="__vm\.IRSend.vsarduino.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="lib" />
+    <Folder Include="lib\IRcom" />
     <Folder Include="__vm\" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />

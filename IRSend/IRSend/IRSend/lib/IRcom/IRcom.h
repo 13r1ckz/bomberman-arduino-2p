@@ -38,10 +38,10 @@ public:
 	void setTellerVerzender(uint16_t teller);
 	uint16_t getTellerVerzender();
 	
-	void sendBit(char b);
+	
 protected:
 private:
-	
+	void sendBit(char b);
 	void sendPulse();
 	void sendStartBit();
 	void sendStopBit();
