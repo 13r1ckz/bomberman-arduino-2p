@@ -53,31 +53,34 @@ void single_sample()	//brightness
 }
 
 int navigateStart() { //navigates through start
-	int nunchukYStart = 1;
-	int time = 5;
+	int nunchukY = 1;
+	int counter = 5;
 	int i = 0;
 	char msg;
 	
 	while(1) {
 		single_sample();
 		nunchuk.update();
+		Serial.println(nunchukY);
+		
+		
 		if(nunchuk.analogY < 60) {
-			if(i>time) {
+			if(i>counter) {
 				i=0;
 			}
 			if(i == 0) {
-				nunchukYStart++;
+				nunchukY++;
 				i++;
 			}
 			i++;
 		}
 		
 		if(nunchuk.analogY > 200) {
-			if(i>time) {
+			if(i>counter) {
 				i=0;
 			}
 			if(i == 0) {
-				nunchukYStart--;
+				nunchukY--;
 				i++;
 			}
 			i++;
@@ -91,23 +94,21 @@ int navigateStart() { //navigates through start
 			}
 		}
 		else{
-			if(nunchukYStart == 1){
+			if(nunchukY == 1){
 				nav.navigatestart(1);
 				if (nunchuk.zButton) {
 					chat.println(1,DEC);
 					return 1;
 				}
 			}
-			
-			//tekent rode rand om geselecteerde level
-			if(nunchukYStart == 2){
-				nav.navigatestart(2);
+			if(nunchukY == 2){
+				nav.navigatestart(2); //tekent rode rand om geselecteerde level
 				if (nunchuk.zButton) {
 					chat.println(2,DEC);
 					return 2;
 				}
 			}
-			if(nunchukYStart == 3){
+			if(nunchukY == 3){
 				nav.navigatestart(3);
 				
 				if (nunchuk.zButton) {
@@ -115,26 +116,25 @@ int navigateStart() { //navigates through start
 					return 3;
 				}
 			}
-			if(nunchukYStart == 4){
+			if(nunchukY == 4){
 				nav.navigatestart(4);
 				
 				if (nunchuk.zButton) {
 					return 4;
 				}
 			}
-			if(nunchukYStart == 5){
-				nunchukYStart = 1;
+			if(nunchukY == 5){
+				nunchukY = 1;
 			}
-			if(nunchukYStart == 0){
-				nunchukYStart = 4;
+			if(nunchukY == 0){
+				nunchukY = 4;
 			}
 		}
 	}
-	return msg;
 }
 
 int Startscherm(){
-	int level;
+	int level = 0;
 	lcd.fillScreen(BLACK);
 	
 	lcd.fillRect(60, 15, 200, 50, WHITE);		//print knop Level 1
@@ -156,38 +156,77 @@ int Startscherm(){
 	bom.BomXY(1, 0);
 	bom.BomXY(18, 0);
 	level = navigateStart();
-	return level;
+	
+	Serial.print("level :");
+	Serial.println(level);
+	
+	if (level == 1)	{
+		level1();
+	}
+	if (level == 2)	{
+		level2();
+	}
+	if (level == 3)	{
+		levelRandom();
+	}
+	if (level == 4)	{
+		highScore();
+		} else {
+		Serial.println("FAIL");
+	}
 }
 
 int loseScreen(){
 	lcd.fillScreen(BLACK);
 	lcd.drawText(38, 50, "You lose", RGB(255,0,0), BLACK, 4);
 	Serial.println("lose screen");
+	for (int i = 1; i < 14; i++) {		//leegt veld
+		for (int j = 1; j < 14; j++) {
+			a[i][j] = 1;
+		}
+	}
+	for (int i = 2; i < 13; i+=2) {		//zet binnenmuren
+		for (int j = 2; j < 13; j+=2) {
+			a[i][j] = 2;
+		}
+	}
 	while(1) {
 		Serial.println("while");
 		nunchuk.update();
 		Serial.println(nunchuk.zButton);	
 		if (nunchuk.zButton) {
-			//Serial.println("zButton");
-			main();
-			return;
+			Startscherm();
 		}
-		
 	}
 }
 
 int winScreen(){
 	lcd.fillScreen(BLACK);
 	lcd.drawText(50, 50, "You win", RGB(0,255,0), BLACK, 4);
-	nunchuk.update();
-	if (nunchuk.zButton) {
-		main();	
+	for (int i = 1; i < 14; i++) {		//leegt veld
+		for (int j = 1; j < 14; j++) {
+			a[i][j] = 1;
+		}
 	}
-	return;
+	for (int i = 2; i < 13; i+=2) {		//zet binnenmuren
+		for (int j = 2; j < 13; j+=2) {
+			a[i][j] = 2;
+		}
+	}
+	
+	while(1) {
+		Serial.println("while");
+		nunchuk.update();
+		Serial.println(nunchuk.zButton);
+		if (nunchuk.zButton) {
+			Startscherm();
+		}
+	}
+	
 }
 
 int navigate(){
-	uint8_t levensA = 3;
+	uint8_t levensA = 1;
 	uint8_t levensB = 3;
 	int counterBomExplosion = 0;
 	int gridX, gridY;
@@ -197,9 +236,9 @@ int navigate(){
 	int bomDelete = 50;
 	int counterBomDelete = 0;
 	int XA, XB, YA, YB;
-	//nunchukX = 1;
-	//nunchukY = 1;
-	
+	nunchukX = 1;
+	nunchukY = 1;
+	Serial.println("navigate");
 	while(1) {
 		single_sample();
 		nunchuk.update();
@@ -251,7 +290,7 @@ int navigate(){
 			counterBomDelete++;
 			if (counterBomDelete == bomDelete) {
 				if ((((XA == bomX) || (XA == bomX-16) || (XA == bomX+16)) && (YA == bomY)) || ((XA == bomX) && ((YA == bomY) || (YA == bomY-16) || (YA == bomY+16))))	{ //character A midden in bom
-				levensA--;
+					levensA--;
 				}
 				if ((((XB == bomX) || (XB == bomX-16) || (XB == bomX+16)) && (YB == bomY)) || ((XB == bomX) && ((YB == bomY) || (YB == bomY-16) || (YB == bomY+16))))	{ //character B midden in bom
 					levensB--;
@@ -261,7 +300,6 @@ int navigate(){
 				counterBomDelete = 0;
 			}
 		}
-		
 	}
 }
 
@@ -299,7 +337,6 @@ int highScore() {
 
 int main(void)
 {
-	int level;
 	initrw.init();
 	Serial.begin(9600);
 	chat.begin(9600);
@@ -310,26 +347,9 @@ int main(void)
 	nunchuk.init();
 	init_adc_single_sample();
 	
+	Serial.println("main");
 	while (1)
 	{
-		
-		level = Startscherm();
-		//Serial.print("main: level ");
-		//Serial.println(level);
-		
-		if (level == 1)	{
-			level1();
-		}
-		if (level == 2)	{
-			level2();
-		}
-		if (level == 3)	{
-			levelRandom();
-		}
-		if (level == 4)	{
-			highScore();
-		} else {
-			Serial.println("FAIL");
-		}
+		Startscherm();
 	}
 }
