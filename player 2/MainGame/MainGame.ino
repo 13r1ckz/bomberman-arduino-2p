@@ -81,11 +81,16 @@ int navigateStart() { //navigates through start
 			}
 			i++;
 		}
-		
 		if (chat.available()){
+			Serial.println("chat avalible");
 			msg = chat.read();
 			msg = msg - 48;
+			Serial.print("voor");
+			Serial.println(msg);
 			if(msg >= 1 || msg <= 5 ){
+				Serial.println("na");
+				Serial.println(msg);
+				Serial.println("hey");
 			return msg;
 			}
 		}
