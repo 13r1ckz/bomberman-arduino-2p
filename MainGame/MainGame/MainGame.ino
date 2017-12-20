@@ -14,6 +14,7 @@
 #include "lib/hart/hart.h"
 #include "lib/init/initRW.h"
 #include "lib/Navigate/Navigate.h"
+#include "lib/IRcom/IRcom.h"
 
 #define BLACK 0x00
 #define WHITE 0xFFFFFFFF
@@ -31,6 +32,58 @@ Bom bom;
 hart harts;
 Navigate nav;
 initRW initrw;
+IRcom ir;
+
+ISR(TIMER2_COMPB_vect){
+}
+
+ISR(TIMER1_OVF_vect) {    //macro met interrupt vector
+	ir.setTellerVerzender(ir.getTellerVerzender() + 1);
+	ir.setTellerOntvanger(ir.getTellerOntvanger() + 1);
+}
+
+ISR(INT0_vect){
+	//Serial.println("i");
+	ir.verschil = ir.getTellerOntvanger() - ir.tempteller;
+	
+	if(ir.startbit == 0){
+		if(ir.verschil >= 40){
+			ir.startbit = 1;
+			ir.ontvangeraantal++;
+			//Serial.println("Startbit");
+		}
+		} else if (ir.startbit == 1){
+		if(ir.verschil >= 40){
+			ir.startbit = 0;
+			ir.setTellerOntvanger(0);
+			ir.tempteller = 0;
+			ir.ontvangeraantal++;
+			} else if(ir.verschil >= 30 && ir.verschil <40){
+			Serial.println("1");
+			ir.ontvangenbericht |=(1<<ir.bitteller);
+			ir.bitteller--;
+			ir.ontvangeraantal++;
+			} else if(ir.verschil >= 20 && ir.verschil <30){
+			Serial.println("0");
+			ir.ontvangenbericht &=~(1<<ir.bitteller);
+			ir.bitteller--;
+			ir.ontvangeraantal++;
+		}
+	}
+	
+	if(ir.ontvangeraantal % 10 == 0){
+		if(ir.bitteller == -1){
+			ir.bitteller = 7;
+			ir.letter = ir. ontvangenbericht;
+			Serial.println(ir.letter);
+			ir.ontvangenbericht = 0x00;
+			}else{
+			ir.bitteller =7;
+			ir.ontvangenbericht = 0x00;
+		}
+	}
+	ir.tempteller = ir.getTellerOntvanger();
+}
 
 void init_adc_single_sample()	//init brightness
 {
@@ -87,9 +140,10 @@ int navigateStart() { //navigates through start
 			i++;
 		}
 		
-		if (chat.available()){
-			msg = chat.read();
-			msg = msg - 48;
+		//Serial.println(ir.letter);
+		if (!(ir.letter == 0)){
+			//Serial.println("letter");
+			msg = ir.letter - 48;
 			if(msg >= 1 || msg <= 5){
 				return msg;
 			}
@@ -113,7 +167,8 @@ int navigateStart() { //navigates through start
 			}
 		}
 	}
-	chat.println(nunchukY,DEC);
+	ir.sendByte(nunchukY);
+	_delay_ms(10);
 	return nunchukY;
 }
 
@@ -314,6 +369,8 @@ int main(void)
 	chat.begin(9600);
 	//	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	uint8_t clear_bg=0x00; //0x80 = dont clear background for fonts (only for DisplayXXX)
+
+	ir.setIR();
 
 	//init display
 	lcd.begin();
