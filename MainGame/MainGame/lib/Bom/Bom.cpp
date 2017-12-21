@@ -40,7 +40,7 @@ Bom::BomExpl(int X, int Y)
 				
 }//explosion
 
-Bom::BomTrack(int bomX, int bomY) 
+Bom::BomTrack(int bomX, int bomY, int character) 
 {
 	BomExpl(bomX, bomY);
 	if(!(a[bomY/16][bomX/16-1] == 2)) {		//links van de bom
@@ -48,6 +48,10 @@ Bom::BomTrack(int bomX, int bomY)
 		
 		if (a[bomY/16][bomX/16-1] == 3) {	//verwijderd krat
 			a[bomY/16][bomX/16-1] = 1;
+			
+			if(character == 1) {
+				points +=2;
+			}
 		}
 	}
 	if(!(a[bomY/16][bomX/16+1] == 2)) {		//rechts van de bom
@@ -55,6 +59,10 @@ Bom::BomTrack(int bomX, int bomY)
 		
 		if (a[bomY/16][bomX/16+1] == 3) {	//verwijderd krat
 			a[bomY/16][bomX/16+1] = 1;
+			
+			if(character == 1) {
+				points +=2;
+			}
 		}
 	}
 	if(!(a[bomY/16-1][bomX/16] == 2)) {		//boven van de bom
@@ -62,6 +70,10 @@ Bom::BomTrack(int bomX, int bomY)
 		
 		if (a[bomY/16-1][bomX/16] == 3) {	//verwijderd krat
 			a[bomY/16-1][bomX/16] = 1;
+			
+			if(character == 1) {
+				points +=2;
+			}
 		}
 		
 	}
@@ -70,11 +82,15 @@ Bom::BomTrack(int bomX, int bomY)
 		
 		if (a[bomY/16+1][bomX/16] == 3) {	//verwijderd krat
 			a[bomY/16+1][bomX/16] = 1;
+			
+			if(character == 1) {
+				points +=2;
+			}
 		}
 	}
 }
 
-Bom::BomDelete(int bomX, int bomY) 
+Bom::BomDelete(int bomX, int bomY, int character) 
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	#define WHITE 0xFFFFFFFF
@@ -95,4 +111,61 @@ Bom::BomDelete(int bomX, int bomY)
 	if(!(a[bomY/16+1][bomX/16] == 2)) {		//onder van de bom
 		lcd.fillRect(bomX, bomY+16, 16, 16, WHITE);
 	}
+}
+
+void Bom::PlaceBom(int XA, int YA, int XB, int YB, int character, int bomBinnen, int * counterBomExplosion, int * counterBomDelete)
+{
+	ArduinoNunchuk nunchuk;
+	SoftwareSerial chat(2, 3); // RX, TX
+	
+	int bomExplosion = 75;
+	int bomDelete = 50;
+	
+	if (bomb==0){				//als er geen bom ligt
+		if (nunchuk.zButton) {
+			if (character == 1) {
+				bomX=XA;
+				bomY=YA;
+			} else if (character == 2) {
+				bomX=XB;
+				bomY=YB;
+			}
+			bomb=1;
+			*counterBomExplosion=0;
+			Serial.println(255,BIN);
+			chat.println(255,BIN);
+		}
+	}
+	if (bomb==1 || bomBinnen == 1) {
+		BomXY(bomX/16, bomY/16);
+		*counterBomExplosion+=1;
+		bomBinnen = 0;
+
+	}
+	
+	if(*counterBomExplosion==bomExplosion) {
+		BomTrack(bomX, bomY, character);
+		*counterBomExplosion=0;
+		bomb = 2;
+	}
+	
+	if (bomb == 2) {
+		*counterBomDelete+=1;
+		if (*counterBomDelete == bomDelete) {
+			if ((((XA == bomX) || (XA == bomX-16) || (XA == bomX+16)) && (YA == bomY)) || ((XA == bomX) && ((YA == bomY) || (YA == bomY-16) || (YA == bomY+16))))	{ //character A midden in bom
+				levensA--;
+				points -= 5;
+			}
+			if ((((XB == bomX) || (XB == bomX-16) || (XB == bomX+16)) && (YB == bomY)) || ((XB == bomX) && ((YB == bomY) || (YB == bomY-16) || (YB == bomY+16))))	{ //character B midden in bom
+				levensB--;
+				points += 10;
+			}
+			BomDelete(bomX, bomY, character);
+			bomb = 0;
+			*counterBomDelete = 0;
+		}
+		
+	}
+	
+	
 }

@@ -140,6 +140,15 @@ int navigateStart() { //navigates through start
 			i++;
 		}
 		
+		
+		if (chat.available()){
+			msg = chat.read();
+			msg = msg - 48;
+				if(msg >= 1 || msg <= 5){
+					return msg;
+				}
+			}
+			/*
 		//Serial.println(ir.letter);
 		if (!(ir.letter == 0)){
 			//Serial.println("letter");
@@ -147,7 +156,7 @@ int navigateStart() { //navigates through start
 			if(msg >= 1 || msg <= 5){
 				return msg;
 			}
-		}
+		}*/
 		else{
 			if(nunchukY == 1){
 				nav.navigatestart(1);
@@ -167,8 +176,9 @@ int navigateStart() { //navigates through start
 			}
 		}
 	}
-	ir.sendByte(nunchukY);
-	_delay_ms(10);
+	//ir.sendByte(nunchukY);
+	//_delay_ms(10);
+	chat.println(nunchukY,DEC);
 	return nunchukY;
 }
 
@@ -216,14 +226,13 @@ int resetGrid(){
 int loseScreen(){
 	lcd.fillScreen(BLACK);
 	lcd.drawText(38, 50, "You lose", RGB(255,0,0), BLACK, 4);
-	Serial.println("lose screen");
-	
-	nunchuk.update();
+	//Serial.println("lose screen");
 	
 	while(!nunchuk.zButton) {
 		nunchuk.update();
-		Serial.println("");	
+		Serial.println(nunchuk.zButton);
 	}
+	
 	return;
 }
 
@@ -239,19 +248,18 @@ int winScreen(){
 }
 
 int navigate(){
-	uint8_t levensA = 1;
-	uint8_t levensB = 3;
 	int counterBomExplosion = 0;
 	int gridX, gridY;
-	uint8_t bomb = 0;
+	
 	uint8_t bomX, bomY;
-	int bomExplosion = 75;
-	int bomDelete = 50;
+	
 	int counterBomDelete = 0;
 	int XA, XB, YA, YB;
 	nunchukX = 1;
 	nunchukY = 1;
+	char bomBinnen = 0;
 	Serial.println("navigate");
+	int character = 1;
 	while(1) {
 		single_sample();
 		nunchuk.update();
@@ -260,57 +268,26 @@ int navigate(){
 		XB = gridFH.GridF(13);			// hier move character B
 		YB = gridFH.GridF(13);
 		Characters.MoveB(XB/16, YB/16);
-		int gridX = 0;
-		int gridY = 0;
+		
 		nav.navigate();
 		if (chat.available()) {
 			Serial.write(chat.read());
+			bomBinnen = 1;
+			character = 2;
 		}
 		
 		harts.HartS(levensA, 16, 2);
-		harts.HartS(levensB, 16, 14);
+		harts.HartS(levensB, 16, 13);
+		lcd.drawInteger(255, 112, points, DEC, BLACK, WHITE, 2| 0x00);
 		if (levensA == 0) {
 			return 1;
 		}
 		if (levensB == 0) {
 			return 2;
 		}
-
-		if (bomb==0){				//als er geen bom ligt
-			if (nunchuk.zButton) {
-				bomX=XA;
-				bomY=YA;
-				bomb=1;
-				counterBomExplosion=0;
-				Serial.println(255,BIN);
-				chat.println(255,BIN);
-			}
-		}
-		if (bomb==1) {
-			bom.BomXY(bomX/16, bomY/16);
-			counterBomExplosion++;
-		}
+		bom.PlaceBom(XA, YA, XB, YB, character, bomBinnen, &counterBomExplosion, &counterBomDelete);
+		character = 1;
 		
-		if(counterBomExplosion==bomExplosion) {
-			bom.BomTrack(bomX, bomY);
-			counterBomExplosion=0;
-			bomb = 2;
-		}
-		
-		if (bomb == 2) {
-			counterBomDelete++;
-			if (counterBomDelete == bomDelete) {
-				if ((((XA == bomX) || (XA == bomX-16) || (XA == bomX+16)) && (YA == bomY)) || ((XA == bomX) && ((YA == bomY) || (YA == bomY-16) || (YA == bomY+16))))	{ //character A midden in bom
-					levensA--;
-				}
-				if ((((XB == bomX) || (XB == bomX-16) || (XB == bomX+16)) && (YB == bomY)) || ((XB == bomX) && ((YB == bomY) || (YB == bomY-16) || (YB == bomY+16))))	{ //character B midden in bom
-					levensB--;
-				}
-				bom.BomDelete(bomX, bomY);
-				bomb = 0;
-				counterBomDelete = 0;
-			}
-		}
 	}
 }
 
@@ -324,20 +301,30 @@ int level1() {
 	resetGrid();
 	if(life == 2) {
 		winScreen();
-		
 	}
 	if(life == 1) {
 		loseScreen();
+		nunchuk.update();
 	}
 	return;
 }
 
 int level2() {
+	int life;
 	lcd.fillScreen(WHITE);
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
 	OB.ObstacleDR(2, 0);
-	navigate();
+	life = navigate();
+	resetGrid();
+	if(life == 2) {
+		winScreen();
+		
+	}
+	if(life == 1) {
+		loseScreen();
+		
+	}
 	return;
 }
 
@@ -370,7 +357,7 @@ int main(void)
 	//	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	uint8_t clear_bg=0x00; //0x80 = dont clear background for fonts (only for DisplayXXX)
 
-	ir.setIR();
+	//ir.setIR();
 
 	//init display
 	lcd.begin();
@@ -386,19 +373,6 @@ int main(void)
 		}
 		if (level == 2)	{
 			level2();
-			int life;
-			lcd.fillScreen(WHITE);
-			wallOut.OuterWallP();
-			wallIn.InnerWallP();
-			OB.ObstacleDR(2, 0);
-			life = navigate();
-			if(life == 2) {
-				winScreen();
-				
-			}
-			if(life == 1) {
-				loseScreen();
-			}
 		}
 		if (level == 3)	{
 			levelRandom(0);

@@ -8,19 +8,23 @@
 #include <ArduinoNunchuk.h>
 #include <SoftwareSerial.h>
 
+
 class Bom
 {
 //variables
 public:
 protected:
 private:
-
+	int bomY;
+	int bomX;
+	uint8_t bomb = 0;
 //functions
 public:
 	BomXY(int X, int Y);
 	BomExpl(int X, int Y);
-	BomTrack(int bomX, int bomY);
-	BomDelete(int bomX, int bomY);
+	BomTrack(int bomX, int bomY, int character);
+	BomDelete(int bomX, int bomY, int character);
+	void PlaceBom(int XA, int YA, int XB, int YB, int character, int bomBinnen, int * counterBomExplosion, int * counterBomDelete);
 protected:
 private:
 
