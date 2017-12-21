@@ -115,13 +115,16 @@ Bom::BomDelete(int bomX, int bomY, int character)
 
 void Bom::PlaceBom(int XA, int YA, int XB, int YB, int character, int bomBinnen, int * counterBomExplosion, int * counterBomDelete)
 {
+	MI0283QT9 lcd;
 	ArduinoNunchuk nunchuk;
 	SoftwareSerial chat(2, 3); // RX, TX
 	
 	int bomExplosion = 75;
 	int bomDelete = 50;
+	nunchuk.update();
 	
 	if (bomb==0){				//als er geen bom ligt
+		//Serial.println(nunchuk.zButton);
 		if (nunchuk.zButton) {
 			if (character == 1) {
 				bomX=XA;
@@ -154,6 +157,7 @@ void Bom::PlaceBom(int XA, int YA, int XB, int YB, int character, int bomBinnen,
 		if (*counterBomDelete == bomDelete) {
 			if ((((XA == bomX) || (XA == bomX-16) || (XA == bomX+16)) && (YA == bomY)) || ((XA == bomX) && ((YA == bomY) || (YA == bomY-16) || (YA == bomY+16))))	{ //character A midden in bom
 				levensA--;
+				lcd.fillRect(255, 112,100, 50, WHITE);
 				points -= 5;
 			}
 			if ((((XB == bomX) || (XB == bomX-16) || (XB == bomX+16)) && (YB == bomY)) || ((XB == bomX) && ((YB == bomY) || (YB == bomY-16) || (YB == bomY+16))))	{ //character B midden in bom

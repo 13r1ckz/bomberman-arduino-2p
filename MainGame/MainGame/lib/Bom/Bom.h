@@ -15,6 +15,7 @@ class Bom
 public:
 protected:
 private:
+MI0283QT9 lcd;
 	int bomY;
 	int bomX;
 	uint8_t bomb = 0;
