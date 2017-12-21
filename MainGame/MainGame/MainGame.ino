@@ -1,11 +1,10 @@
-#include <avr/io.h>
-#include <avr/interrupt.h>
 #include <stdint.h>
 #include <Wire.h>
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
 #include <ArduinoNunchuk.h>
 #include <EEPROM.h>
+#include <SoftwareSerial.h>
 #include "lib/Grid/Grid.h"
 #include "lib/Wall/Wall.h"
 #include "lib/Obstacle/Obstacle.h"
@@ -13,10 +12,16 @@
 #include "lib/Bom/Bom.h"
 #include "lib/Data/Data.h"
 #include "lib/hart/hart.h"
+#include "lib/init/initRW.h"
+#include "lib/Navigate/Navigate.h"
+#include "lib/IRcom/IRcom.h"
 
+#define BLACK 0x00
+#define WHITE 0xFFFFFFFF
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
+SoftwareSerial chat(2, 3); // RX, TX
 
 GridClass gridFH;
 OuterWall wallOut;
@@ -25,8 +30,60 @@ Obstacle OB;
 Character Characters;
 Bom bom;
 hart harts;
+Navigate nav;
+initRW initrw;
+IRcom ir;
 
+ISR(TIMER2_COMPB_vect){
+}
 
+ISR(TIMER1_OVF_vect) {    //macro met interrupt vector
+	ir.setTellerVerzender(ir.getTellerVerzender() + 1);
+	ir.setTellerOntvanger(ir.getTellerOntvanger() + 1);
+}
+
+ISR(INT0_vect){
+	//Serial.println("i");
+	ir.verschil = ir.getTellerOntvanger() - ir.tempteller;
+	
+	if(ir.startbit == 0){
+		if(ir.verschil >= 40){
+			ir.startbit = 1;
+			ir.ontvangeraantal++;
+			//Serial.println("Startbit");
+		}
+		} else if (ir.startbit == 1){
+		if(ir.verschil >= 40){
+			ir.startbit = 0;
+			ir.setTellerOntvanger(0);
+			ir.tempteller = 0;
+			ir.ontvangeraantal++;
+			} else if(ir.verschil >= 30 && ir.verschil <40){
+			Serial.println("1");
+			ir.ontvangenbericht |=(1<<ir.bitteller);
+			ir.bitteller--;
+			ir.ontvangeraantal++;
+			} else if(ir.verschil >= 20 && ir.verschil <30){
+			Serial.println("0");
+			ir.ontvangenbericht &=~(1<<ir.bitteller);
+			ir.bitteller--;
+			ir.ontvangeraantal++;
+		}
+	}
+	
+	if(ir.ontvangeraantal % 10 == 0){
+		if(ir.bitteller == -1){
+			ir.bitteller = 7;
+			ir.letter = ir. ontvangenbericht;
+			Serial.println(ir.letter);
+			ir.ontvangenbericht = 0x00;
+			}else{
+			ir.bitteller =7;
+			ir.ontvangenbericht = 0x00;
+		}
+	}
+	ir.tempteller = ir.getTellerOntvanger();
+}
 
 void init_adc_single_sample()	//init brightness
 {
@@ -52,15 +109,20 @@ int navigateStart() { //navigates through start
 	int nunchukY = 1;
 	int counter = 5;
 	int i = 0;
+	char msg;
 	
-	while(1) {
-		single_sample();
+	nunchuk.update();
+	
+	while(nunchuk.zButton == 0) {
+		
 		nunchuk.update();
+		single_sample();
+		
 		if(nunchuk.analogY < 60) {
 			if(i>counter) {
 				i=0;
 			}
-			if(i == 0) {
+			if(i == 0 && nunchukY < 4) {
 				nunchukY++;
 				i++;
 			}
@@ -71,96 +133,57 @@ int navigateStart() { //navigates through start
 			if(i>counter) {
 				i=0;
 			}
-			if(i == 0) {
+			if(i == 0 && nunchukY > 1) {
 				nunchukY--;
 				i++;
 			}
 			i++;
 		}
 		
-		//Serial.print(nunchuk.analogY, DEC);
-		//Serial.print(' ');
-		//Serial.println(nunchukY, DEC);
 		
-		if(nunchukY == 1){
-			lcd.drawRect(60, 180, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 181, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 182, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 70, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 71, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 72, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 15, 200, 50, RGB(255,0,0));
-			lcd.drawRect(61, 16, 198, 48, RGB(255,0,0));
-			lcd.drawRect(62, 17, 196, 46, RGB(255,0,0));
-			if (nunchuk.zButton) {
-				return 1;
+		if (chat.available()){
+			msg = chat.read();
+			msg = msg - 48;
+				if(msg >= 1 || msg <= 5){
+					return msg;
+				}
 			}
-		}
+			/*
+		//Serial.println(ir.letter);
+		if (!(ir.letter == 0)){
+			//Serial.println("letter");
+			msg = ir.letter - 48;
+			if(msg >= 1 || msg <= 5){
+				return msg;
+			}
+		}*/
+		else{
+			if(nunchukY == 1){
+				nav.navigatestart(1);
+
+			}
+			if(nunchukY == 2){
+				nav.navigatestart(2); //tekent rode rand om geselecteerde level
+
+			}
+			if(nunchukY == 3){
+				nav.navigatestart(3);
 		
-		//tekent rode rand om geselecteerde level
-		if(nunchukY == 2){
-			lcd.drawRect(60, 15, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 16, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 17, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 125, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 126, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 127, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 70, 200, 50, RGB(255,0,0));
-			lcd.drawRect(61, 71, 198, 48, RGB(255,0,0));
-			lcd.drawRect(62, 72, 196, 46, RGB(255,0,0));
-			if (nunchuk.zButton) {
-				return 2;
 			}
-		}
-		if(nunchukY == 3){
-			lcd.drawRect(60, 70, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 71, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 72, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 180, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 181, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 182, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 125, 200, 50, RGB(255,0,0));
-			lcd.drawRect(61, 126, 198, 48, RGB(255,0,0));
-			lcd.drawRect(62, 127, 196, 46, RGB(255,0,0));
-			
-			if (nunchuk.zButton) {
-				return 3;
+			if(nunchukY == 4){
+				nav.navigatestart(4);
+				
 			}
-		}
-		if(nunchukY == 4){
-			lcd.drawRect(60, 125, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 126, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 127, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 15, 200, 50, RGB(255,255,255));
-			lcd.drawRect(61, 16, 198, 48, RGB(255,255,255));
-			lcd.drawRect(62, 17, 196, 46, RGB(255,255,255));
-			
-			lcd.drawRect(60, 180, 200, 50, RGB(255,0,0));
-			lcd.drawRect(61, 181, 198, 48, RGB(255,0,0));
-			lcd.drawRect(62, 182, 196, 46, RGB(255,0,0));
-			
-			if (nunchuk.zButton) {
-				return 4;
-			}
-		}
-		if(nunchukY == 5){
-			nunchukY = 1;
-		}
-		if(nunchukY == 0){
-			nunchukY = 4;
 		}
 	}
+	//ir.sendByte(nunchukY);
+	//_delay_ms(10);
+	chat.println(nunchukY,DEC);
+	return nunchukY;
 }
 
 int Startscherm(){
-	int level;
+	//int level;
 	lcd.fillScreen(RGB(0,0,0));
 	
 	lcd.fillRect(60,15,200,50,0xFFFFFF);		//print knop Level 1
@@ -174,319 +197,149 @@ int Startscherm(){
 	
 	lcd.fillRect(60,180,200,50,0xFFFFFF);		//print knop High score
 	lcd.drawText(82,195, "High score", 0x111111, 0xFFFFFF, 2);
-		
+	
 	lcd.fillRect(0,0,32,16,RGB(255,255,255));
 	Characters.MoveA(0,0);
 	lcd.fillRect(288,0,32,16,RGB(255,255,255));
 	Characters.MoveB(19,0);
 	bom.BomXY(1,0);
 	bom.BomXY(18,0);
-	level = navigateStart();
-	return level;
+	//level = navigateStart();
+	//Serial.println(level);
+	//return level;
+	return;
+}
+
+int resetGrid(){
+	for (int i = 1; i < 14; i++) {		//leegt veld
+		for (int j = 1; j < 14; j++) {
+			a[i][j] = 1;
+		}
+	}
+	for (int i = 2; i < 13; i+=2) {		//zet binnenmuren
+		for (int j = 2; j < 13; j+=2) {
+			a[i][j] = 2;
+		}
+	}
 }
 
 int loseScreen(){
-	lcd.fillScreen(RGB(0,0,0));
-	lcd.drawText(38,50,"You lose", RGB(255,0,0), RGB(0,0,0), 4);
+	lcd.fillScreen(BLACK);
+	lcd.drawText(38, 50, "You lose", RGB(255,0,0), BLACK, 4);
+	//Serial.println("lose screen");
+	
+	while(!nunchuk.zButton) {
+		nunchuk.update();
+		Serial.println(nunchuk.zButton);
+	}
+	
 	return;
 }
 
 int winScreen(){
-	lcd.fillScreen(RGB(0,0,0));
-	lcd.drawText(50,50,"You win", RGB(0,255,0), RGB(0,0,0), 4);
+	lcd.fillScreen(BLACK);
+	lcd.drawText(50, 50, "You win", RGB(0,255,0), BLACK, 4);
+
+	while(!nunchuk.zButton) {
+		nunchuk.update();
+		Serial.println("");
+	}
 	return;
 }
 
 int navigate(){
-	int levensA = 3;
-	int levensB = 3;
-	int nunchukY = 1;
-	int nunchukX = 1;
-	int counter = 8;
-	int i = 0;
-	int q = 0;
+	int counterBomExplosion = 0;
 	int gridX, gridY;
-	int bomb = 0;
-	int bomX, bomY;
-	int bomcounter = 75;
-	int bomcounter2 = 50;
-	int bomMidden = 0;
-	int bomLinks = 0;
-	int bomRechts = 0;
-	int bomOnder = 0;
-	int bomBoven = 0;
-	int cBomMidden = 0;
-	int cBomLinks = 0;
-	int cBomRechts = 0;
-	int cBomOnder = 0;
-	int cBomBoven = 0;
 	
+	uint8_t bomX, bomY;
+	
+	int counterBomDelete = 0;
+	int XA, XB, YA, YB;
+	nunchukX = 1;
+	nunchukY = 1;
+	char bomBinnen = 0;
+	Serial.println("navigate");
+	int character = 1;
 	while(1) {
 		single_sample();
 		nunchuk.update();
-		int XA = gridFH.GridF(nunchukX);
-		int YA = gridFH.GridF(nunchukY);
-		int XB = gridFH.GridF(13);
-		int YB = gridFH.GridF(13);
-		Characters.MoveA((XA/16),(YA/16));
-		Characters.MoveB((XB/16),(XB/16));
-		int gridX = 0;
-		int gridY = 0;
+		XA = gridFH.GridF(nunchukX);	// hier move character A
+		YA = gridFH.GridF(nunchukY);
+		XB = gridFH.GridF(13);			// hier move character B
+		YB = gridFH.GridF(13);
+		Characters.MoveB(XB/16, YB/16);
 		
-		Serial.print("levensA: ");
-		Serial.println(levensA);
-		if (bomb==0){				//als er geen bom ligt
-			if (nunchuk.zButton)
-			{
-				bomX=XA;
-				bomY=YA;
-				bomb=1;
-				q=0;
-			}
-		}
-		if (bomb==1){
-			bom.BomXY((bomX/16),(bomY/16));
-			q++;
-			/*Serial.print(bomX);
-			Serial.print(" ");
-			Serial.println(bomY);*/
-	}
-	harts.HartS(levensA, 16, 2);
-	harts.HartS(levensB, 16, 14);
-	if (levensA == 0) {
-		loseScreen();
-		return;
-	}
-	if (levensB == 0) {
-		winScreen();
-		return;
-	}
-		
-		if(q==bomcounter){
-			Serial.print("X: ");
-			Serial.println(bomX);
-			Serial.print("Y: ");
-			Serial.println(bomY);
-			
-			bomMidden = 1;
-			
-			bom.BomExpl(bomX, bomY);
-			if(!(a[bomY/16][bomX/16-1] == 2)){		//links van de bom
-				bom.BomExpl((bomX-16), bomY);
-				bomLinks = 1;
-				
-				if (a[bomY/16][bomX/16-1] == 3){	//verwijderd krat
-					a[bomY/16][bomX/16-1] = 1;
-				}				
-			}
-			if(!(a[bomY/16][bomX/16+1] == 2)){		//rechts van de bom
-				bom.BomExpl((bomX+16), bomY);
-				bomRechts = 1;
-				
-				if (a[bomY/16][bomX/16+1] == 3){	//verwijderd krat
-					a[bomY/16][bomX/16+1] = 1;
-				}
-			}
-			if(!(a[bomY/16-1][bomX/16] == 2)){		//boven van de bom
-				bom.BomExpl(bomX, (bomY-16));
-				bomBoven = 1;
-				
-				if (a[bomY/16-1][bomX/16] == 3){	//verwijderd krat
-					a[bomY/16-1][bomX/16] = 1;
-				}
-				
-			}
-			if(!(a[bomY/16+1][bomX/16] == 2)){		//onder van de bom
-				bom.BomExpl(bomX, (bomY+16));
-				bomOnder = 1;
-				
-				if (a[bomY/16+1][bomX/16] == 3){	//verwijderd krat
-					a[bomY/16+1][bomX/16] = 1;
-				}
-			}
-			q=0;
-			bomb = 2;
-			
+		nav.navigate();
+		if (chat.available()) {
+			Serial.write(chat.read());
+			bomBinnen = 1;
+			character = 2;
 		}
 		
-		if (bomMidden == 1){		//verwijdert explosie midden
-			cBomMidden++;
-			if (cBomMidden == (bomcounter2+2)){
-				lcd.fillRect(bomX,bomY,16,16,RGB(255,255,255));
-				cBomMidden = 0;
-				bomMidden = 0;
-				bomb = 0;
-				
-				if ((XA == bomX)&&(YA == bomY))	{
-					levensA--;
-				}
-				if ((XB == bomX)&&(YB == bomY))	{
-					levensB--;
-				}
-			}
+		harts.HartS(levensA, 16, 2);
+		harts.HartS(levensB, 16, 13);
+		lcd.drawInteger(255, 112, points, DEC, BLACK, WHITE, 2| 0x00);
+		if (levensA == 0) {
+			return 1;
 		}
-		if (bomLinks == 1){			//verwijdert explosie links
-			cBomLinks++;
-			if (cBomLinks == bomcounter2){
-				lcd.fillRect(bomX-16,bomY,16,16,RGB(255,255,255));
-				cBomLinks = 0;
-				bomLinks = 0;
-				
-				if ((XA == (bomX-16))&&(YA == bomY))	{ //links A
-				levensA--;
-				}
-				if ((XB == (bomX-16))&&(YB == bomY))	{ //links B
-				levensB--;
-				}
-			}
-			
+		if (levensB == 0) {
+			return 2;
 		}
-		if (bomRechts == 1){		//verwijdert explosie rechts
-			cBomRechts++;
-			if (cBomRechts == bomcounter2){
-				lcd.fillRect(bomX+16,bomY,16,16,RGB(255,255,255));
-				cBomRechts = 0;
-				bomRechts = 0;
-				
-				if ((XA == (bomX+16))&&(YA == bomY))	{
-					levensA--;
-				}
-				if ((XB == (bomX+16))&&(YB == bomY))	{
-					levensB--;
-				}
-			}
-		}
+		bom.PlaceBom(XA, YA, XB, YB, character, bomBinnen, &counterBomExplosion, &counterBomDelete);
+		character = 1;
 		
-		if (bomOnder == 1){			//verwijdert explosie onder
-			cBomOnder++;
-			if (cBomOnder == bomcounter2){
-				lcd.fillRect(bomX,bomY+16,16,16,RGB(255,255,255));
-				cBomOnder = 0;
-				bomOnder = 0;
-				
-				if ((XA == bomX)&&(YA == (bomY+16)))	{
-					levensA--;
-				}
-				if ((XB == bomX)&&(YB == (bomY-16)))	{
-					levensB--;
-				}
-			}
-		}
-		
-		if (bomBoven == 1){			//verwijdert explosie boven
-			cBomBoven++;
-			if (cBomBoven == bomcounter2){
-				lcd.fillRect(bomX,bomY-16,16,16,RGB(255,255,255));
-				cBomBoven = 0;
-				bomBoven = 0;
-				
-				if ((XA == bomX)&&(YA == (bomY-16)))	{
-					levensA--;
-				}
-				if ((XB == bomX)&&(YB == (bomY-16)))	{
-					levensB--;
-				}
-			}
-		}
-		
-		//omlaag lopen
-		if(nunchuk.analogY < 60) {
-			if(i>counter) {
-				i=0;
-			}
-			if(i == 0) {		//zorgt dat hij niet te snel loopt
-				if (a[YA/16+1][XA/16] == 1)
-				{
-					nunchukY++;
-					lcd.fillRect((gridFH.GridF(nunchukX)),(gridFH.GridF(nunchukY)-16), 16, 16, RGB(255,255,255)); //wist vorige positie
-				}
-			}
-			i++;
-		}
-		
-		//omhoog lopen
-		if(nunchuk.analogY > 200) {
-			if(i>counter) {
-				i=0;
-			}
-			if(i == 0) {	//zorgt dat hij niet te snel loopt
-				if (a[YA/16-1][XA/16] == 1)
-				{
-					nunchukY--;
-					lcd.fillRect((gridFH.GridF(nunchukX)),(gridFH.GridF(nunchukY)+16), 16, 16, RGB(255,255,255)); //wist vorige positie
-				}
-			}
-			i++;
-		}
-		
-		//naar links lopen
-		if(nunchuk.analogX < 60) {
-			if(i>counter) {
-				i=0;
-			}
-			if(i == 0) {	//zorgt dat hij niet te snel loopt
-				if (a[YA/16][XA/16-1] == 1)
-				{
-					nunchukX--;
-					lcd.fillRect((gridFH.GridF(nunchukX)+16),(gridFH.GridF(nunchukY)), 16, 16, RGB(255,255,255)); //wist vorige positie
-				}
-			}
-			i++;
-		}
-		
-		//naar rechts lopen
-		if(nunchuk.analogX > 200) {
-			if(i>counter) {
-				i=0;
-			}
-			if(i == 0) {	//zorgt dat hij niet te snel loopt
-				if (a[YA/16][XA/16+1] == 1)
-				{
-					nunchukX++;
-					lcd.fillRect((gridFH.GridF(nunchukX)-16),(gridFH.GridF(nunchukY)), 16, 16, RGB(255,255,255)); //wist vorige positie
-				}
-			}
-			i++;
-		}
 	}
 }
 
 int level1() {
-	
-	lcd.fillScreen(RGB(255,255,255));
-
+	int life;
+	lcd.fillScreen(WHITE);
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
-	OB.ObstacleDR(1);
-	navigate();
-	while(1){}
-	//woodBox(Grid(2),Grid(1));
-	//woodBox(Grid(6),Grid(3));
-	//woodBox(Grid(7),Grid(8));
-	//navigate();
-	
+	OB.ObstacleDR(1, 0);
+	life = navigate();
+	resetGrid();
+	if(life == 2) {
+		winScreen();
+	}
+	if(life == 1) {
+		loseScreen();
+		nunchuk.update();
+	}
+	return;
 }
 
 int level2() {
-	lcd.fillScreen(RGB(255,255,255));
+	int life;
+	lcd.fillScreen(WHITE);
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
-	OB.ObstacleDR(2);
-	navigate();
-	while(1){}
-	//lcd.fillScreen(RGB(0,255,0));
-	//OuterWall();
-	//InnerGrid();
-	//navigate();
-	//return;
+	OB.ObstacleDR(2, 0);
+	life = navigate();
+	resetGrid();
+	if(life == 2) {
+		winScreen();
+		
+	}
+	if(life == 1) {
+		loseScreen();
+		
+	}
+	return;
 }
 
-int levelRandom() {
-	//lcd.fillScreen(RGB(0,0,255));
-	//OuterWall.OuterWallP();
-	//();
-	//navigate();
-	//return;
+int levelRandom(uint8_t SL) {
+	lcd.fillScreen(WHITE);
+	wallOut.OuterWallP();
+	wallIn.InnerWallP();
+	if (SL == 1)
+	{
+		OB.ObstacleDR(3,1);
+	} else {
+		OB.ObstacleDR(3,0);
+	}
+	navigate();
+	return;
 }
 
 int highScore() {
@@ -495,14 +348,16 @@ int highScore() {
 	return;
 }
 
-
 int main(void)
 {
 	int level;
-	init();
+	initrw.init();
 	Serial.begin(9600);
+	chat.begin(9600);
 	//	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	uint8_t clear_bg=0x00; //0x80 = dont clear background for fonts (only for DisplayXXX)
+
+	//ir.setIR();
 
 	//init display
 	lcd.begin();
@@ -511,11 +366,8 @@ int main(void)
 	
 	while (1)
 	{
-		
-		level = Startscherm();
-		
-		//Serial.println(level, DEC);
-
+		Startscherm();
+		level = navigateStart();
 		if (level == 1)	{
 			level1();
 		}
@@ -523,10 +375,13 @@ int main(void)
 			level2();
 		}
 		if (level == 3)	{
-			levelRandom();
+			levelRandom(0);
 		}
 		if (level == 4)	{
 			highScore();
+		}
+		if (level == 5)	{
+			levelRandom(1);
 		}
 	}
 }

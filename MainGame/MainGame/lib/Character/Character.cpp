@@ -2,9 +2,20 @@
 * Character.cpp
 *
 * Created: 11/30/2017 11:01:42 AM
-* Author: gerjo
+* Author: gerjon
 */
 
+#define DARKBLUE 0x78
+#define LIGHTBLUE 0x33FD
+#define BLACK 0x00
+#define WHITE 0xFFFFFFFF
+#define SKIN 0xFFFFFE73
+#define MOUTH 0xFFFFFCCC
+#define DARKRED 0xFFFFC001
+#define LIGHTRED 0xFFFFF801
+
+
+//RGB(2,13,199)
 
 #include "Character.h"
 
@@ -14,129 +25,64 @@ Character::MoveA(int X, int Y)
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	GridClass gridFH;
 	int i,j;
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((gridFH.GridF(X) + (i+3)),(gridFH.GridF(Y)+0),RGB(2,13,199));
-	}
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y), gridFH.GridF(X)+12, gridFH.GridF(Y), DARKBLUE);	//Hat
 	
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+1),RGB(2,13,199));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+1),RGB(49,127,236));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+1),RGB(2,13,199));
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+1, gridFH.GridF(X)+13, gridFH.GridF(Y)+1, DARKBLUE);
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+1, gridFH.GridF(X)+12, gridFH.GridF(Y)+1, LIGHTBLUE);
 	
-	lcd.drawPixel((gridFH.GridF(X)+ 1),(gridFH.GridF(Y)+2),RGB(2,13,199));
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+2),RGB(49,127,236));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+2),RGB(2,13,199));
+	lcd.drawLine(gridFH.GridF(X)+1, gridFH.GridF(Y)+2, gridFH.GridF(X)+14, gridFH.GridF(Y)+2, DARKBLUE);
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+2, gridFH.GridF(X)+13, gridFH.GridF(Y)+2, LIGHTBLUE);
 	
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+3),RGB(2,13,199));
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+3),RGB(49,127,236));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+3),RGB(2,13,199));
+	lcd.drawLine(gridFH.GridF(X)+1, gridFH.GridF(Y)+3, (gridFH.GridF(X)+14), gridFH.GridF(Y)+3, DARKBLUE);
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+3, (gridFH.GridF(X)+13), gridFH.GridF(Y)+3, LIGHTBLUE);
 	
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+4),RGB(2,13,199));
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+4),RGB(49,127,236));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+4),RGB(2,13,199));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+4),RGB(49,127,236));
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+4),RGB(2,13,199));
+	lcd.drawLine(gridFH.GridF(X)+1, gridFH.GridF(Y)+4, gridFH.GridF(X)+14, gridFH.GridF(Y)+4, DARKBLUE);
+	lcd.drawPixel(gridFH.GridF(X)+2, gridFH.GridF(Y)+4, LIGHTBLUE);
+	lcd.drawPixel(gridFH.GridF(X)+13, gridFH.GridF(Y)+4, LIGHTBLUE);
 	
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+5),RGB(2,13,199));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+5),RGB(49,127,236));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+5),RGB(2,13,199));
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+5, gridFH.GridF(X)+13, gridFH.GridF(Y)+5, DARKBLUE);
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+5, gridFH.GridF(X)+12, gridFH.GridF(Y)+5, LIGHTBLUE);
 	
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+6),RGB(2,13,199));
-	}
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+6, gridFH.GridF(X)+13, gridFH.GridF(Y)+6, DARKBLUE);
+		
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+7, gridFH.GridF(X)+12, gridFH.GridF(Y)+7, SKIN);	//Face
+	lcd.drawLine(gridFH.GridF(X)+4, gridFH.GridF(Y)+7, gridFH.GridF(X)+6, gridFH.GridF(Y)+7, WHITE);
+	lcd.drawPixel(gridFH.GridF(X)+5, gridFH.GridF(Y)+7, BLACK);
+	lcd.drawLine(gridFH.GridF(X)+9, gridFH.GridF(Y)+7, gridFH.GridF(X)+11, gridFH.GridF(Y)+7, WHITE);
+	lcd.drawPixel(gridFH.GridF(X)+10, gridFH.GridF(Y)+7, BLACK);
 	
-	lcd.drawPixel((gridFH.GridF(X)+3),(gridFH.GridF(Y)+7),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+4),(gridFH.GridF(Y)+7),RGB(255,255,255));
-	lcd.drawPixel((gridFH.GridF(X)+5),(gridFH.GridF(Y)+7),RGB(0,0,0));
-	lcd.drawPixel((gridFH.GridF(X)+6),(gridFH.GridF(Y)+7),RGB(255,255,255));
-	lcd.drawPixel((gridFH.GridF(X)+7),(gridFH.GridF(Y)+7),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+8),(gridFH.GridF(Y)+7),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+9),(gridFH.GridF(Y)+7),RGB(255,255,255));
-	lcd.drawPixel((gridFH.GridF(X)+10),(gridFH.GridF(Y)+7),RGB(0,0,0));
-	lcd.drawPixel((gridFH.GridF(X)+11),(gridFH.GridF(Y)+7),RGB(255,255,255));
-	lcd.drawPixel((gridFH.GridF(X)+12),(gridFH.GridF(Y)+7),RGB(254,204,154));
+	lcd.drawLine(gridFH.GridF(X), gridFH.GridF(Y)+8, gridFH.GridF(X)+1, gridFH.GridF(Y)+8, SKIN);
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+8, gridFH.GridF(X)+12, gridFH.GridF(Y)+8, SKIN);
+	lcd.drawLine(gridFH.GridF(X)+7, gridFH.GridF(Y)+8, gridFH.GridF(X)+8, gridFH.GridF(Y)+8, MOUTH);
+	lcd.drawLine(gridFH.GridF(X)+14, gridFH.GridF(Y)+8, gridFH.GridF(X)+15, gridFH.GridF(Y)+8, SKIN);
 	
-	lcd.drawPixel((gridFH.GridF(X)+0),(gridFH.GridF(Y)+8),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+8),RGB(254,204,154));
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+8),RGB(254,204,154));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+7),(gridFH.GridF(Y)+8),RGB(253,154,102));
-	lcd.drawPixel((gridFH.GridF(X)+8),(gridFH.GridF(Y)+8),RGB(253,154,102));
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+9)),(gridFH.GridF(Y)+8),RGB(254,204,154));
-	}
+	lcd.drawLine(gridFH.GridF(X), gridFH.GridF(Y)+9, gridFH.GridF(X)+1, gridFH.GridF(Y)+9, SKIN);		//Body
+	lcd.drawPixel(gridFH.GridF(X)+2, gridFH.GridF(Y)+9, DARKBLUE);
+	lcd.drawLine(gridFH.GridF(X)+4, gridFH.GridF(Y)+9, gridFH.GridF(X)+11, gridFH.GridF(Y)+9, DARKBLUE);
+	lcd.drawLine(gridFH.GridF(X)+5, gridFH.GridF(Y)+9, gridFH.GridF(X)+10, gridFH.GridF(Y)+9, LIGHTBLUE);
+	lcd.drawPixel(gridFH.GridF(X)+13, gridFH.GridF(Y)+9, DARKBLUE);
+	lcd.drawLine(gridFH.GridF(X)+14, gridFH.GridF(Y)+9, gridFH.GridF(X)+15, gridFH.GridF(Y)+9, SKIN);
+	
+	lcd.drawLine(gridFH.GridF(X)+1, gridFH.GridF(Y)+10, gridFH.GridF(X)+14, gridFH.GridF(Y)+10, DARKBLUE);
+	lcd.drawPixel(gridFH.GridF(X)+2, gridFH.GridF(Y)+10, LIGHTBLUE);
+	lcd.drawLine(gridFH.GridF(X)+4, gridFH.GridF(Y)+10, gridFH.GridF(X)+11, gridFH.GridF(Y)+10, LIGHTBLUE);
+	lcd.drawPixel(gridFH.GridF(X)+13, gridFH.GridF(Y)+10, LIGHTBLUE);
 
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+8),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+15),(gridFH.GridF(Y)+8),RGB(254,204,154));
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+11, gridFH.GridF(X)+13, gridFH.GridF(Y)+11, DARKBLUE);
+	lcd.drawLine(gridFH.GridF(X)+5, gridFH.GridF(Y)+11, gridFH.GridF(X)+10, gridFH.GridF(Y)+11, LIGHTBLUE);
 	
-	lcd.drawPixel((gridFH.GridF(X)+0),(gridFH.GridF(Y)+9),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+9),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+9),RGB(2,13,199));
-	lcd.drawPixel((gridFH.GridF(X)+4),(gridFH.GridF(Y)+9),RGB(2,13,199));
-	for(i = 0; i < 6; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+5)),(gridFH.GridF(Y)+9),RGB(49,127,236));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+11),(gridFH.GridF(Y)+9),RGB(2,13,199));
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+9),RGB(2,13,199));
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+9),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+15),(gridFH.GridF(Y)+9),RGB(254,204,154));
+	lcd.drawLine(gridFH.GridF(X)+4, gridFH.GridF(Y)+12, gridFH.GridF(X)+11, gridFH.GridF(Y)+12, DARKBLUE);	//Legs
 	
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+10),RGB(2,13,199));
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+10),RGB(49,127,236));
-	lcd.drawPixel((gridFH.GridF(X)+3),(gridFH.GridF(Y)+10),RGB(2,13,199));
-	for(i = 0; i < 8; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+4)),(gridFH.GridF(Y)+10),RGB(49,127,236));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+12),(gridFH.GridF(Y)+10),RGB(2,13,199));
-	lcd.drawPixel((gridFH.GridF(X)+12),(gridFH.GridF(Y)+10),RGB(49,127,236));
-	lcd.drawPixel((gridFH.GridF(X)+12),(gridFH.GridF(Y)+10),RGB(2,13,199));
-
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+11),RGB(2,13,199));
-	}
-	for(i = 0; i < 6; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+5)),(gridFH.GridF(Y)+11),RGB(49,127,236));
-	}
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+11)),(gridFH.GridF(Y)+11),RGB(2,13,199));
-	}
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+13, gridFH.GridF(X)+6, gridFH.GridF(Y)+13, DARKBLUE);
+	lcd.drawLine(gridFH.GridF(X)+9, gridFH.GridF(Y)+13, gridFH.GridF(X)+12, gridFH.GridF(Y)+13, DARKBLUE);
 	
-	for(i = 0; i < 8; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+4)),(gridFH.GridF(Y)+12),RGB(2,13,199));
-	}
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+14, gridFH.GridF(X)+4, gridFH.GridF(Y)+14, BLACK);		//feet
+	lcd.drawPixel((gridFH.GridF(X)+5),(gridFH.GridF(Y)+14), DARKBLUE);
+	lcd.drawPixel((gridFH.GridF(X)+10),(gridFH.GridF(Y)+14), DARKBLUE);
+	lcd.drawLine(gridFH.GridF(X)+11, gridFH.GridF(Y)+14, gridFH.GridF(X)+13, gridFH.GridF(Y)+14, BLACK);
 	
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+13),RGB(2,13,199));
-	}
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+9)),(gridFH.GridF(Y)+13),RGB(2,13,199));
-	}
-	
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+14),RGB(0,0,0));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+5),(gridFH.GridF(Y)+14),RGB(2,13,199));
-	lcd.drawPixel((gridFH.GridF(X)+10),(gridFH.GridF(Y)+14),RGB(2,13,199));
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+11)),(gridFH.GridF(Y)+14),RGB(0,0,0));
-	}
-	
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+15),RGB(0,0,0));
-	}
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+10)),(gridFH.GridF(Y)+15),RGB(0,0,0));
-	}
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+15, gridFH.GridF(X)+5, gridFH.GridF(Y)+15, BLACK);
+	lcd.drawLine(gridFH.GridF(X)+10, gridFH.GridF(Y)+15, gridFH.GridF(X)+13, gridFH.GridF(Y)+15, BLACK);
 } //Character
 
 Character::MoveB(int X, int Y)
@@ -145,126 +91,62 @@ Character::MoveB(int X, int Y)
 	GridClass gridFH;
 	
 	int i,j;
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+0),RGB(194,0,9));
-	}
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y), gridFH.GridF(X)+12, gridFH.GridF(Y), DARKRED);	//Hat
 	
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+1),RGB(194,0,9));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+1),RGB(255,1,12));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+1),RGB(194,0,9));
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+1, gridFH.GridF(X)+13, gridFH.GridF(Y)+1, DARKRED);
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+1, gridFH.GridF(X)+12, gridFH.GridF(Y)+1, LIGHTRED);
 	
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+2),RGB(194,0,9));
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+2),RGB(255,1,12));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+2),RGB(194,0,9));
+	lcd.drawLine(gridFH.GridF(X)+1, gridFH.GridF(Y)+2, gridFH.GridF(X)+14, gridFH.GridF(Y)+2, DARKRED);
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+2, gridFH.GridF(X)+13, gridFH.GridF(Y)+2, LIGHTRED);
 	
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+3),RGB(194,0,9));
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+3),RGB(255,1,12));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+3),RGB(194,0,9));
+	lcd.drawLine(gridFH.GridF(X)+1, gridFH.GridF(Y)+3, (gridFH.GridF(X)+14), gridFH.GridF(Y)+3, DARKRED);
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+3, (gridFH.GridF(X)+13), gridFH.GridF(Y)+3, LIGHTRED);
 	
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+4),RGB(194,0,9));
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+4),RGB(255,1,12));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+4),RGB(194,0,9));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+4),RGB(255,1,12));
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+4),RGB(194,0,9));
+	lcd.drawLine(gridFH.GridF(X)+1, gridFH.GridF(Y)+4, gridFH.GridF(X)+14, gridFH.GridF(Y)+4, DARKRED);
+	lcd.drawPixel(gridFH.GridF(X)+2, gridFH.GridF(Y)+4, LIGHTRED);
+	lcd.drawPixel(gridFH.GridF(X)+13, gridFH.GridF(Y)+4, LIGHTRED);
 	
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+5),RGB(194,0,9));
-	for(i = 0; i < 10; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+5),RGB(255,1,12));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+5),RGB(194,0,9));
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+5, gridFH.GridF(X)+13, gridFH.GridF(Y)+5, DARKRED);
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+5, gridFH.GridF(X)+12, gridFH.GridF(Y)+5, LIGHTRED);
 	
-	for(i = 0; i < 12; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+6),RGB(194,0,9));
-	}
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+6, gridFH.GridF(X)+13, gridFH.GridF(Y)+6, DARKRED);
 	
-	lcd.drawPixel((gridFH.GridF(X)+3),(gridFH.GridF(Y)+7),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+4),(gridFH.GridF(Y)+7),RGB(255,255,255));
-	lcd.drawPixel((gridFH.GridF(X)+5),(gridFH.GridF(Y)+7),RGB(0,0,0));
-	lcd.drawPixel((gridFH.GridF(X)+6),(gridFH.GridF(Y)+7),RGB(255,255,255));
-	lcd.drawPixel((gridFH.GridF(X)+7),(gridFH.GridF(Y)+7),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+8),(gridFH.GridF(Y)+7),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+9),(gridFH.GridF(Y)+7),RGB(255,255,255));
-	lcd.drawPixel((gridFH.GridF(X)+10),(gridFH.GridF(Y)+7),RGB(0,0,0));
-	lcd.drawPixel((gridFH.GridF(X)+11),(gridFH.GridF(Y)+7),RGB(255,255,255));
-	lcd.drawPixel((gridFH.GridF(X)+12),(gridFH.GridF(Y)+7),RGB(254,204,154));
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+7, gridFH.GridF(X)+12, gridFH.GridF(Y)+7, SKIN);	//Face
+	lcd.drawLine(gridFH.GridF(X)+4, gridFH.GridF(Y)+7, gridFH.GridF(X)+6, gridFH.GridF(Y)+7, WHITE);
+	lcd.drawPixel(gridFH.GridF(X)+5, gridFH.GridF(Y)+7, BLACK);
+	lcd.drawLine(gridFH.GridF(X)+9, gridFH.GridF(Y)+7, gridFH.GridF(X)+11, gridFH.GridF(Y)+7, WHITE);
+	lcd.drawPixel(gridFH.GridF(X)+10, gridFH.GridF(Y)+7, BLACK);
 	
-	lcd.drawPixel((gridFH.GridF(X)+0),(gridFH.GridF(Y)+8),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+8),RGB(254,204,154));
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+8),RGB(254,204,154));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+7),(gridFH.GridF(Y)+8),RGB(253,154,102));
-	lcd.drawPixel((gridFH.GridF(X)+8),(gridFH.GridF(Y)+8),RGB(253,154,102));
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+9)),(gridFH.GridF(Y)+8),RGB(254,204,154));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+8),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+15),(gridFH.GridF(Y)+8),RGB(254,204,154));
+	lcd.drawLine(gridFH.GridF(X), gridFH.GridF(Y)+8, gridFH.GridF(X)+1, gridFH.GridF(Y)+8, SKIN);
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+8, gridFH.GridF(X)+12, gridFH.GridF(Y)+8, SKIN);
+	lcd.drawLine(gridFH.GridF(X)+7, gridFH.GridF(Y)+8, gridFH.GridF(X)+8, gridFH.GridF(Y)+8, MOUTH);
+	lcd.drawLine(gridFH.GridF(X)+14, gridFH.GridF(Y)+8, gridFH.GridF(X)+15, gridFH.GridF(Y)+8, SKIN);
 	
-	lcd.drawPixel((gridFH.GridF(X)+0),(gridFH.GridF(Y)+9),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+9),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+9),RGB(194,0,9));
-	lcd.drawPixel((gridFH.GridF(X)+4),(gridFH.GridF(Y)+9),RGB(194,0,9));
-	for(i = 0; i < 6; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+5)),(gridFH.GridF(Y)+9),RGB(255,1,12));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+11),(gridFH.GridF(Y)+9),RGB(194,0,9));
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+9),RGB(194,0,9));
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+9),RGB(254,204,154));
-	lcd.drawPixel((gridFH.GridF(X)+15),(gridFH.GridF(Y)+9),RGB(254,204,154));
+	lcd.drawLine(gridFH.GridF(X), gridFH.GridF(Y)+9, gridFH.GridF(X)+1, gridFH.GridF(Y)+9, SKIN);		//Body
+	lcd.drawPixel(gridFH.GridF(X)+2, gridFH.GridF(Y)+9, DARKRED);
+	lcd.drawLine(gridFH.GridF(X)+4, gridFH.GridF(Y)+9, gridFH.GridF(X)+11, gridFH.GridF(Y)+9, DARKRED);
+	lcd.drawLine(gridFH.GridF(X)+5, gridFH.GridF(Y)+9, gridFH.GridF(X)+10, gridFH.GridF(Y)+9, LIGHTRED);
+	lcd.drawPixel(gridFH.GridF(X)+13, gridFH.GridF(Y)+9, DARKRED);
+	lcd.drawLine(gridFH.GridF(X)+14, gridFH.GridF(Y)+9, gridFH.GridF(X)+15, gridFH.GridF(Y)+9, SKIN);
 	
-	lcd.drawPixel((gridFH.GridF(X)+1),(gridFH.GridF(Y)+10),RGB(194,0,9));
-	lcd.drawPixel((gridFH.GridF(X)+2),(gridFH.GridF(Y)+10),RGB(255,1,12));
-	lcd.drawPixel((gridFH.GridF(X)+3),(gridFH.GridF(Y)+10),RGB(194,0,9));
-	for(i = 0; i < 8; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+4)),(gridFH.GridF(Y)+10),RGB(255,1,12));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+12),(gridFH.GridF(Y)+10),RGB(194,0,9));
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+10),RGB(255,1,12));
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+10),RGB(194,0,9));
+	lcd.drawLine(gridFH.GridF(X)+1, gridFH.GridF(Y)+10, gridFH.GridF(X)+14, gridFH.GridF(Y)+10, DARKRED);
+	lcd.drawPixel(gridFH.GridF(X)+2, gridFH.GridF(Y)+10, LIGHTRED);
+	lcd.drawLine(gridFH.GridF(X)+4, gridFH.GridF(Y)+10, gridFH.GridF(X)+11, gridFH.GridF(Y)+10, LIGHTRED);
+	lcd.drawPixel(gridFH.GridF(X)+13, gridFH.GridF(Y)+10, LIGHTRED);
+
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+11, gridFH.GridF(X)+13, gridFH.GridF(Y)+11, DARKRED);
+	lcd.drawLine(gridFH.GridF(X)+5, gridFH.GridF(Y)+11, gridFH.GridF(X)+10, gridFH.GridF(Y)+11, LIGHTRED);
 	
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+11),RGB(194,0,9));
-	}
-	for(i = 0; i < 6; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+5)),(gridFH.GridF(Y)+11),RGB(255,1,12));
-	}
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+11)),(gridFH.GridF(Y)+11),RGB(194,0,9));
-	}
+	lcd.drawLine(gridFH.GridF(X)+4, gridFH.GridF(Y)+12, gridFH.GridF(X)+11, gridFH.GridF(Y)+12, DARKRED);	//Legs
 	
-	for(i = 0; i < 8; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+4)),(gridFH.GridF(Y)+12),RGB(194,0,9));
-	}
+	lcd.drawLine(gridFH.GridF(X)+3, gridFH.GridF(Y)+13, gridFH.GridF(X)+6, gridFH.GridF(Y)+13, DARKRED);
+	lcd.drawLine(gridFH.GridF(X)+9, gridFH.GridF(Y)+13, gridFH.GridF(X)+12, gridFH.GridF(Y)+13, DARKRED);
 	
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+3)),(gridFH.GridF(Y)+13),RGB(194,0,9));
-	}
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+9)),(gridFH.GridF(Y)+13),RGB(194,0,9));
-	}
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+14, gridFH.GridF(X)+4, gridFH.GridF(Y)+14, BLACK);		//feet
+	lcd.drawPixel((gridFH.GridF(X)+5),(gridFH.GridF(Y)+14), DARKRED);
+	lcd.drawPixel((gridFH.GridF(X)+10),(gridFH.GridF(Y)+14), DARKRED);
+	lcd.drawLine(gridFH.GridF(X)+11, gridFH.GridF(Y)+14, gridFH.GridF(X)+13, gridFH.GridF(Y)+14, BLACK);
 	
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+14),RGB(0,0,0));
-	}
-	lcd.drawPixel((gridFH.GridF(X)+5),(gridFH.GridF(Y)+14),RGB(194,0,9));
-	lcd.drawPixel((gridFH.GridF(X)+10),(gridFH.GridF(Y)+14),RGB(194,0,9));
-	for(i = 0; i < 3; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+11)),(gridFH.GridF(Y)+14),RGB(0,0,0));
-	}
-	
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+2)),(gridFH.GridF(Y)+15),RGB(0,0,0));
-	}
-	for(i = 0; i < 4; i++){
-		lcd.drawPixel((gridFH.GridF(X)+(i+10)),(gridFH.GridF(Y)+15),RGB(0,0,0));
-	}	
+	lcd.drawLine(gridFH.GridF(X)+2, gridFH.GridF(Y)+15, gridFH.GridF(X)+5, gridFH.GridF(Y)+15, BLACK);
+	lcd.drawLine(gridFH.GridF(X)+10, gridFH.GridF(Y)+15, gridFH.GridF(X)+13, gridFH.GridF(Y)+15, BLACK);
 } //Character

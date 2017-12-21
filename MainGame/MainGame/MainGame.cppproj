@@ -72,6 +72,7 @@
       <Value>C:/Program Files (x86)/Arduino/libraries/MI0283QT9</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries/Nunchuck</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/EEPROM/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SoftwareSerial/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries/digitalWriteFast</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility</Value>
@@ -115,6 +116,7 @@
       <Value>C:/Program Files (x86)/Arduino/libraries/MI0283QT9</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries/Nunchuck</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/EEPROM/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SoftwareSerial/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries/digitalWriteFast</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility</Value>
@@ -149,7 +151,7 @@
   <avrgcccpp.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcccpp.assembler.debugging.DebugLevel>
 </AvrGccCpp>
     </ToolchainSettings>
-    <VMSETTING_IncludePaths>../../../MainGame;C:/Program Files (x86)/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries;C:/Users/Christine/Documents/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino;C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include;C:/Program Files (x86)/Arduino/libraries/GraphicsLib;C:/Program Files (x86)/Arduino/libraries/MI0283QT9;C:/Program Files (x86)/Arduino/libraries/Nunchuck;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility;C:/Program Files (x86)/Arduino/libraries/digitalWriteFast;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/EEPROM/src;C:/Users/gerjo/OneDrive/Documents/Arduino/libraries;</VMSETTING_IncludePaths>
+    <VMSETTING_IncludePaths>../../../MainGame;C:/Program Files (x86)/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries;C:/Users/Christine/Documents/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino;C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include;C:/Program Files (x86)/Arduino/libraries/GraphicsLib;C:/Program Files (x86)/Arduino/libraries/MI0283QT9;C:/Program Files (x86)/Arduino/libraries/Nunchuck;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility;C:/Program Files (x86)/Arduino/libraries/digitalWriteFast;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/EEPROM/src;C:/Users/gerjo/OneDrive/Documents/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SoftwareSerial/src;</VMSETTING_IncludePaths>
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
@@ -477,6 +479,7 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
       <Value>C:/Program Files (x86)/Arduino/libraries/MI0283QT9</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries/Nunchuck</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/EEPROM/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SoftwareSerial/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries/digitalWriteFast</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility</Value>
@@ -520,6 +523,7 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
       <Value>C:/Program Files (x86)/Arduino/libraries/MI0283QT9</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries/Nunchuck</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/EEPROM/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SoftwareSerial/src</Value>
       <Value>C:/Program Files (x86)/Arduino/libraries/digitalWriteFast</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
       <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility</Value>
@@ -554,7 +558,7 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
   <avrgcccpp.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcccpp.assembler.debugging.DebugLevel>
 </AvrGccCpp>
     </ToolchainSettings>
-    <VMSETTING_IncludePaths>../../../MainGame;C:/Program Files (x86)/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries;C:/Users/Christine/Documents/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino;C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include;C:/Program Files (x86)/Arduino/libraries/GraphicsLib;C:/Program Files (x86)/Arduino/libraries/MI0283QT9;C:/Program Files (x86)/Arduino/libraries/Nunchuck;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility;C:/Program Files (x86)/Arduino/libraries/digitalWriteFast;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/EEPROM/src;C:/Users/gerjo/OneDrive/Documents/Arduino/libraries;</VMSETTING_IncludePaths>
+    <VMSETTING_IncludePaths>../../../MainGame;C:/Program Files (x86)/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries;C:/Users/Christine/Documents/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino;C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/;C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include;C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include;C:/Program Files (x86)/Arduino/libraries/GraphicsLib;C:/Program Files (x86)/Arduino/libraries/MI0283QT9;C:/Program Files (x86)/Arduino/libraries/Nunchuck;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility;C:/Program Files (x86)/Arduino/libraries/digitalWriteFast;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/EEPROM/src;C:/Users/gerjo/OneDrive/Documents/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SoftwareSerial/src;</VMSETTING_IncludePaths>
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
@@ -882,6 +886,24 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
     <Compile Include="lib\hart\hart.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="lib\init\initRW.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\init\initRW.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\IRcom\IRcom.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\IRcom\IRcom.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\Navigate\Navigate.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\Navigate\Navigate.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="lib\Obstacle\Obstacle.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -908,6 +930,9 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
     <Folder Include="lib\Grid\" />
     <Folder Include="lib\Data" />
     <Folder Include="lib\hart" />
+    <Folder Include="lib\init\" />
+    <Folder Include="lib\IRcom\" />
+    <Folder Include="lib\Navigate\" />
     <Folder Include="lib\Obstacle\" />
     <Folder Include="lib\Wall\" />
     <Folder Include="__vm\" />

@@ -10,27 +10,16 @@
 
 #define __AVR_ATmega328p__
 #define __AVR_ATmega328P__
-#define ARDUINO 10801
+#define ARDUINO 106012
 #define ARDUINO_MAIN
 #define F_CPU 16000000L
 #define __AVR__
 #define F_CPU 16000000L
-#define ARDUINO 10801
+#define ARDUINO 106012
 #define ARDUINO_AVR_UNO
 #define ARDUINO_ARCH_AVR
-void init_adc_single_sample();
-void single_sample();
-int navigateStart();
-int Startscherm();
-int loseScreen();
-int winScreen();
-int navigate();
-int level1();
-int level2();
-int levelRandom(uint8_t SL);
-int highScore();
 int main(void);
 
 #include "pins_arduino.h" 
 #include "Arduino.h"
-#include "MainGame.ino"
+#include "IRSend.ino"

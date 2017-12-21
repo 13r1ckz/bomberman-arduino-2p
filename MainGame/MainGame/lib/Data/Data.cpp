@@ -24,3 +24,11 @@ unsigned char a[15][15] = { {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 {2,1,1,1,1,1,1,1,1,1,1,1,1,1,2},
 {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
 };
+
+int nunchukX = 1;
+int nunchukY = 1;
+
+int levensA = 3;
+int levensB = 3;
+
+int points = 0;
