@@ -226,11 +226,16 @@ int resetGrid(){
 int loseScreen(){
 	lcd.fillScreen(BLACK);
 	lcd.drawText(38, 50, "You lose", RGB(255,0,0), BLACK, 4);
-	//Serial.println("lose screen");
+	lcd.drawText(80, 130, "Punten: ", WHITE, BLACK, 2);
+	lcd.drawInteger(200, 130, points, DEC, WHITE, BLACK, 2 | 0x00);
+	levensA = 3;
+	levensB = 3;
+	points = 0;
+	
 	
 	while(!nunchuk.zButton) {
 		nunchuk.update();
-		Serial.println(nunchuk.zButton);
+		delay(1);
 	}
 	
 	return;
@@ -238,12 +243,19 @@ int loseScreen(){
 
 int winScreen(){
 	lcd.fillScreen(BLACK);
-	lcd.drawText(50, 50, "You win", RGB(0,255,0), BLACK, 4);
-
+	lcd.drawText(50, 50, "You win", RGB(0,255,0), BLACK, 4);	
+	lcd.drawText(80, 130, "Punten: ", WHITE, BLACK, 2);
+	lcd.drawInteger(200, 130, points, DEC, WHITE, BLACK, 2 | 0x00);
+	levensA = 3;
+	levensB = 3;
+	points = 0;
+	
+	
 	while(!nunchuk.zButton) {
 		nunchuk.update();
-		Serial.println("");
+		delay(1);
 	}
+	
 	return;
 }
 
@@ -301,9 +313,13 @@ int level1() {
 	resetGrid();
 	if(life == 2) {
 		winScreen();
+		life = 0;
+		nunchuk.update();
+		
 	}
 	if(life == 1) {
 		loseScreen();
+		life = 0;
 		nunchuk.update();
 	}
 	return;
@@ -319,7 +335,7 @@ int level2() {
 	resetGrid();
 	if(life == 2) {
 		winScreen();
-		
+		life = 0;
 	}
 	if(life == 1) {
 		loseScreen();
