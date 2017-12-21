@@ -196,21 +196,27 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 			woodBox(8,13);
 	}
 	else if (level == 3){
-		uint8_t seed;
+		
 		uint8_t x;
 		uint8_t y;
+				Serial.println(seed);
+		Serial.println("level 3");
+		Serial.println(SR);
 		if(SR == 1){
-			while(0){
-			if(chat.available()){
-			seed = chat.read();	
+			Serial.println(seed);
+			while(!seed){
+				
+			//if(chat.available()){
+			
 			randomSeed(seed);
 			Serial.print("Seed: ");
 			Serial.println(seed);
-			}
+			//}
 			}
 		}else{
 		seed = random(TCNT0);
 		randomSeed(seed);
+		Serial.println("sent");
 		Serial.print("Seed: ");
 		Serial.println(seed);
 		chat.print(seed);
@@ -239,3 +245,6 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 	}
 } //Obstacle
 
+Obstacle::setseed(uint8_t seed){
+	this->seed = seed;
+}

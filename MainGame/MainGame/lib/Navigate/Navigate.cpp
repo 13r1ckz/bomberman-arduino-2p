@@ -20,11 +20,11 @@ Navigate::navigate()
 			{
 				nunchukY++;
 				chat.println(nunchukX, BIN);
-				Serial.print("X: ");
-				Serial.println(nunchukX, BIN);
+				//Serial.print("X: ");
+				//Serial.println(nunchukX, BIN);
 				chat.println(nunchukY, BIN);
-				Serial.print("Y: ");
-				Serial.println(nunchukY, BIN);
+				//Serial.print("Y: ");
+				//Serial.println(nunchukY, BIN);
 				lcd.fillRect(gridFH.GridF(nunchukX), gridFH.GridF(nunchukY)-16, 16, 16, WHITE); //wist vorige positie
 			}
 		}
@@ -40,11 +40,11 @@ Navigate::navigate()
 			{
 				nunchukY--;
 				chat.println(nunchukX, BIN);
-				Serial.print("X: ");
-				Serial.println(nunchukX, BIN);
+				//Serial.print("X: ");
+				//Serial.println(nunchukX, BIN);
 				chat.println(nunchukY, BIN);
-				Serial.print("Y: ");
-				Serial.println(nunchukY, BIN);
+				//Serial.print("Y: ");
+				//Serial.println(nunchukY, BIN);
 				lcd.fillRect(gridFH.GridF(nunchukX), gridFH.GridF(nunchukY)+16, 16, 16, WHITE); //wist vorige positie
 			}
 		}
@@ -60,11 +60,11 @@ Navigate::navigate()
 			{
 				nunchukX--;
 				chat.println(nunchukX, BIN);
-				Serial.print("X: ");
-				Serial.println(nunchukX, BIN);
+				//Serial.print("X: ");
+				//Serial.println(nunchukX, BIN);
 				chat.println(nunchukY, BIN);
-				Serial.print("Y: ");
-				Serial.println(nunchukY, BIN);
+				//Serial.print("Y: ");
+				//Serial.println(nunchukY, BIN);
 				lcd.fillRect(gridFH.GridF(nunchukX)+16, gridFH.GridF(nunchukY), 16, 16, WHITE); //wist vorige positie
 			}
 		}
@@ -80,11 +80,11 @@ Navigate::navigate()
 			{
 				nunchukX++;
 				chat.println(nunchukX, BIN);
-				Serial.print("X: ");
-				Serial.println(nunchukX, BIN);
+				//Serial.print("X: ");
+				//Serial.println(nunchukX, BIN);
 				chat.println(nunchukY, BIN);
-				Serial.print("Y: ");
-				Serial.println(nunchukY, BIN);
+				//Serial.print("Y: ");
+				//Serial.println(nunchukY, BIN);
 				lcd.fillRect(gridFH.GridF(nunchukX)-16, gridFH.GridF(nunchukY), 16, 16, WHITE); //wist vorige positie
 			}
 		}

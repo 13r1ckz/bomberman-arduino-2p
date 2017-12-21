@@ -12,6 +12,7 @@ class Obstacle
 {
 //variables
 public:
+uint8_t seed = 0;
 protected:
 private:
 
@@ -19,6 +20,7 @@ private:
 public:
 	woodBox(int X, int Y);
 	ObstacleDR(int Level, uint8_t SR);
+	setseed(uint8_t seed);
 protected:
 private:
 

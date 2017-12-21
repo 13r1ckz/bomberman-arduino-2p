@@ -59,12 +59,12 @@ ISR(INT0_vect){
 			ir.tempteller = 0;
 			ir.ontvangeraantal++;
 			} else if(ir.verschil >= 30 && ir.verschil <40){
-			Serial.println("1");
+			//Serial.println("1");
 			ir.ontvangenbericht |=(1<<ir.bitteller);
 			ir.bitteller--;
 			ir.ontvangeraantal++;
 			} else if(ir.verschil >= 20 && ir.verschil <30){
-			Serial.println("0");
+			//Serial.println("0");
 			ir.ontvangenbericht &=~(1<<ir.bitteller);
 			ir.bitteller--;
 			ir.ontvangeraantal++;
@@ -75,7 +75,7 @@ ISR(INT0_vect){
 		if(ir.bitteller == -1){
 			ir.bitteller = 7;
 			ir.letter = ir. ontvangenbericht;
-			Serial.println(ir.letter);
+			//Serial.println(ir.letter);
 			ir.ontvangenbericht = 0x00;
 			}else{
 			ir.bitteller =7;
@@ -104,25 +104,21 @@ void single_sample()	//brightness
 	bright = bright * 10;
 	lcd.led(bright);
 }
-
 int navigateStart() { //navigates through start
 	int nunchukY = 1;
 	int counter = 5;
 	int i = 0;
 	char msg;
+	char temp;
 	
-	nunchuk.update();
-	
-	while(nunchuk.zButton == 0) {
-		
-		nunchuk.update();
+	while(1) {
 		single_sample();
-		
+		nunchuk.update();
 		if(nunchuk.analogY < 60) {
 			if(i>counter) {
 				i=0;
 			}
-			if(i == 0 && nunchukY < 4) {
+			if(i == 0) {
 				nunchukY++;
 				i++;
 			}
@@ -133,43 +129,63 @@ int navigateStart() { //navigates through start
 			if(i>counter) {
 				i=0;
 			}
-			if(i == 0 && nunchukY > 1) {
+			if(i == 0) {
 				nunchukY--;
 				i++;
 			}
 			i++;
 		}
 		
-		//Serial.println(ir.letter);
-		if (!(ir.letter == 0)){
-			//Serial.println("letter");
-			msg = ir.letter - 48;
-			if(msg >= 1 || msg <= 5){
+		if (chat.available()){
+			msg = chat.read();
+			msg = msg - 48;
+			temp = chat.read();
+			Serial.println(temp);
+			OB.setseed(temp);
+			if(msg >= 1 || msg <= 5 ){
 				return msg;
 			}
 		}
 		else{
 			if(nunchukY == 1){
 				nav.navigatestart(1);
-
+				if (nunchuk.zButton) {
+					chat.println(1,DEC);
+					return 1;
+				}
 			}
+			
+			//tekent rode rand om geselecteerde level
 			if(nunchukY == 2){
-				nav.navigatestart(2); //tekent rode rand om geselecteerde level
-
+				nav.navigatestart(2);
+				if (nunchuk.zButton) {
+					chat.println(2,DEC);
+					return 2;
+				}
 			}
 			if(nunchukY == 3){
 				nav.navigatestart(3);
-		
+				
+				if (nunchuk.zButton) {
+					chat.println(5,DEC);
+					return 3;
+				}
 			}
 			if(nunchukY == 4){
 				nav.navigatestart(4);
 				
+				if (nunchuk.zButton) {
+					return 4;
+				}
+			}
+			if(nunchukY == 5){
+				nunchukY = 1;
+			}
+			if(nunchukY == 0){
+				nunchukY = 4;
 			}
 		}
 	}
-	ir.sendByte(nunchukY);
-	_delay_ms(10);
-	return nunchukY;
 }
 
 int Startscherm(){
@@ -216,13 +232,13 @@ int resetGrid(){
 int loseScreen(){
 	lcd.fillScreen(BLACK);
 	lcd.drawText(38, 50, "You lose", RGB(255,0,0), BLACK, 4);
-	Serial.println("lose screen");
+	//Serial.println("lose screen");
 	
 	nunchuk.update();
 	
 	while(!nunchuk.zButton) {
 		nunchuk.update();
-		Serial.println("");	
+		Serial.println("");
 	}
 	return;
 }
@@ -251,7 +267,7 @@ int navigate(){
 	int XA, XB, YA, YB;
 	nunchukX = 1;
 	nunchukY = 1;
-	Serial.println("navigate");
+	//Serial.println("navigate");
 	while(1) {
 		single_sample();
 		nunchuk.update();
@@ -282,7 +298,7 @@ int navigate(){
 				bomY=YA;
 				bomb=1;
 				counterBomExplosion=0;
-				Serial.println(255,BIN);
+				//Serial.println(255,BIN);
 				chat.println(255,BIN);
 			}
 		}
@@ -348,7 +364,7 @@ int levelRandom(uint8_t SL) {
 	if (SL == 1)
 	{
 		OB.ObstacleDR(3,1);
-	} else {
+		} else {
 		OB.ObstacleDR(3,0);
 	}
 	navigate();
@@ -370,7 +386,7 @@ int main(void)
 	//	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	uint8_t clear_bg=0x00; //0x80 = dont clear background for fonts (only for DisplayXXX)
 
-	ir.setIR();
+	//ir.setIR();
 
 	//init display
 	lcd.begin();
@@ -407,6 +423,7 @@ int main(void)
 			highScore();
 		}
 		if (level == 5)	{
+			Serial.println("level5");
 			levelRandom(1);
 		}
 	}
