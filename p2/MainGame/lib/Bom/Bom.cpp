@@ -110,51 +110,49 @@ Bom::BomDelete(int bomX, int bomY, int character)
 	
 	if(!(a[bomY/16+1][bomX/16] == 2)) {		//onder van de bom
 		lcd.fillRect(bomX, bomY+16, 16, 16, WHITE);
-	}
+	} 
 }
 
-void Bom::PlaceBom(int XA, int YA, int XB, int YB, int character, int bomBinnen, int * counterBomExplosion, int * counterBomDelete)
+void Bom::PlaceBomA(int XA, int YA, int XB, int YB, int character, int bomBinnen, int * counterBomExplosionA, int * counterBomDeleteA)
 {
 	MI0283QT9 lcd;
 	ArduinoNunchuk nunchuk;
 	SoftwareSerial chat(2, 3); // RX, TX
 	
-	int bomExplosion = 75;
-	int bomDelete = 50;
+	int bomExplosion = 40;
+	int bomDelete = 40;
 	nunchuk.update();
-	
-	if (bomb==0){				//als er geen bom ligt
+
+
+	if (bombA==0){				//als er geen bom ligt
 		//Serial.println(nunchuk.zButton);
 		if (nunchuk.zButton) {
-			if (character == 1) {
-				bomX=XA;
-				bomY=YA;
-			} else if (character == 2) {
-				bomX=XB;
-				bomY=YB;
-			}
-			bomb=1;
-			*counterBomExplosion=0;
+					bomX=XA;
+					bomY=YA;
+				
+					
+			bombA=1;
+			*counterBomExplosionA=0;
 			Serial.println(255,BIN);
-			chat.println(255,BIN);
+			//chat.println(255,BIN);
 		}
 	}
-	if (bomb==1 || bomBinnen == 1) {
+	if (bombA==1 || bomBinnen == 1) {
 		BomXY(bomX/16, bomY/16);
-		*counterBomExplosion+=1;
+		*counterBomExplosionA+=1;
 		bomBinnen = 0;
 
 	}
 	
-	if(*counterBomExplosion==bomExplosion) {
+	if(*counterBomExplosionA==bomExplosion) {
 		BomTrack(bomX, bomY, character);
-		*counterBomExplosion=0;
-		bomb = 2;
+		*counterBomExplosionA=0;
+		bombA = 2;
 	}
 	
-	if (bomb == 2) {
-		*counterBomDelete+=1;
-		if (*counterBomDelete == bomDelete) {
+	if (bombA == 2) {
+		*counterBomDeleteA+=1;
+		if (*counterBomDeleteA == bomDelete) {
 			if ((((XA == bomX) || (XA == bomX-16) || (XA == bomX+16)) && (YA == bomY)) || ((XA == bomX) && ((YA == bomY) || (YA == bomY-16) || (YA == bomY+16))))	{ //character A midden in bom
 				levensA--;
 				lcd.fillRect(255, 112,100, 50, WHITE);
@@ -165,8 +163,65 @@ void Bom::PlaceBom(int XA, int YA, int XB, int YB, int character, int bomBinnen,
 				points += 10;
 			}
 			BomDelete(bomX, bomY, character);
-			bomb = 0;
-			*counterBomDelete = 0;
+			bombA = 0;
+			*counterBomDeleteA = 0;
+		}
+		
+	}
+	
+	
+}
+void Bom::PlaceBomB(int XA, int YA, int XB, int YB, int character, int bomBinnen, int * counterBomExplosionB, int * counterBomDeleteB)
+{
+	MI0283QT9 lcd;
+	ArduinoNunchuk nunchuk;
+	SoftwareSerial chat(2, 3); // RX, TX
+	
+	int bomExplosion = 40;
+	int bomDelete = 40;
+	nunchuk.update();
+	
+	
+		
+	
+	
+if(bomBinnen ==1 ){
+	bomX=XB;
+	bomY=YB;
+	bombB = 1;
+	
+		
+}
+
+	if (bombB==1) {
+		BomXY(bomX/16, bomY/16);
+		*counterBomExplosionB+=1;
+		bomBinnen = 0;
+		//Serial.println("bomb");
+
+	}
+	
+	if(*counterBomExplosionB==bomExplosion) {
+		BomTrack(bomX, bomY, character);
+		*counterBomExplosionB=0;
+		bombB = 2;
+	}
+	
+	if (bombB == 2) {
+		*counterBomDeleteB+=1;
+		if (*counterBomDeleteB == bomDelete) {
+			if ((((XA == bomX) || (XA == bomX-16) || (XA == bomX+16)) && (YA == bomY)) || ((XA == bomX) && ((YA == bomY) || (YA == bomY-16) || (YA == bomY+16))))	{ //character A midden in bom
+				levensA--;
+				lcd.fillRect(255, 112,100, 50, WHITE);
+			
+			}
+			if ((((XB == bomX) || (XB == bomX-16) || (XB == bomX+16)) && (YB == bomY)) || ((XB == bomX) && ((YB == bomY) || (YB == bomY-16) || (YB == bomY+16))))	{ //character B midden in bom
+				levensB--;
+			
+			}
+			BomDelete(bomX, bomY, character);
+			bombB = 0;
+			*counterBomDeleteB = 0;
 		}
 		
 	}

@@ -8,6 +8,7 @@ Navigate::navigate()
 	SoftwareSerial chat(2, 3); // RX, TX
 	GridClass gridFH;
 	Character Characters;
+	//chat.begin(9600);
 	nunchuk.update();
 	int time = 8;
 	Characters.MoveB(nunchukX, nunchukY);
@@ -19,12 +20,8 @@ Navigate::navigate()
 			if (a[nunchukY+1][nunchukX] == 1)
 			{
 				nunchukY++;
-				chat.println(nunchukX, BIN);
-				Serial.print("X: ");
-				Serial.println(nunchukX, BIN);
-				chat.println(nunchukY, BIN);
-				Serial.print("Y: ");
-				Serial.println(nunchukY, BIN);
+				chat.print(nunchukX, DEC);
+				chat.print(nunchukY, DEC);
 				lcd.fillRect(gridFH.GridF(nunchukX), gridFH.GridF(nunchukY)-16, 16, 16, WHITE); //wist vorige positie
 			}
 		}
@@ -39,12 +36,8 @@ Navigate::navigate()
 			if (a[nunchukY-1][nunchukX] == 1)
 			{
 				nunchukY--;
-				chat.println(nunchukX, BIN);
-				Serial.print("X: ");
-				Serial.println(nunchukX, BIN);
-				chat.println(nunchukY, BIN);
-				Serial.print("Y: ");
-				Serial.println(nunchukY, BIN);
+				chat.print(nunchukX, DEC);
+				chat.print(nunchukY, DEC);
 				lcd.fillRect(gridFH.GridF(nunchukX), gridFH.GridF(nunchukY)+16, 16, 16, WHITE); //wist vorige positie
 			}
 		}
@@ -59,12 +52,8 @@ Navigate::navigate()
 			if (a[nunchukY][nunchukX-1] == 1)
 			{
 				nunchukX--;
-				chat.println(nunchukX, BIN);
-				Serial.print("X: ");
-				Serial.println(nunchukX, BIN);
-				chat.println(nunchukY, BIN);
-				Serial.print("Y: ");
-				Serial.println(nunchukY, BIN);
+				chat.print(nunchukX, DEC);
+				chat.print(nunchukY, DEC);
 				lcd.fillRect(gridFH.GridF(nunchukX)+16, gridFH.GridF(nunchukY), 16, 16, WHITE); //wist vorige positie
 			}
 		}
@@ -79,12 +68,8 @@ Navigate::navigate()
 			if (a[nunchukY][nunchukX+1] == 1)
 			{
 				nunchukX++;
-				chat.println(nunchukX, BIN);
-				Serial.print("X: ");
-				Serial.println(nunchukX, BIN);
-				chat.println(nunchukY, BIN);
-				Serial.print("Y: ");
-				Serial.println(nunchukY, BIN);
+				chat.print(nunchukX, DEC);
+				chat.print(nunchukY, DEC);
 				lcd.fillRect(gridFH.GridF(nunchukX)-16, gridFH.GridF(nunchukY), 16, 16, WHITE); //wist vorige positie
 			}
 		}
@@ -152,3 +137,5 @@ Navigate::navigatestart(char button)
 		lcd.drawText(20,20, "enter number between 1 and 4", RGB(255,0,0),RGB(255,0,0),3);
 	}
 } //Navigatestart
+
+

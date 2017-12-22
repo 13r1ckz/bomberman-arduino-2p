@@ -25,8 +25,8 @@ unsigned char a[15][15] = { {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
 };
 
-int nunchukX = 1;
-int nunchukY = 1;
+int nunchukX = 13;
+int nunchukY = 13;
 
 int levensA = 3;
 int levensB = 3;

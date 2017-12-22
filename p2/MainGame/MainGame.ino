@@ -34,6 +34,9 @@ Navigate nav;
 initRW initrw;
 IRcom ir;
 
+uint8_t loopX = 1;
+uint8_t loopY = 1;
+uint8_t lopen = 0;
 ISR(TIMER2_COMPB_vect){
 }
 
@@ -144,18 +147,18 @@ int navigateStart() { //navigates through start
 		if (chat.available()){
 			msg = chat.read();
 			msg = msg - 48;
-				if(msg >= 1 || msg <= 5){
-					return msg;
-				}
-			}
-			/*
-		//Serial.println(ir.letter);
-		if (!(ir.letter == 0)){
-			//Serial.println("letter");
-			msg = ir.letter - 48;
 			if(msg >= 1 || msg <= 5){
 				return msg;
 			}
+		}
+		/*
+		//Serial.println(ir.letter);
+		if (!(ir.letter == 0)){
+		//Serial.println("letter");
+		msg = ir.letter - 48;
+		if(msg >= 1 || msg <= 5){
+		return msg;
+		}
 		}*/
 		else{
 			if(nunchukY == 1){
@@ -168,7 +171,7 @@ int navigateStart() { //navigates through start
 			}
 			if(nunchukY == 3){
 				nav.navigatestart(3);
-		
+				
 			}
 			if(nunchukY == 4){
 				nav.navigatestart(4);
@@ -243,7 +246,7 @@ int loseScreen(){
 
 int winScreen(){
 	lcd.fillScreen(BLACK);
-	lcd.drawText(50, 50, "You win", RGB(0,255,0), BLACK, 4);	
+	lcd.drawText(50, 50, "You win", RGB(0,255,0), BLACK, 4);
 	lcd.drawText(80, 130, "Punten: ", WHITE, BLACK, 2);
 	lcd.drawInteger(200, 130, points, DEC, WHITE, BLACK, 2 | 0x00);
 	levensA = 3;
@@ -260,12 +263,18 @@ int winScreen(){
 }
 
 int navigate(){
-	int counterBomExplosion = 0;
+		
+	//Serial.print("X:"); Serial.println(loopX);
+	//Serial.print("Y:"); Serial.println(loopY);
+	int counterBomExplosionA = 0;
+	int counterBomExplosionB = 0;
 	int gridX, gridY;
+	int z= 0;
 	
 	uint8_t bomX, bomY;
 	
-	int counterBomDelete = 0;
+	int counterBomDeleteA = 0;
+	int counterBomDeleteB = 0;
 	int XA, XB, YA, YB;
 	nunchukX = 13;
 	nunchukY = 13;
@@ -277,20 +286,51 @@ int navigate(){
 		nunchuk.update();
 		XA = gridFH.GridF(nunchukX);	// hier move character A
 		YA = gridFH.GridF(nunchukY);
-		XB = gridFH.GridF(1);			// hier move character B
-		YB = gridFH.GridF(1);
-		Characters.MoveA(XB/16, YB/16);
+		XB = gridFH.GridF(loopX);			// hier move character B
+		YB = gridFH.GridF(loopY);
+
+		//Serial.println(XB);
+		//Serial.println(YB);
 		
-		nav.navigate();
-		//if (chat.available()) {
-			//Serial.write(chat.read());
-			//bomBinnen = 1;
-			//character = 2;
-		//}
-		if(chat.available()){
-			Serial.println(chat.read());
+		uint8_t loopXoud = loopX;
+		uint8_t loopYoud = loopY;
+		if (loopXoud !=loopX || loopYoud !=loopX)
+		{
+		Characters.MoveA(loopX, loopY);	
 		}
 		
+		
+		
+		nav.navigate();
+	
+		if(chat.available()>0){
+			lopen = chat.read();
+			
+			if(lopen == 48){
+				
+			bomBinnen = 1;
+			character = 2;
+			//bom.PlaceBomB(XA, YA, XB, YB, character, bomBinnen, &counterBomExplosionB, &counterBomDeleteB);
+			Serial.println("BOOOM");
+			}else{	
+			
+				if (z == 0)
+				{
+					loopX = lopen;
+					Serial.print("X:");
+					Serial.println(loopX);
+					}
+					if(z == 1){
+					loopY =lopen;
+					Serial.print("Y:");
+					Serial.println(loopY);
+				}
+				z = !z;
+				if(!bomBinnen){
+				lcd.fillRect(gridFH.GridF(loopXoud), gridFH.GridF(loopYoud), 16, 16, WHITE); //wist vorige positie
+				}
+		}
+			}
 		harts.HartS(levensB, 16, 2);
 		harts.HartS(levensA, 16, 13);
 		lcd.drawInteger(255, 112, points, DEC, BLACK, WHITE, 2| 0x00);
@@ -300,10 +340,16 @@ int navigate(){
 		if (levensB == 0) {
 			return 2;
 		}
-		bom.PlaceBom(XA, YA, XB, YB, character, bomBinnen, &counterBomExplosion, &counterBomDelete);
 		character = 1;
-		
+		bom.PlaceBomA(XA, YA, XB, YB, character, 0, &counterBomExplosionA, &counterBomDeleteA);
+		character = 2;
+		bom.PlaceBomB(XA, YA, XB, YB, character, bomBinnen, &counterBomExplosionB, &counterBomDeleteB);
+		bomBinnen = 0;
+			
+		//Serial.println("boombinnen");
+	
 	}
+	
 }
 
 int level1() {
@@ -354,7 +400,7 @@ int levelRandom(uint8_t SL) {
 	if (SL == 1)
 	{
 		OB.ObstacleDR(3,1);
-	} else {
+		} else {
 		OB.ObstacleDR(3,0);
 	}
 	navigate();
