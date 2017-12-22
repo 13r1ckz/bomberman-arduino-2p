@@ -34,6 +34,10 @@ Navigate nav;
 initRW initrw;
 IRcom ir;
 
+uint8_t loopX = 1;
+uint8_t loopY = 2;
+uint8_t lopen = 0;
+
 ISR(TIMER2_COMPB_vect){
 }
 
@@ -144,10 +148,10 @@ int navigateStart() { //navigates through start
 		if (chat.available()){
 			msg = chat.read();
 			msg = msg - 48;
-				if(msg >= 1 || msg <= 5){
+				if(msg >= 1 && msg <= 5){
 					return msg;
 				}
-			}
+		}
 			/*
 		//Serial.println(ir.letter);
 		if (!(ir.letter == 0)){
@@ -157,7 +161,7 @@ int navigateStart() { //navigates through start
 				return msg;
 			}
 		}*/
-		else{
+		else {
 			if(nunchukY == 1){
 				nav.navigatestart(1);
 
@@ -262,30 +266,54 @@ int winScreen(){
 int navigate(){
 	int counterBomExplosion = 0;
 	int gridX, gridY;
-	
+	int z = 0;
 	uint8_t bomX, bomY;
-	
+
 	int counterBomDelete = 0;
 	int XA, XB, YA, YB;
 	nunchukX = 1;
 	nunchukY = 1;
 	char bomBinnen = 0;
-	Serial.println("navigate");
+	
 	int character = 1;
 	while(1) {
 		single_sample();
 		nunchuk.update();
 		XA = gridFH.GridF(nunchukX);	// hier move character A
 		YA = gridFH.GridF(nunchukY);
-		XB = gridFH.GridF(13);			// hier move character B
-		YB = gridFH.GridF(13);
+		XB = gridFH.GridF(loopX);			// hier move character B
+		YB = gridFH.GridF(loopY);
+		uint8_t loopXoud = loopX;
+		uint8_t loopYoud = loopY;
 		Characters.MoveB(XB/16, YB/16);
+
 		
 		nav.navigate();
-		if (chat.available()) {
-			Serial.write(chat.read());
-			bomBinnen = 1;
-			character = 2;
+		
+		if(chat.available()>0){
+			lopen = chat.read();
+			
+			if(lopen == '0'){
+				bomBinnen = 1;
+				character = 2;
+				//bom.PlaceBomB(XA, YA, XB, YB, character, bomBinnen, &counterBomExplosionB, &counterBomDeleteB);
+				
+				}else{
+				
+				if (z == 0)
+				{
+					loopX = lopen - 48;
+					Serial.print("X:");
+					Serial.println(loopX);
+				}
+				if(z == 1){
+					loopY =lopen - 48;
+					Serial.print("Y:");
+					Serial.println(loopY);
+				}
+				z = !z;
+				lcd.fillRect(gridFH.GridF(loopXoud), gridFH.GridF(loopYoud), 16, 16, WHITE); //wist vorige positie
+			}
 		}
 		
 		harts.HartS(levensA, 16, 2);

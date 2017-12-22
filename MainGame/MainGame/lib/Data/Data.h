@@ -3,8 +3,8 @@
 #define __DATA_H__
 
 extern unsigned char a[15][15];
-extern int nunchukX;
-extern int nunchukY;
+extern char nunchukX;
+extern char nunchukY;
 extern int points;
 extern int levensA;
 extern int levensB;
