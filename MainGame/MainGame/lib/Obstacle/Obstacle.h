@@ -5,7 +5,6 @@
 #include "../Data/Data.h"
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
-#include <SoftwareSerial.h>
 #include <Arduino.h>
 
 class Obstacle

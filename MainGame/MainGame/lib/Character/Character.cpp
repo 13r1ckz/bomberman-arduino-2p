@@ -20,7 +20,7 @@
 #include "Character.h"
 
 // default constructor
-Character::MoveA(int X, int Y)
+Character::MoveBlue(int X, int Y)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	GridClass gridFH;
@@ -85,7 +85,7 @@ Character::MoveA(int X, int Y)
 	lcd.drawLine(gridFH.GridF(X)+10, gridFH.GridF(Y)+15, gridFH.GridF(X)+13, gridFH.GridF(Y)+15, BLACK);
 } //Character
 
-Character::MoveB(int X, int Y)
+Character::MoveRed(int X, int Y)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	GridClass gridFH;

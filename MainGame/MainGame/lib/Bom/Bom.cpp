@@ -1,4 +1,4 @@
-/* 
+/*
 * Bom.cpp
 *
 * Created: 11/30/2017 11:26:54 AM
@@ -28,19 +28,19 @@ Bom::BomXY(int X, int Y)
 
 Bom::BomExpl(int X, int Y)
 {
-		MI0283QT9 lcd;  //MI0283QT9 Adapter v1
-		GridClass gridFH;
-		lcd.fillRect(X, Y, 16, 16, RGB(164,0,0));
-		lcd.fillRect((X+1), (Y+1), 14, 14, RGB(214,0,0));
-		lcd.fillRect((X+2), (Y+2), 12, 12, RGB(255,80,10));
-		lcd.fillRect((X+3), (Y+3), 10, 10, RGB(255,120,50));
-		lcd.fillRect((X+4), (Y+4), 8, 8, RGB(255,170,90));
-		lcd.fillRect((X+5), (Y+5), 6, 6, RGB(255,255,170));
-		lcd.fillRect((X+6), (Y+6), 4, 4, RGB(255,255,255));
-				
+	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
+	GridClass gridFH;
+	lcd.fillRect(X, Y, 16, 16, RGB(164,0,0));
+	lcd.fillRect((X+1), (Y+1), 14, 14, RGB(214,0,0));
+	lcd.fillRect((X+2), (Y+2), 12, 12, RGB(255,80,10));
+	lcd.fillRect((X+3), (Y+3), 10, 10, RGB(255,120,50));
+	lcd.fillRect((X+4), (Y+4), 8, 8, RGB(255,170,90));
+	lcd.fillRect((X+5), (Y+5), 6, 6, RGB(255,255,170));
+	lcd.fillRect((X+6), (Y+6), 4, 4, RGB(255,255,255));
+	
 }//explosion
 
-Bom::BomTrack(int bomX, int bomY, int character) 
+Bom::BomTrack(int bomX, int bomY, int character)
 {
 	BomExpl(bomX, bomY);
 	if(!(a[bomY/16][bomX/16-1] == 2)) {		//links van de bom
@@ -90,7 +90,7 @@ Bom::BomTrack(int bomX, int bomY, int character)
 	}
 }
 
-Bom::BomDelete(int bomX, int bomY, int character) 
+Bom::BomDelete(int bomX, int bomY, int character)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	#define WHITE 0xFFFFFFFF
@@ -113,49 +113,44 @@ Bom::BomDelete(int bomX, int bomY, int character)
 	}
 }
 
-void Bom::PlaceBom(int XA, int YA, int XB, int YB, int character, int bomBinnen, int * counterBomExplosion, int * counterBomDelete)
+void Bom::PlaceBomA(int XA, int YA, int XB, int YB, int character, int bomBinnen, int * counterBomExplosionA, int * counterBomDeleteA)
 {
 	MI0283QT9 lcd;
 	ArduinoNunchuk nunchuk;
-	SoftwareSerial chat(2, 3); // RX, TX
-	chat.begin(9600);
+	
 	int bomExplosion = 40;
 	int bomDelete = 40;
 	nunchuk.update();
-	
-	if (bomb==0 ){				//als er geen bom ligt
-		//Serial.println(nunchuk.zButton);
+
+
+	if (bombA==0){				//als er geen bom ligt
+		
 		if (nunchuk.zButton) {
-			chat.print(0x00);
-			if (character == 1) {
-				bomX=XA;
-				bomY=YA;
-			} else if (character == 2) {
-				bomX=XB;
-				bomY=YB;
-			}
-			bomb=1;
-			*counterBomExplosion=0;
-			//Serial.println(255,BIN);
-			//chat.println(255,BIN);
+			bomX=XA;
+			bomY=YA;
+			Serial.print(0);
+			
+			bombA=1;
+			*counterBomExplosionA=0;
+			
 		}
 	}
-	if (bomb==1 || bomBinnen == 1) {
+	if (bombA==1 || bomBinnen == 1) {
 		BomXY(bomX/16, bomY/16);
-		*counterBomExplosion+=1;
+		*counterBomExplosionA+=1;
 		bomBinnen = 0;
 
 	}
 	
-	if(*counterBomExplosion==bomExplosion) {
+	if(*counterBomExplosionA==bomExplosion) {
 		BomTrack(bomX, bomY, character);
-		*counterBomExplosion=0;
-		bomb = 2;
+		*counterBomExplosionA=0;
+		bombA = 2;
 	}
 	
-	if (bomb == 2) {
-		*counterBomDelete+=1;
-		if (*counterBomDelete == bomDelete) {
+	if (bombA == 2) {
+		*counterBomDeleteA+=1;
+		if (*counterBomDeleteA == bomDelete) {
 			if ((((XA == bomX) || (XA == bomX-16) || (XA == bomX+16)) && (YA == bomY)) || ((XA == bomX) && ((YA == bomY) || (YA == bomY-16) || (YA == bomY+16))))	{ //character A midden in bom
 				levensA--;
 				lcd.fillRect(255, 112,100, 50, WHITE);
@@ -166,8 +161,58 @@ void Bom::PlaceBom(int XA, int YA, int XB, int YB, int character, int bomBinnen,
 				points += 10;
 			}
 			BomDelete(bomX, bomY, character);
-			bomb = 0;
-			*counterBomDelete = 0;
+			bombA = 0;
+			*counterBomDeleteA = 0;
+		}
+		
+	}
+	
+	
+}
+void Bom::PlaceBomB(int XA, int YA, int XB, int YB, int character, int bomBinnen, int * counterBomExplosionB, int * counterBomDeleteB)
+{
+	MI0283QT9 lcd;
+	ArduinoNunchuk nunchuk;
+
+	int bomExplosion = 40;
+	int bomDelete = 40;
+	nunchuk.update();
+
+	if(bomBinnen ==1 ){
+		bomX=XB;
+		bomY=YB;
+		bombB = 1;
+	}
+
+	if (bombB==1) {
+		BomXY(bomX/16, bomY/16);
+		*counterBomExplosionB+=1;
+		bomBinnen = 0;
+		
+
+	}
+	
+	if(*counterBomExplosionB==bomExplosion) {
+		BomTrack(bomX, bomY, character);
+		*counterBomExplosionB=0;
+		bombB = 2;
+	}
+	
+	if (bombB == 2) {
+		*counterBomDeleteB+=1;
+		if (*counterBomDeleteB == bomDelete) {
+			if ((((XA == bomX) || (XA == bomX-16) || (XA == bomX+16)) && (YA == bomY)) || ((XA == bomX) && ((YA == bomY) || (YA == bomY-16) || (YA == bomY+16))))	{ //character A midden in bom
+				levensA--;
+				lcd.fillRect(255, 112,100, 50, WHITE);
+				
+			}
+			if ((((XB == bomX) || (XB == bomX-16) || (XB == bomX+16)) && (YB == bomY)) || ((XB == bomX) && ((YB == bomY) || (YB == bomY-16) || (YB == bomY+16))))	{ //character B midden in bom
+				levensB--;
+				
+			}
+			BomDelete(bomX, bomY, character);
+			bombB = 0;
+			*counterBomDeleteB = 0;
 		}
 		
 	}

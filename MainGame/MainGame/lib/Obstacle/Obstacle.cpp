@@ -16,7 +16,6 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	GridClass gridFH;
-	SoftwareSerial chat(2, 3); // RX, TX
 	Serial.begin(9600);
 	if(level == 1){
 		woodBox(4,1);
@@ -201,19 +200,15 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 		uint8_t y;
 		if(SR == 1){
 			while(0){
-			if(chat.available()){
-			seed = chat.read();	
+			if(Serial.available()){
+			seed = Serial.read();	
 			randomSeed(seed);
-			Serial.print("Seed: ");
-			Serial.println(seed);
 			}
 			}
 		}else{
 		seed = random(TCNT0);
 		randomSeed(seed);
-		Serial.print("Seed: ");
-		Serial.println(seed);
-		chat.print(seed);
+		Serial.print(seed);
 		}
 		for(uint8_t QX = 0; QX < 123; QX++){
 			x = random(1,14);
