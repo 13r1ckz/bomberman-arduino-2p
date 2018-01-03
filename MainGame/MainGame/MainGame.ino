@@ -279,7 +279,7 @@ int navigate(){
 		
 		if (loopXoud !=loopX || loopYoud !=loopX)
 		{
-			Characters.MoveBlue(loopX, loopY);
+			Characters.MoveRed(loopX, loopY);
 		}
 		
 		
