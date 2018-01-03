@@ -12,7 +12,6 @@ Navigate::navigate()
 	nunchuk.update();
 	int time = 8;
 	Characters.MoveRed(nunchukX, nunchukY);
-	Serial.println(nunchuk.analogX);
 	if(nunchuk.analogY < 60) { //omlaag lopen
 		if(counter > time) {
 			counter=0;
