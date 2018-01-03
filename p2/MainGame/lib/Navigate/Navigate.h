@@ -4,7 +4,6 @@
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
 #include <ArduinoNunchuk.h>
-#include <SoftwareSerial.h>
 #include "../Data/Data.h"
 #include "../Grid/Grid.h"
 #include "../Character/Character.h"

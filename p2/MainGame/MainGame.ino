@@ -1,10 +1,10 @@
+
 #include <stdint.h>
 #include <Wire.h>
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
 #include <ArduinoNunchuk.h>
 #include <EEPROM.h>
-#include <SoftwareSerial.h>
 #include "lib/Grid/Grid.h"
 #include "lib/Wall/Wall.h"
 #include "lib/Obstacle/Obstacle.h"
@@ -15,14 +15,12 @@
 #include "lib/init/initRW.h"
 #include "lib/Navigate/Navigate.h"
 #include "lib/IRcom/IRcom.h"
-
 #define BLACK 0x00
 #define WHITE 0xFFFFFFFF
+
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
-SoftwareSerial chat(2, 3); // RX, TX
-
 GridClass gridFH;
 OuterWall wallOut;
 InnerWall wallIn;
@@ -144,22 +142,15 @@ int navigateStart() { //navigates through start
 		}
 		
 		
-		if (chat.available()){
-			msg = chat.read();
+		if (Serial.available()){
+			msg = Serial.read();
+			
 			msg = msg - 48;
 			if(msg >= 1 || msg <= 5){
 				return msg;
 			}
 		}
-		/*
-		//Serial.println(ir.letter);
-		if (!(ir.letter == 0)){
-		//Serial.println("letter");
-		msg = ir.letter - 48;
-		if(msg >= 1 || msg <= 5){
-		return msg;
-		}
-		}*/
+		
 		else{
 			if(nunchukY == 1){
 				nav.navigatestart(1);
@@ -179,9 +170,8 @@ int navigateStart() { //navigates through start
 			}
 		}
 	}
-	//ir.sendByte(nunchukY);
-	//_delay_ms(10);
-	chat.println(nunchukY,DEC);
+
+	Serial.println(nunchukY,DEC);
 	return nunchukY;
 }
 
@@ -202,14 +192,12 @@ int Startscherm(){
 	lcd.drawText(82,195, "High score", 0x111111, 0xFFFFFF, 2);
 	
 	lcd.fillRect(0,0,32,16,RGB(255,255,255));
-	Characters.MoveA(0,0);
+	Characters.MoveBlue(0,0);
 	lcd.fillRect(288,0,32,16,RGB(255,255,255));
-	Characters.MoveB(19,0);
+	Characters.MoveRed(19,0);
 	bom.BomXY(1,0);
 	bom.BomXY(18,0);
-	//level = navigateStart();
-	//Serial.println(level);
-	//return level;
+
 	return;
 }
 
@@ -264,8 +252,6 @@ int winScreen(){
 
 int navigate(){
 		
-	//Serial.print("X:"); Serial.println(loopX);
-	//Serial.print("Y:"); Serial.println(loopY);
 	int counterBomExplosionA = 0;
 	int counterBomExplosionB = 0;
 	int gridX, gridY;
@@ -279,8 +265,8 @@ int navigate(){
 	nunchukX = 13;
 	nunchukY = 13;
 	char bomBinnen = 0;
-	Serial.println("navigate");
 	int character = 1;
+	Characters.MoveBlue(1,1);
 	while(1) {
 		single_sample();
 		nunchuk.update();
@@ -289,41 +275,35 @@ int navigate(){
 		XB = gridFH.GridF(loopX);			// hier move character B
 		YB = gridFH.GridF(loopY);
 
-		//Serial.println(XB);
-		//Serial.println(YB);
-		
 		uint8_t loopXoud = loopX;
 		uint8_t loopYoud = loopY;
+		
 		if (loopXoud !=loopX || loopYoud !=loopX)
 		{
-		Characters.MoveA(loopX, loopY);	
+		Characters.MoveBlue(loopX, loopY);	
 		}
 		
 		
 		
 		nav.navigate();
 	
-		if(chat.available()>0){
-			lopen = chat.read();
+		if(Serial.available()>0){
+			lopen = Serial.read();
 			
 			if(lopen == 48){
-				
 			bomBinnen = 1;
 			character = 2;
 			//bom.PlaceBomB(XA, YA, XB, YB, character, bomBinnen, &counterBomExplosionB, &counterBomDeleteB);
-			Serial.println("BOOOM");
+		
 			}else{	
-			
 				if (z == 0)
 				{
 					loopX = lopen;
-					Serial.print("X:");
-					Serial.println(loopX);
+			
 					}
 					if(z == 1){
 					loopY =lopen;
-					Serial.print("Y:");
-					Serial.println(loopY);
+				
 				}
 				z = !z;
 				if(!bomBinnen){
@@ -344,12 +324,8 @@ int navigate(){
 		bom.PlaceBomA(XA, YA, XB, YB, character, 0, &counterBomExplosionA, &counterBomDeleteA);
 		character = 2;
 		bom.PlaceBomB(XA, YA, XB, YB, character, bomBinnen, &counterBomExplosionB, &counterBomDeleteB);
-		bomBinnen = 0;
-			
-		//Serial.println("boombinnen");
-	
+		bomBinnen = 0;	
 	}
-	
 }
 
 int level1() {
@@ -418,12 +394,8 @@ int main(void)
 	int level;
 	initrw.init();
 	Serial.begin(9600);
-	chat.begin(9600);
-	//	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	uint8_t clear_bg=0x00; //0x80 = dont clear background for fonts (only for DisplayXXX)
-
-	//ir.setIR();
-
+	
 	//init display
 	lcd.begin();
 	nunchuk.init();

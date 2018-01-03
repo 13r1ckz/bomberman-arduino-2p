@@ -14,8 +14,8 @@ private:
 
 //functions
 public:
-	MoveA(int X, int Y);
-	MoveB(int X, int Y);
+	MoveBlue(int X, int Y);
+	MoveRed(int X, int Y);
 protected:
 private:
 

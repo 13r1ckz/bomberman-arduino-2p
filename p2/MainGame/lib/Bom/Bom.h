@@ -6,7 +6,6 @@
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
 #include <ArduinoNunchuk.h>
-#include <SoftwareSerial.h>
 
 
 class Bom

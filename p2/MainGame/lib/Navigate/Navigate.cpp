@@ -5,13 +5,14 @@ Navigate::navigate()
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	ArduinoNunchuk nunchuk = ArduinoNunchuk();
-	SoftwareSerial chat(2, 3); // RX, TX
+
 	GridClass gridFH;
 	Character Characters;
-	//chat.begin(9600);
+	Serial.begin(9600);
 	nunchuk.update();
 	int time = 8;
-	Characters.MoveB(nunchukX, nunchukY);
+	Characters.MoveRed(nunchukX, nunchukY);
+	Serial.println(nunchuk.analogX);
 	if(nunchuk.analogY < 60) { //omlaag lopen
 		if(counter > time) {
 			counter=0;
@@ -20,8 +21,8 @@ Navigate::navigate()
 			if (a[nunchukY+1][nunchukX] == 1)
 			{
 				nunchukY++;
-				chat.print(nunchukX, DEC);
-				chat.print(nunchukY, DEC);
+				Serial.print(nunchukX, DEC);
+				Serial.print(nunchukY, DEC);
 				lcd.fillRect(gridFH.GridF(nunchukX), gridFH.GridF(nunchukY)-16, 16, 16, WHITE); //wist vorige positie
 			}
 		}
@@ -36,8 +37,8 @@ Navigate::navigate()
 			if (a[nunchukY-1][nunchukX] == 1)
 			{
 				nunchukY--;
-				chat.print(nunchukX, DEC);
-				chat.print(nunchukY, DEC);
+				Serial.print(nunchukX, DEC);
+				Serial.print(nunchukY, DEC);
 				lcd.fillRect(gridFH.GridF(nunchukX), gridFH.GridF(nunchukY)+16, 16, 16, WHITE); //wist vorige positie
 			}
 		}
@@ -52,8 +53,8 @@ Navigate::navigate()
 			if (a[nunchukY][nunchukX-1] == 1)
 			{
 				nunchukX--;
-				chat.print(nunchukX, DEC);
-				chat.print(nunchukY, DEC);
+				Serial.print(nunchukX, DEC);
+				Serial.print(nunchukY, DEC);
 				lcd.fillRect(gridFH.GridF(nunchukX)+16, gridFH.GridF(nunchukY), 16, 16, WHITE); //wist vorige positie
 			}
 		}
@@ -68,8 +69,8 @@ Navigate::navigate()
 			if (a[nunchukY][nunchukX+1] == 1)
 			{
 				nunchukX++;
-				chat.print(nunchukX, DEC);
-				chat.print(nunchukY, DEC);
+				Serial.print(nunchukX, DEC);
+				Serial.print(nunchukY, DEC);
 				lcd.fillRect(gridFH.GridF(nunchukX)-16, gridFH.GridF(nunchukY), 16, 16, WHITE); //wist vorige positie
 			}
 		}

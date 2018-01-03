@@ -117,7 +117,6 @@ void Bom::PlaceBomA(int XA, int YA, int XB, int YB, int character, int bomBinnen
 {
 	MI0283QT9 lcd;
 	ArduinoNunchuk nunchuk;
-	SoftwareSerial chat(2, 3); // RX, TX
 	
 	int bomExplosion = 40;
 	int bomDelete = 40;
@@ -125,7 +124,7 @@ void Bom::PlaceBomA(int XA, int YA, int XB, int YB, int character, int bomBinnen
 
 
 	if (bombA==0){				//als er geen bom ligt
-		//Serial.println(nunchuk.zButton);
+		
 		if (nunchuk.zButton) {
 					bomX=XA;
 					bomY=YA;
@@ -133,8 +132,7 @@ void Bom::PlaceBomA(int XA, int YA, int XB, int YB, int character, int bomBinnen
 					
 			bombA=1;
 			*counterBomExplosionA=0;
-			Serial.println(255,BIN);
-			//chat.println(255,BIN);
+			
 		}
 	}
 	if (bombA==1 || bomBinnen == 1) {
@@ -175,7 +173,7 @@ void Bom::PlaceBomB(int XA, int YA, int XB, int YB, int character, int bomBinnen
 {
 	MI0283QT9 lcd;
 	ArduinoNunchuk nunchuk;
-	SoftwareSerial chat(2, 3); // RX, TX
+	
 	
 	int bomExplosion = 40;
 	int bomDelete = 40;
@@ -197,7 +195,7 @@ if(bomBinnen ==1 ){
 		BomXY(bomX/16, bomY/16);
 		*counterBomExplosionB+=1;
 		bomBinnen = 0;
-		//Serial.println("bomb");
+		
 
 	}
 	

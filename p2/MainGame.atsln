@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "MainGame", "MainGame\MainGame.cppproj", "{C81EAF1A-0A54-410B-B45E-6B0DB2E92897}"
 EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "SerialTest", "..\..\..\..\..\..\..\Documents\Arduino\SerialTest\SerialTest.cppproj", "{BC23C967-79B2-409B-821F-22BB050A7461}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -15,6 +17,10 @@ Global
 		{C81EAF1A-0A54-410B-B45E-6B0DB2E92897}.Debug|AVR.Build.0 = Debug|AVR
 		{C81EAF1A-0A54-410B-B45E-6B0DB2E92897}.Release|AVR.ActiveCfg = Release|AVR
 		{C81EAF1A-0A54-410B-B45E-6B0DB2E92897}.Release|AVR.Build.0 = Release|AVR
+		{BC23C967-79B2-409B-821F-22BB050A7461}.Debug|AVR.ActiveCfg = Debug|AVR
+		{BC23C967-79B2-409B-821F-22BB050A7461}.Debug|AVR.Build.0 = Debug|AVR
+		{BC23C967-79B2-409B-821F-22BB050A7461}.Release|AVR.ActiveCfg = Release|AVR
+		{BC23C967-79B2-409B-821F-22BB050A7461}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
