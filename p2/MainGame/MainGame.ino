@@ -1,4 +1,3 @@
-
 #include <stdint.h>
 #include <Wire.h>
 #include <GraphicsLib.h>
@@ -15,8 +14,12 @@
 #include "lib/init/initRW.h"
 #include "lib/Navigate/Navigate.h"
 #include "lib/IRcom/IRcom.h"
+
 #define BLACK 0x00
 #define WHITE 0xFFFFFFFF
+#define DARKBLUE 0x78
+#define GREEN 0x7E0
+#define RED 0xFFFFF800
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -35,6 +38,7 @@ IRcom ir;
 uint8_t loopX = 1;
 uint8_t loopY = 1;
 uint8_t lopen = 0;
+uint8_t bericht=0;
 ISR(TIMER2_COMPB_vect){
 }
 
@@ -177,26 +181,26 @@ int navigateStart() { //navigates through start
 
 int Startscherm(){
 	//int level;
-	lcd.fillScreen(RGB(0,0,0));
+	lcd.fillScreen(BLACK);
 	
-	lcd.fillRect(60,15,200,50,0xFFFFFF);		//print knop Level 1
-	lcd.drawText(82,30, "Level 1", 0x111111, 0xFFFFFF, 3.5);
+	lcd.fillRect(60,15,200,50,WHITE);		//print knop Level 1
+	lcd.drawText(82,30, "Level 1", DARKBLUE, WHITE, 3.5);
 	
-	lcd.fillRect(60,70,200,50,0xFFFFFF);		//print knop Level 2
-	lcd.drawText(82,85, "Level 2", 0x111111, 0xFFFFFF, 3.5);
+	lcd.fillRect(60,70,200,50,WHITE);		//print knop Level 2
+	lcd.drawText(82,85, "Level 2", DARKBLUE, WHITE, 3.5);
 	
-	lcd.fillRect(60,125,200,50,0xFFFFFF);		//print knop Random
-	lcd.drawText(89,140, "Random", 0x111111, 0xFFFFFF, 3.5);
+	lcd.fillRect(60,125,200,50, WHITE);		//print knop Random
+	lcd.drawText(89,140, "Random", DARKBLUE, WHITE, 3.5);
 	
-	lcd.fillRect(60,180,200,50,0xFFFFFF);		//print knop High score
-	lcd.drawText(82,195, "High score", 0x111111, 0xFFFFFF, 2);
+	lcd.fillRect(60,180,200,50,WHITE);		//print knop High score
+	lcd.drawText(82,195, "High score", DARKBLUE, WHITE, 2);
 	
-	lcd.fillRect(0,0,32,16,RGB(255,255,255));
+	lcd.fillRect(0,0,32,16,WHITE);
 	Characters.MoveBlue(0,0);
-	lcd.fillRect(288,0,32,16,RGB(255,255,255));
-	Characters.MoveRed(19,0);
-	bom.BomXY(1,0);
-	bom.BomXY(18,0);
+	lcd.fillRect(288,0,32,16,WHITE);
+	Characters.MoveRed(gridFH.GridF(19),gridFH.GridF(0));
+	bom.BomXY(gridFH.GridF(1),0);
+	bom.BomXY(gridFH.GridF(18),0);
 
 	return;
 }
@@ -216,7 +220,7 @@ int resetGrid(){
 
 int loseScreen(){
 	lcd.fillScreen(BLACK);
-	lcd.drawText(38, 50, "You lose", RGB(255,0,0), BLACK, 4);
+	lcd.drawText(38, 50, "You lose", RED, BLACK, 4);
 	lcd.drawText(80, 130, "Punten: ", WHITE, BLACK, 2);
 	lcd.drawInteger(200, 130, points, DEC, WHITE, BLACK, 2 | 0x00);
 	levensA = 3;
@@ -234,7 +238,7 @@ int loseScreen(){
 
 int winScreen(){
 	lcd.fillScreen(BLACK);
-	lcd.drawText(50, 50, "You win", RGB(0,255,0), BLACK, 4);
+	lcd.drawText(50, 50, "You win", GREEN, BLACK, 4);
 	lcd.drawText(80, 130, "Punten: ", WHITE, BLACK, 2);
 	lcd.drawInteger(200, 130, points, DEC, WHITE, BLACK, 2 | 0x00);
 	levensA = 3;
@@ -251,14 +255,15 @@ int winScreen(){
 }
 
 int navigate(){
-		
+	
 	int counterBomExplosionA = 0;
 	int counterBomExplosionB = 0;
 	int gridX, gridY;
 	int z= 0;
 	
 	uint8_t bomX, bomY;
-	
+	uint8_t loopXoud;
+	uint8_t loopYoud;
 	int counterBomDeleteA = 0;
 	int counterBomDeleteB = 0;
 	int XA, XB, YA, YB;
@@ -266,7 +271,7 @@ int navigate(){
 	nunchukY = 13;
 	char bomBinnen = 0;
 	int character = 1;
-	Characters.MoveBlue(1,1);
+	Characters.MoveBlue(gridFH.GridF(1),gridFH.GridF(1));
 	while(1) {
 		single_sample();
 		nunchuk.update();
@@ -274,43 +279,59 @@ int navigate(){
 		YA = gridFH.GridF(nunchukY);
 		XB = gridFH.GridF(loopX);			// hier move character B
 		YB = gridFH.GridF(loopY);
-
-		uint8_t loopXoud = loopX;
-		uint8_t loopYoud = loopY;
-		
-		if (loopXoud !=loopX || loopYoud !=loopX)
-		{
-		Characters.MoveBlue(loopX, loopY);	
-		}
-		
-		
-		
+		loopXoud = loopX;
+		loopYoud = loopY;
 		nav.navigate();
-	
-		if(Serial.available()>0){
-			lopen = Serial.read();
-			
-			if(lopen == 48){
-			bomBinnen = 1;
-			character = 2;
-			//bom.PlaceBomB(XA, YA, XB, YB, character, bomBinnen, &counterBomExplosionB, &counterBomDeleteB);
-		
-			}else{	
-				if (z == 0)
-				{
-					loopX = lopen;
-			
-					}
-					if(z == 1){
-					loopY =lopen;
-				
-				}
-				z = !z;
-				if(!bomBinnen){
-				lcd.fillRect(gridFH.GridF(loopXoud), gridFH.GridF(loopYoud), 16, 16, WHITE); //wist vorige positie
-				}
-		}
-			}
+		Characters.MoveBlue(gridFH.GridF(loopX), gridFH.GridF(loopY));
+	 if(Serial.available()>0){
+		 
+		 if(z == 0){
+			 bericht = Serial.read() - 48;
+			 z = 1;
+			 } else if (z == 1) {
+			 lopen = Serial.read() - 48;
+			 z = 2;
+		 }
+		 
+		 if(z == 2){
+			 if(bericht == 0){
+				 loopY = lopen;
+				 } else if(bericht == 1){
+				 if(lopen == 5){
+					 bomBinnen = 1;
+					 character = 2;
+					 z = 0;
+					 } else {
+					 loopY = lopen + 10;
+				 }
+			 }
+			 z = 3;
+			 } else if(z == 3){
+			 bericht = Serial.read() - 48;
+			 z = 4;
+			 } else if(z == 4){
+			 lopen = Serial.read() - 48;
+			 z = 5;
+		 }
+		 
+		 if(z == 5){
+			 if(bericht == 0){
+				 loopX = lopen;
+				 } else if(bericht == 1){
+				 if(lopen == 5){
+					 bomBinnen = 1;
+					 character = 2;
+					 z = 0;
+					 } else {
+					 loopX = lopen + 10;
+				 }
+			 }
+			 z = 0;
+		 }
+		 if(!bomBinnen){
+			 lcd.fillRect(gridFH.GridF(loopXoud), gridFH.GridF(loopYoud), 16, 16, WHITE); //wist vorige positie
+		 }
+	 }
 		harts.HartS(levensB, 16, 2);
 		harts.HartS(levensA, 16, 13);
 		lcd.drawInteger(255, 112, points, DEC, BLACK, WHITE, 2| 0x00);
@@ -321,10 +342,10 @@ int navigate(){
 			return 2;
 		}
 		character = 1;
-		bom.PlaceBomA(XA, YA, XB, YB, character, 0, &counterBomExplosionA, &counterBomDeleteA);
+		bom.PlaceBomA(XA, YA, XB, YB, character, &counterBomExplosionA, &counterBomDeleteA);
 		character = 2;
 		bom.PlaceBomB(XA, YA, XB, YB, character, bomBinnen, &counterBomExplosionB, &counterBomDeleteB);
-		bomBinnen = 0;	
+		bomBinnen = 0;
 	}
 }
 

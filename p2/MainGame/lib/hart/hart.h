@@ -1,9 +1,4 @@
-/* 
-* hart.h
-*
-* Created: 12/7/2017 11:26:13 AM
-* Author: gerjo
-*/
+
 
 
 #ifndef __HART_H__
@@ -23,6 +18,7 @@ private:
 //functions
 public:
 	HartS(int L, int X, int Y);
+	 drawHarts(int X, int Y); 
 protected:
 private:
 
