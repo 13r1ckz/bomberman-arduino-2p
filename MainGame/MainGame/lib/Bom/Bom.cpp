@@ -8,35 +8,46 @@
 
 #include "Bom.h"
 
+#define BLACK 0x000000
+#define DARKGREY 0x49CB
+#define LIGHTERORANGE 0xFFFFFBC6
+#define LIGHTORANGE 0xFFFFFA81
+#define ORANGE 0xFFFFFB20
+#define TERRACOTTA 0xFFFFFD4B
+#define LIGHTRED 0xFFFFF800
+#define RED 0xFFFFD000
+#define DARKRED 0xFFFFA000
+#define WHITECREAM 0xFFFFFFF5
+#define WHITE 0xFFFFFF
+
 // default constructor
 Bom::BomXY(int X, int Y)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	GridClass gridFH;
 	
-	//lcd.fillRect(gridFH.GridF(X),gridFH.GridF(Y),16,16,RGB(255,255,255));
-	lcd.fillCircle((gridFH.GridF(X)+7),(gridFH.GridF(Y)+9),5,RGB(0,0,0));
-	lcd.drawPixel((gridFH.GridF(X)+11),(gridFH.GridF(Y)+5),RGB(75,86,90));
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+5),RGB(254,100,0));
-	lcd.drawPixel((gridFH.GridF(X)+12),(gridFH.GridF(Y)+4),RGB(254,100,0));
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+3),RGB(254,100,0));
-	lcd.drawPixel((gridFH.GridF(X)+14),(gridFH.GridF(Y)+4),RGB(254,100,0));
-	lcd.drawPixel((gridFH.GridF(X)+13),(gridFH.GridF(Y)+4),RGB(255,0,0));
-	lcd.drawPixel((gridFH.GridF(X)+6),(gridFH.GridF(Y)+6),RGB(255,255,255));
-	lcd.drawPixel((gridFH.GridF(X)+5),(gridFH.GridF(Y)+7),RGB(255,255,255));
+	lcd.fillCircle((X+7),(Y+9),5,BLACK);
+	lcd.drawPixel((X+11),(Y+5),DARKGREY);
+	lcd.drawPixel((X+13),(Y+5),ORANGE);
+	lcd.drawPixel((X+12),(Y+4),ORANGE);
+	lcd.drawPixel((X+13),(Y+3),ORANGE);
+	lcd.drawPixel((X+14),(Y+4),ORANGE);
+	lcd.drawPixel((X+13),(Y+4),LIGHTRED);
+	lcd.drawPixel((X+6),(Y+6),WHITE);
+	lcd.drawPixel((X+5),(Y+7),WHITE);
 } //Bom
 
 Bom::BomExpl(int X, int Y)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	GridClass gridFH;
-	lcd.fillRect(X, Y, 16, 16, RGB(164,0,0));
-	lcd.fillRect((X+1), (Y+1), 14, 14, RGB(214,0,0));
-	lcd.fillRect((X+2), (Y+2), 12, 12, RGB(255,80,10));
-	lcd.fillRect((X+3), (Y+3), 10, 10, RGB(255,120,50));
-	lcd.fillRect((X+4), (Y+4), 8, 8, RGB(255,170,90));
-	lcd.fillRect((X+5), (Y+5), 6, 6, RGB(255,255,170));
-	lcd.fillRect((X+6), (Y+6), 4, 4, RGB(255,255,255));
+	lcd.fillRect(X, Y, 16, 16, DARKRED);
+	lcd.fillRect((X+1), (Y+1), 14, 14, RED);
+	lcd.fillRect((X+2), (Y+2), 12, 12, LIGHTORANGE);
+	lcd.fillRect((X+3), (Y+3), 10, 10, LIGHTERORANGE);
+	lcd.fillRect((X+4), (Y+4), 8, 8, TERRACOTTA);
+	lcd.fillRect((X+5), (Y+5), 6, 6, WHITECREAM);
+	lcd.fillRect((X+6), (Y+6), 4, 4, WHITE);
 	
 }//explosion
 
@@ -93,22 +104,21 @@ Bom::BomTrack(int bomX, int bomY, int character)
 Bom::BomDelete(int bomX, int bomY, int character)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
-	#define WHITE 0xFFFFFFFF
 	lcd.fillRect(bomX, bomY, 16, 16, WHITE); //midden van de bom
 	
-	if(!(a[bomY/16][bomX/16-1] == 2)) {		//links van de bom
+	if(!(a[bomY/16][(bomX/16)-1] == 2)) {		//links van de bom
 		lcd.fillRect(bomX-16, bomY, 16, 16, WHITE);
 	}
 	
-	if(!(a[bomY/16][bomX/16+1] == 2)) {		//rechts van de bom
+	if(!(a[bomY/16][(bomX/16)+1] == 2)) {		//rechts van de bom
 		lcd.fillRect(bomX+16, bomY, 16, 16, WHITE);
 	}
 	
-	if(!(a[bomY/16-1][bomX/16] == 2)) {		//boven van de bom
+	if(!(a[(bomY/16)-1][bomX/16] == 2)) {		//boven van de bom
 		lcd.fillRect(bomX, bomY-16, 16, 16, WHITE);
 	}
 	
-	if(!(a[bomY/16+1][bomX/16] == 2)) {		//onder van de bom
+	if(!(a[(bomY/16)+1][bomX/16] == 2)) {		//onder van de bom
 		lcd.fillRect(bomX, bomY+16, 16, 16, WHITE);
 	}
 }
@@ -136,7 +146,7 @@ void Bom::PlaceBomA(int XA, int YA, int XB, int YB, int character, int bomBinnen
 		}
 	}
 	if (bombA==1 || bomBinnen == 1) {
-		BomXY(bomX/16, bomY/16);
+		BomXY(bomX, bomY);
 		*counterBomExplosionA+=1;
 		bomBinnen = 0;
 

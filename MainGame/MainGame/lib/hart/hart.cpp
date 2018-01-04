@@ -8,6 +8,7 @@
 #include "hart.h"
 
 #define RED 0xFFFFF800
+#define WHITE 0xFFFFFFFF
 
 // default constructor
 hart::HartS(int L, int X, int Y)
@@ -27,16 +28,16 @@ hart::HartS(int L, int X, int Y)
 		X++;
 		drawHarts(X, Y);
 		X++;
-		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, RGB(255,255,255));
+		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, WHITE);
 	}
 	else if(L == 1){
 		drawHarts(X, Y);
 		X++;
-		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, RGB(255,255,255));
+		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, WHITE);
 		X++;
-		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, RGB(255,255,255));
+		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, WHITE);
 	}*/
-	lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16*3, 16, RGB(255,255,255));
+	lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16*3, 16, WHITE);
 	for(i = 0; i < L; i++){
 		drawHarts(X, Y);
 		X++;

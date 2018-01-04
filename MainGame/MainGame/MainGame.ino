@@ -14,8 +14,12 @@
 #include "lib/init/initRW.h"
 #include "lib/Navigate/Navigate.h"
 #include "lib/IRcom/IRcom.h"
+
 #define BLACK 0x00
 #define WHITE 0xFFFFFFFF
+#define DARKBLUE 0x78
+#define GREEN 0x7E0
+#define RED 0xFFFFF800
 
 //Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -85,14 +89,14 @@ ISR(INT0_vect){
 	ir.tempteller = ir.getTellerOntvanger();
 }
 
-void init_adc_single_sample()	//init brightness
+void initBrightness()	//init brightness
 {
 	ADMUX |= (1<<MUX0);		// input analog A1 Arduino
 	ADMUX |= (1<<REFS0);	// 5 volt
 	ADCSRA |= (1<<ADEN);	// ADC enable
 }
 
-void single_sample()	//brightness
+void brightness()	//brightness
 {
 	uint8_t bright;
 	uint16_t result;
@@ -116,7 +120,7 @@ int navigateStart() { //navigates through start
 	while(nunchuk.zButton == 0) {
 		
 		nunchuk.update();
-		single_sample();
+		brightness();
 		
 		if(nunchuk.analogY < 60) {
 			if(i>counter) {
@@ -174,28 +178,27 @@ int navigateStart() { //navigates through start
 	return nunchukY;
 }
 
-int Startscherm(){
-	//int level;
-	lcd.fillScreen(RGB(0,0,0));
+int Startscherm(){	
+	lcd.fillScreen(BLACK);
 	
-	lcd.fillRect(60,15,200,50,0xFFFFFF);		//print knop Level 1
-	lcd.drawText(82,30, "Level 1", 0x111111, 0xFFFFFF, 3.5);
+	lcd.fillRect(60,15,200,50,WHITE);		//print knop Level 1
+	lcd.drawText(82,30, "Level 1", DARKBLUE, WHITE, 3.5);
 	
-	lcd.fillRect(60,70,200,50,0xFFFFFF);		//print knop Level 2
-	lcd.drawText(82,85, "Level 2", 0x111111, 0xFFFFFF, 3.5);
+	lcd.fillRect(60,70,200,50,WHITE);		//print knop Level 2
+	lcd.drawText(82,85, "Level 2", DARKBLUE, WHITE, 3.5);
 	
-	lcd.fillRect(60,125,200,50,0xFFFFFF);		//print knop Random
-	lcd.drawText(89,140, "Random", 0x111111, 0xFFFFFF, 3.5);
+	lcd.fillRect(60,125,200,50, WHITE);		//print knop Random
+	lcd.drawText(89,140, "Random", DARKBLUE, WHITE, 3.5);
 	
-	lcd.fillRect(60,180,200,50,0xFFFFFF);		//print knop High score
-	lcd.drawText(82,195, "High score", 0x111111, 0xFFFFFF, 2);
+	lcd.fillRect(60,180,200,50,WHITE);		//print knop High score
+	lcd.drawText(82,195, "High score", DARKBLUE, WHITE, 2);
 	
-	lcd.fillRect(0,0,32,16,RGB(255,255,255));
+	lcd.fillRect(0,0,32,16,WHITE);
 	Characters.MoveBlue(0,0);
-	lcd.fillRect(288,0,32,16,RGB(255,255,255));
+	lcd.fillRect(288,0,32,16,WHITE);
 	Characters.MoveRed(19,0);
-	bom.BomXY(1,0);
-	bom.BomXY(18,0);
+	bom.BomXY(gridFH.GridF(1),0);
+	bom.BomXY(gridFH.GridF(18),0);
 
 	return;
 }
@@ -215,7 +218,7 @@ int resetGrid(){
 
 int loseScreen(){
 	lcd.fillScreen(BLACK);
-	lcd.drawText(38, 50, "You lose", RGB(255,0,0), BLACK, 4);
+	lcd.drawText(38, 50, "You lose", RED, BLACK, 4);
 	lcd.drawText(80, 130, "Punten: ", WHITE, BLACK, 2);
 	lcd.drawInteger(200, 130, points, DEC, WHITE, BLACK, 2 | 0x00);
 	levensA = 3;
@@ -233,13 +236,12 @@ int loseScreen(){
 
 int winScreen(){
 	lcd.fillScreen(BLACK);
-	lcd.drawText(50, 50, "You win", RGB(0,255,0), BLACK, 4);
+	lcd.drawText(50, 50, "You win", GREEN, BLACK, 4);
 	lcd.drawText(80, 130, "Punten: ", WHITE, BLACK, 2);
 	lcd.drawInteger(200, 130, points, DEC, WHITE, BLACK, 2 | 0x00);
 	levensA = 3;
 	levensB = 3;
 	points = 0;
-	
 	
 	while(!nunchuk.zButton) {
 		nunchuk.update();
@@ -267,7 +269,7 @@ int navigate(){
 	int character = 1;
 	Characters.MoveRed(13,13);
 	while(1) {
-		single_sample();
+		brightness();
 		nunchuk.update();
 		XA = gridFH.GridF(nunchukX);	// hier move character A
 		YA = gridFH.GridF(nunchukY);
@@ -398,7 +400,7 @@ int main(void)
 	//init display
 	lcd.begin();
 	nunchuk.init();
-	init_adc_single_sample();
+	initBrightness();
 	
 	while (1)
 	{
