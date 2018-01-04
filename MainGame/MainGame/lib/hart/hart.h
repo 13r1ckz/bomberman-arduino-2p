@@ -23,6 +23,7 @@ private:
 //functions
 public:
 	HartS(int L, int X, int Y);
+	drawHarts(int X, int Y);
 protected:
 private:
 
