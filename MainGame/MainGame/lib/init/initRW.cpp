@@ -15,7 +15,6 @@ initRW::init()
 		// work there
 		sei();
 		
-
 		#if defined(TCCR0B) && defined(CS01) && defined(CS00)
 		// this combination is for the standard 168/328/1280/2560
 		sbi(TCCR0B, CS01);
@@ -31,12 +30,6 @@ initRW::init()
 		sbi(TIMSK0, TOIE0);
 		#else
 		#error	Timer 0 overflow interrupt not set correctly
-		#endif
-
-
-
-
-
-		
+		#endif	
 } //initRW
 
