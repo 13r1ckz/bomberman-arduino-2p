@@ -365,9 +365,10 @@ int winScreen(){
 	uint8_t geheugen;
 	uint8_t m = 0;
 	lcd.fillScreen(BLACK);
-	lcd.drawText(50, 50, "You win", GREEN, BLACK, 4);
-	lcd.drawText(80, 130, "Punten: ", WHITE, BLACK, 2);
-	lcd.drawInteger(200, 130, points, DEC, WHITE, BLACK, 2 | 0x00);
+	lcd.fillScreen(BLACK);
+	lcd.drawText(35, 50, "You win", GREEN, BLACK, 4);
+	lcd.drawText(80, 100, "Punten: ", WHITE, BLACK, 2);
+	lcd.drawInteger(200, 100, points, DEC, WHITE, BLACK, 2 | 0x00);
 	
 	geheugen = memory(geheugen);
 	
