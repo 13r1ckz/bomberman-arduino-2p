@@ -183,3 +183,26 @@ Navigate::navigatestart(char button)
 		lcd.drawText(20,20, "enter number between 1 and 4", RED,RED,3);
 	}
 } //Navigatestart
+
+Navigate::navigateHoofdscherm(char button){
+	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
+	if(button == 1){	
+
+				
+		lcd.drawRect(60, 125, 195, 50, WHITE);
+		lcd.drawRect(61, 126, 193, 48, WHITE);
+		lcd.drawRect(62, 127, 191, 46, WHITE);
+			
+		lcd.drawRect(60, 70, 195, 50, RED);
+		lcd.drawRect(61, 71, 193, 48, RED);
+		lcd.drawRect(62, 72, 191, 46, RED);
+	} else if(button == 2){
+		lcd.drawRect(60, 70, 195, 50, WHITE);
+		lcd.drawRect(61, 71, 193, 48, WHITE);
+		lcd.drawRect(62, 72, 191, 46, WHITE);
+				
+		lcd.drawRect(60, 125, 195, 50, RED);
+		lcd.drawRect(61, 126, 193, 48, RED);
+		lcd.drawRect(62, 127, 191, 46, RED);
+	}
+}

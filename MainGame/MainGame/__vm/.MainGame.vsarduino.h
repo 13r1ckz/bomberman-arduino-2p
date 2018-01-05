@@ -20,9 +20,11 @@
 #define ARDUINO_ARCH_AVR
 void initBrightness();
 void brightness();
+int reset(int soort);
 int navigateStart();
 int Startscherm();
 int resetGrid();
+int memory(int geheugen);
 int loseScreen();
 int winScreen();
 int navigate();
@@ -30,6 +32,9 @@ int level1();
 int level2();
 int levelRandom(uint8_t SL);
 int highScore();
+int hoofdscherm();
+int navigateHoofdscherm();
+int waitScreen();
 int main(void);
 
 #include "pins_arduino.h" 

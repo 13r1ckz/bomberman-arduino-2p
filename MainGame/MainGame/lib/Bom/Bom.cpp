@@ -52,6 +52,7 @@ Bom::BomTrackA(int bomX, int bomY, int character) //kratten verwijderen+punten t
 			a[bomY/16][bomX/16-1] = 1;
 			
 			if(character == 1) {
+				lcd.fillRect(240, 100,100, 50, WHITE);
 				points +=2;
 			}
 		}
@@ -63,6 +64,7 @@ Bom::BomTrackA(int bomX, int bomY, int character) //kratten verwijderen+punten t
 			a[bomY/16][bomX/16+1] = 1;
 			
 			if(character == 1) {
+				lcd.fillRect(240, 100,100, 50, WHITE);
 				points +=2;
 			}
 		}
@@ -74,6 +76,7 @@ Bom::BomTrackA(int bomX, int bomY, int character) //kratten verwijderen+punten t
 			a[bomY/16-1][bomX/16] = 1;
 			
 			if(character == 1) {
+				lcd.fillRect(240, 100,100, 50, WHITE);
 				points +=2;
 			}
 		}
@@ -86,6 +89,7 @@ Bom::BomTrackA(int bomX, int bomY, int character) //kratten verwijderen+punten t
 			a[bomY/16+1][bomX/16] = 1;
 			
 			if(character == 1) {
+				lcd.fillRect(240, 100,100, 50, WHITE);
 				points +=2;
 			}
 		}
@@ -149,11 +153,12 @@ void Bom::PlaceBomA(int XA, int YA, int XB, int YB, int character, int * counter
 		if (*counterBomDeleteA == bomDelete) {
 			if ((((XA == bomXA) || (XA == bomXA-16) || (XA == bomXA+16)) && (YA == bomYA)) || ((XA == bomXA) && ((YA == bomYA) || (YA == bomYA-16) || (YA == bomYA+16))))	{ //character A midden in bom
 				levensA--;
-				lcd.fillRect(255, 112,100, 50, WHITE);
+				lcd.fillRect(240, 100,100, 50, WHITE);
 				points -= 5;
 			}
 			if ((((XB == bomXA) || (XB == bomXA-16) || (XB == bomXA+16)) && (YB == bomYA)) || ((XB == bomXA) && ((YB == bomYA) || (YB == bomYA-16) || (YB == bomYA+16))))	{ //character B midden in bom
 				levensB--;
+				lcd.fillRect(240, 100,100, 50, WHITE);
 				points += 10;
 			}
 			BomDelete(bomXA, bomYA);
