@@ -20,9 +20,12 @@
 #define ARDUINO_ARCH_AVR
 void init_adc_single_sample();
 void single_sample();
-int navigateStart();
-int Startscherm();
+int reset(int soort);
+int hoofdscherm();
+int waitScreen();
+int navigateHoofdscherm();
 int resetGrid();
+int memory(int geheugen);
 int loseScreen();
 int winScreen();
 int navigate();

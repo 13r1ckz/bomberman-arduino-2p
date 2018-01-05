@@ -23,7 +23,7 @@ private:
 public:
 	navigate();
 	navigatestart(char button);
-	
+	navigateHoofdscherm(char button);
 };
 
 #endif //__NAVIGATE_H__

@@ -12,6 +12,8 @@ class Bom
 {
 //variables
 public:
+uint8_t bombA = 0;
+uint8_t bombB = 0;
 protected:
 private:
 MI0283QT9 lcd;
@@ -19,8 +21,7 @@ MI0283QT9 lcd;
 	int bomXA;
 	int bomYB;
 	int bomXB;
-	uint8_t bombA = 0;
-	uint8_t bombB = 0;
+	
 //functions
 public:
 	BomXY(int X, int Y);
