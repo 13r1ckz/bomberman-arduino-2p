@@ -116,6 +116,7 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 			while(0){
 				if(Serial.available()){
 					seed = Serial.read();
+					Serial.print(seed);
 					randomSeed(seed);
 				}
 			}

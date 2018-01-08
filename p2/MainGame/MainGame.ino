@@ -45,6 +45,7 @@ uint8_t loopX = 1;
 uint8_t loopY = 1;
 uint8_t lopen = 0;
 uint8_t bericht=0;
+uint8_t level =0;
 ISR(TIMER2_COMPB_vect){
 }
 
@@ -98,7 +99,7 @@ ISR(INT0_vect){
 
 void init_adc_single_sample()	//init brightness
 {
-	ADMUX |= (1<<MUX0);		// input analog A1 Arduino
+	ADMUX |= (0<<MUX0);		// input analog A1 Arduino
 	ADMUX |= (1<<REFS0);	// 5 volt
 	ADCSRA |= (1<<ADEN);	// ADC enable
 }
@@ -118,43 +119,43 @@ void single_sample()	//brightness
 
 int reset(int soort){
 	uint8_t a,b,c,d,e;
-	a = eeprom_read_byte(10);
-	b = eeprom_read_byte(20);
-	c = eeprom_read_byte(30);
-	d = eeprom_read_byte(40);
-	e = eeprom_read_byte(50);
+	a = eeprom_read_byte(110);
+	b = eeprom_read_byte(120);
+	c = eeprom_read_byte(130);
+	d = eeprom_read_byte(140);
+	e = eeprom_read_byte(150);
 	
 	if (soort == 1)
 	{
 		if (a >254)
 		{
-			eeprom_write_byte(10,0);
+			eeprom_write_byte(110,0);
 		}
 		if (b >254)
 		{
-			eeprom_write_byte(20,0);
+			eeprom_write_byte(120,0);
 		}
 		if (c >254)
 		{
-			eeprom_write_byte(30,0);
+			eeprom_write_byte(130,0);
 		}
 		if (d >254)
 		{
-			eeprom_write_byte(40,0);
+			eeprom_write_byte(140,0);
 		}
 		if (e >254)
 		{
-			eeprom_write_byte(50,0);
+			eeprom_write_byte(150,0);
 		}
 		return;
-	}else if(soort == 2){
-		eeprom_write_byte(10,0);
-		eeprom_write_byte(20,0);
-		eeprom_write_byte(30,0);
-		eeprom_write_byte(40,0);
-		eeprom_write_byte(50,0);
+		}else if(soort == 2){
+		eeprom_write_byte(110,0);
+		eeprom_write_byte(120,0);
+		eeprom_write_byte(130,0);
+		eeprom_write_byte(140,0);
+		eeprom_write_byte(150,0);
 		return;
-	}else{
+		}else{
 		return;
 	}
 }
@@ -169,6 +170,8 @@ int hoofdscherm(){
 	
 	lcd.fillRect(60,125,195,50,WHITE);		//print knop Level 2
 	lcd.drawText(88,140, "HIGHSCORE", DARKBLUE, WHITE, 2);
+
+	lcd.drawText(290, 2, "CAL", RED,BLACK, 1);
 	
 	Characters.MoveBlue(gridFH.GridF(1)+ 4,gridFH.GridF(2));
 	Characters.MoveRed(gridFH.GridF(18)- 8,gridFH.GridF(2)+1);
@@ -201,6 +204,16 @@ int navigateHoofdscherm(){
 		nunchuk.update();
 		single_sample();
 		
+		if (lcd.touchRead())
+		{
+			if((lcd.touchX() > 250) && (lcd.touchY() < 50))
+			{
+				lcd.touchStartCal();
+				writeCalData();
+				hoofdscherm();
+				
+			}
+		}
 		if(nunchuk.analogY < 60) {
 			if(i>counter) {
 				i=0;
@@ -233,7 +246,7 @@ int navigateHoofdscherm(){
 			}
 		}
 	}
-
+	
 	Serial.println(nunchukY,DEC);
 	return nunchukY;
 }
@@ -254,11 +267,11 @@ int resetGrid(){
 int memory(int geheugen){
 	uint8_t a,b,c,d,e;
 	if (eeprom_is_ready())
-	{	a = eeprom_read_byte(10);
-		b = eeprom_read_byte(20);
-		c = eeprom_read_byte(30);
-		d = eeprom_read_byte(40);
-		e = eeprom_read_byte(50);
+	{	a = eeprom_read_byte(110);
+		b = eeprom_read_byte(120);
+		c = eeprom_read_byte(130);
+		d = eeprom_read_byte(140);
+		e = eeprom_read_byte(150);
 	}
 
 	if (points <=0)
@@ -270,34 +283,34 @@ int memory(int geheugen){
 		return 0;
 	}else if (points>a)
 	{
-		eeprom_write_byte(50,d);
-		eeprom_write_byte(40,c);
-		eeprom_write_byte(30,b);
-		eeprom_write_byte(20,a);
-		eeprom_write_byte(10,points);
+		eeprom_write_byte(150,d);
+		eeprom_write_byte(140,c);
+		eeprom_write_byte(130,b);
+		eeprom_write_byte(120,a);
+		eeprom_write_byte(110,points);
 		return 1;
 	}else if (points > b)
 	{
-		eeprom_write_byte(50,d);
-		eeprom_write_byte(40,c);
-		eeprom_write_byte(30,b);
-		eeprom_write_byte(20,points);
+		eeprom_write_byte(150,d);
+		eeprom_write_byte(140,c);
+		eeprom_write_byte(130,b);
+		eeprom_write_byte(120,points);
 		return 2;
 	}else if (points > c)
 	{
-		eeprom_write_byte(50,d);
-		eeprom_write_byte(40,c);
-		eeprom_write_byte(30,points);
+		eeprom_write_byte(150,d);
+		eeprom_write_byte(140,c);
+		eeprom_write_byte(130,points);
 		return 3;
 		
 	}else if (points > d)
 	{
-		eeprom_write_byte(50,d);
-		eeprom_write_byte(40,points);
+		eeprom_write_byte(150,d);
+		eeprom_write_byte(140,points);
 		return 4;
 	}else if (points > e)
 	{
-		eeprom_write_byte(50,points);
+		eeprom_write_byte(150,points);
 		return 5;
 		
 		}else{
@@ -311,7 +324,7 @@ int loseScreen(){
 	uint8_t geheugen;
 	lcd.fillScreen(BLACK);
 	lcd.drawText(35, 50, "You lose", RED, BLACK, 4);
-	lcd.drawText(80, 100, "Punten: ", WHITE, BLACK, 2);
+	lcd.drawText(80, 100, "Points: ", WHITE, BLACK, 2);
 	lcd.drawInteger(200, 100, points, DEC, WHITE, BLACK, 2 | 0x00);
 	levensA = 3;
 	levensB = 3;
@@ -320,12 +333,12 @@ int loseScreen(){
 	geheugen = memory(geheugen);
 	if (geheugen == 0)
 	{
-		lcd.drawText(35, 160,"No High Score :(", PINK,BLACK,2);
+		lcd.drawText(35, 160,"No HighScore :(", PINK,BLACK,2);
 		}else if(geheugen == 6){
 		lcd.drawText(50, 150,"You committed", BLOOD,BLACK,2);
 		lcd.drawText(100, 170,"SUICIDE", BLOOD,BLACK,2);
 		}else if (geheugen>0){
-		lcd.drawText(35,140,"New High score!", GOLD, BLACK,2.5);
+		lcd.drawText(35,140,"New Highscore!", GOLD, BLACK,2.5);
 		lcd.drawText(75, 180, "Place:",GOLD, BLACK,3);
 		lcd.drawInteger(220,180,geheugen,DEC,GOLD,BLACK,3|0x00);
 	}
@@ -349,20 +362,20 @@ int winScreen(){
 	uint8_t m = 0;
 	lcd.fillScreen(BLACK);
 	lcd.drawText(35, 50, "You win", GREEN, BLACK, 4);
-	lcd.drawText(80, 100, "Punten: ", WHITE, BLACK, 2);
+	lcd.drawText(80, 100, "Points: ", WHITE, BLACK, 2);
 	lcd.drawInteger(200, 100, points, DEC, WHITE, BLACK, 2 | 0x00);
 	levensA = 3;
 	levensB = 3;
 	
 	
-	//geheugen = memory(geheugen);
-geheugen = 1;
+	geheugen = memory(geheugen);
+
 	if (geheugen == 0)
 	{
-		lcd.drawText(35, 160,"No High Score :(", PINK,BLACK,2);
+		lcd.drawText(35, 160,"No HighScore :(", PINK,BLACK,2);
 		}else if (geheugen>0){
 		
-		lcd.drawText(35,140,"New High score!", GOLD, BLACK,2.5);
+		lcd.drawText(35,140,"New Highscore!", GOLD, BLACK,2.5);
 		lcd.drawText(75, 180, "Place:",GOLD, BLACK,3);
 		lcd.drawInteger(220,180,geheugen,DEC,GOLD,BLACK,3|0x00);
 	}
@@ -410,8 +423,13 @@ int navigate(){
 		loopYoud = loopY;
 		nav.navigate();
 		Characters.MoveBlue(gridFH.GridF(loopX), gridFH.GridF(loopY));
+
 		if(Serial.available()>0){
-			
+			if (level == 3);
+			{
+			uint8_t opvang = Serial.read();
+			level = 0;
+			}
 			if(z == 0){
 				bericht = Serial.read() - 48;
 				z = 1;
@@ -423,6 +441,7 @@ int navigate(){
 			if(z == 2){
 				if(bericht == 0){
 					loopY = lopen;
+
 					} else if(bericht == 1){
 					if(lopen == 5){
 						bomBinnen = 1;
@@ -430,20 +449,25 @@ int navigate(){
 						z = 0;
 						} else {
 						loopY = lopen + 10;
+
 					}
 				}
 				z = 3;
 				} else if(z == 3){
 				bericht = Serial.read() - 48;
+
 				z = 4;
 				} else if(z == 4){
+
 				lopen = Serial.read() - 48;
+
 				z = 5;
 			}
 			
 			if(z == 5){
 				if(bericht == 0){
 					loopX = lopen;
+
 					} else if(bericht == 1){
 					if(lopen == 5){
 						bomBinnen = 1;
@@ -451,6 +475,7 @@ int navigate(){
 						z = 0;
 						} else {
 						loopX = lopen + 10;
+
 					}
 				}
 				z = 0;
@@ -463,6 +488,7 @@ int navigate(){
 		harts.HartS(levensA, 16, 13);
 		lcd.drawInteger(255, 112, points, DEC, BLACK, WHITE, 2| 0x00);
 		if (levensA == 0) {
+			PORTC &=~(1<<PORTC1);
 			return 1;
 		}
 		if (levensB == 0) {
@@ -482,8 +508,10 @@ int level1() {
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
 	OB.ObstacleDR(1, 0);
+	PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3);
 	life = navigate();
 	resetGrid();
+	
 	if(life == 2) {
 		winScreen();
 		life = 0;
@@ -491,8 +519,7 @@ int level1() {
 		
 	}
 	if(life == 1) {
-		//loseScreen();
-		winScreen();
+		loseScreen();
 		life = 0;
 		nunchuk.update();
 	}
@@ -507,6 +534,7 @@ int level2() {
 	OB.ObstacleDR(2, 0);
 	life = navigate();
 	resetGrid();
+	PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3);
 	if(life == 2) {
 		winScreen();
 		life = 0;
@@ -519,16 +547,29 @@ int level2() {
 }
 
 int levelRandom(uint8_t SL) {
+	int life;
 	lcd.fillScreen(WHITE);
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
+	level = 3;
+	PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3);
 	if (SL == 1)
 	{
 		OB.ObstacleDR(3,1);
 		} else {
 		OB.ObstacleDR(3,0);
 	}
-	navigate();
+	
+	life = navigate();
+	resetGrid();
+	if(life == 2) {
+		winScreen();
+		life = 0;
+	}
+	if(life == 1) {
+		loseScreen();
+		
+	}
 	return;
 }
 
@@ -539,11 +580,11 @@ int highScore() {
 	
 	if (eeprom_is_ready())
 	{
-		a = eeprom_read_byte(10);
-		b = eeprom_read_byte(20);
-		c = eeprom_read_byte(30);
-		d = eeprom_read_byte(40);
-		e = eeprom_read_byte(50);
+		a = eeprom_read_byte(110);
+		b = eeprom_read_byte(120);
+		c = eeprom_read_byte(130);
+		d = eeprom_read_byte(140);
+		e = eeprom_read_byte(150);
 	}
 	
 	lcd.drawText(100,65, "1:", DIAMAND, BLACK, 3.5);
@@ -558,15 +599,112 @@ int highScore() {
 	lcd.drawInteger(150,155, d, DEC,BRONS, BLACK, 3 | 0x00);
 	lcd.drawInteger(150,185, e, DEC,RED, BLACK, 3 | 0x00);
 	
+	lcd.drawText(240,200,"RESET",GREEN,BLACK,2);
+	
 	while(1){
 		nunchuk.update();
 		if (nunchuk.zButton) {
 			nunchuk.update();
 			return;
 		}
+		if (lcd.touchRead())
+		{
+			if (lcd.touchX()> 260 && lcd.touchX()<320 && lcd.touchY() >180 && lcd.touchY()< 240)
+			{
+				deletememory();
+				return;
+				
+			}
+
+		}
+
 		delay(1);
-		
 	}
+	return;
+}
+
+int deletememory(){
+	
+	int h = 0;
+	
+	lcd.fillRect(0,24,320,192,WHITE);
+	lcd.drawText(50,26,"Delete memory?",DARKBLUE,WHITE,2.8);
+	lcd.drawText(50,199,"Delete memory?",DARKBLUE,WHITE,2.8);
+	lcd.drawText(35,115,"YES",DARKBLUE,WHITE,3);
+	lcd.drawText(225,115,"NO",DARKBLUE,WHITE,3);
+	lcd.drawRect(0,45,140,150,BLOOD);
+	lcd.drawRect(180,45,320,150, BLOOD);
+
+	while(1){
+		if (h == 1)
+		{
+			if (lcd.touchRead())
+			{
+				return;
+			}
+		}else{
+			if(lcd.touchRead()){
+				if (lcd.touchX()>0 && lcd.touchX()<140 && lcd.touchY() >24 && lcd.touchY()< 192)
+				{
+					lcd.fillScreen(BLACK);
+					
+					lcd.drawText(50,90,"Memory",DARKBLUE,BLACK,3);
+					lcd.drawText(50,120,"deleted",DARKBLUE,BLACK,3);
+					lcd.drawText(50,180,"Press anywhere",DARKBLUE,BLACK,2);
+					lcd.drawText(50,200," to continue",DARKBLUE,BLACK,2);
+					reset(2);
+					h= 1;
+				}
+				if (lcd.touchX()>180 && lcd.touchX()<320 && lcd.touchY() >24 && lcd.touchY()< 192)
+				{
+					lcd.fillScreen(BLACK);
+					
+					lcd.drawText(50,90,"Memory not",DARKBLUE,BLACK,3);
+					lcd.drawText(50,120,"deleted",DARKBLUE,BLACK,3);
+					lcd.drawText(50,180,"Press anywhere",DARKBLUE,BLACK,2);
+					lcd.drawText(50,200," to continue",DARKBLUE,BLACK,2);
+					h = 1;
+				}
+			}
+		}
+	}
+	return;
+}
+
+void writeCalData(void)
+{
+	uint16_t i, addr=0;
+	uint8_t *ptr;
+
+	eeprom_write_byte(addr++, 0xAA);
+	
+	ptr = (uint8_t*)&lcd.tp_matrix;
+	for(i=0; i < sizeof(CAL_MATRIX); i++)
+	{
+		eeprom_write_byte(addr++, *ptr++);
+	}
+
+	return;
+}
+
+uint8_t readCalData(void)
+{
+	uint16_t i, addr=0;
+	uint8_t *ptr;
+	uint8_t c;
+
+	c = eeprom_read_byte(addr++);
+	if(c == 0xAA)
+	{
+		ptr = (uint8_t*)&lcd.tp_matrix;
+		for(i=0; i < sizeof(CAL_MATRIX); i++)
+		{
+			*ptr++ = eeprom_read_byte(addr++);
+		}
+		return 0;
+	}
+
+	return 1;
 }
 
 int main(void)
@@ -580,6 +718,14 @@ int main(void)
 	nunchuk.init();
 	init_adc_single_sample();
 	reset(1);
+	DDRC |=(1<<DDC1) | (1<<DDC2) | (1<<DDC3);
+	lcd.touchRead();
+	if(lcd.touchZ() || readCalData()) //calibration data in EEPROM?
+	{
+		lcd.touchStartCal(); //calibrate touchpanel
+		writeCalData(); //write data to EEPROM
+	};
+	
 	while (1)
 	{
 		hoofdscherm();

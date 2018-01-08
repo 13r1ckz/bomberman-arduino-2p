@@ -6,8 +6,10 @@
 // default constructor
 hart::HartS(int L, int X, int Y)
 {
+	
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	GridClass gridFH;
+	
 	int i;
 	if(L == 3){
 		drawHarts(X, Y);
@@ -15,6 +17,9 @@ hart::HartS(int L, int X, int Y)
 		drawHarts(X, Y);
 		X++;
 		drawHarts(X, Y);
+		
+		
+		
 	}
 	else if(L == 2){
 		drawHarts(X, Y);
@@ -22,6 +27,7 @@ hart::HartS(int L, int X, int Y)
 		drawHarts(X, Y);
 		X++;
 		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, WHITE);
+		PORTC &=~(1<<PORTC3);
 	}
 	else if(L == 1){
 		drawHarts(X, Y);
@@ -29,6 +35,7 @@ hart::HartS(int L, int X, int Y)
 		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, WHITE);
 		X++;
 		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, WHITE);
+		PORTC &=~(1<<PORTC2);
 	}
 	/*lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16*3, 16, WHITE);
 	for(i = 0; i < L; i++){

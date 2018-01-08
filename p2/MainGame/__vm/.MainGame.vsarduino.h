@@ -33,6 +33,9 @@ int level1();
 int level2();
 int levelRandom(uint8_t SL);
 int highScore();
+int deletememory();
+void writeCalData(void);
+uint8_t readCalData(void);
 int main(void);
 
 #include "pins_arduino.h" 

@@ -1,5 +1,7 @@
 #include "Wall.h"
 
+#define BLACK 0x00000000
+#define WHITE 0xFFFFFFFF
 // default constructor
 int OuterWall::OuterWallP()
 {
@@ -11,21 +13,21 @@ int OuterWall::OuterWallP()
 		int Y = 0;
 		
 		for(i = 0; i < 15; i++){
-			lcd.fillRect(gridFH.GridF(X),gridFH.GridF(Y),16,16, 0xFFFFFF);
-			lcd.fillRect((gridFH.GridF(X)+1),(gridFH.GridF(Y)+1),14,14, 0x000);
+			lcd.fillRect(gridFH.GridF(X),gridFH.GridF(Y),16,16, WHITE);
+			lcd.fillRect((gridFH.GridF(X)+1),(gridFH.GridF(Y)+1),14,14, BLACK);
 			X = X + 1;
 		}
 		for(i = 0; i < 16; i++){
-			lcd.fillRect(0,gridFH.GridF(Y),16,16, 0xFFFFFF);
-			lcd.fillRect(1,(gridFH.GridF(Y)+1),14,14, 0x000);
-			lcd.fillRect(224,gridFH.GridF(Y),16,16, 0xFFFFFF);
-			lcd.fillRect(225,(gridFH.GridF(Y)+1),14,14, 0x000);
+			lcd.fillRect(0,gridFH.GridF(Y),16,16, WHITE);
+			lcd.fillRect(1,(gridFH.GridF(Y)+1),14,14, BLACK);
+			lcd.fillRect(224,gridFH.GridF(Y),16,16, WHITE);
+			lcd.fillRect(225,(gridFH.GridF(Y)+1),14,14, BLACK);
 			Y = Y + 1;
 		}
 		X = 0;
 		for(i = 0; i < 15; i++){
-			lcd.fillRect(gridFH.GridF(X),224,16,16, 0xFFFFFF);
-			lcd.fillRect((gridFH.GridF(X)+1),(225),14,14, 0x000);
+			lcd.fillRect(gridFH.GridF(X),224,16,16, WHITE);
+			lcd.fillRect((gridFH.GridF(X)+1),(225),14,14, BLACK);
 			X = X + 1;
 		}
 
@@ -43,7 +45,7 @@ int InnerWall::InnerWallP()
 	Y = 2;
 	for(i = 0; i < 6; i++){
 		for(j = 0; j < 6; j++){
-			lcd.fillRect((gridFH.GridF(X)),(gridFH.GridF(Y)),16,16, 0x000);
+			lcd.fillRect((gridFH.GridF(X)),(gridFH.GridF(Y)),16,16, BLACK);
 			X = X + 2;
 		}
 		X = 2;
