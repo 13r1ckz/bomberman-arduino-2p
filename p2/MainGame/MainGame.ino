@@ -532,9 +532,10 @@ int level2() {
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
 	OB.ObstacleDR(2, 0);
+	PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3);
 	life = navigate();
 	resetGrid();
-	PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3);
+	
 	if(life == 2) {
 		winScreen();
 		life = 0;
