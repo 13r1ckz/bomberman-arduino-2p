@@ -101,7 +101,7 @@ ISR(INT0_vect){
 
 void initBrightness()	//init brightness
 {
-	ADMUX |= (1<<MUX0);		// input analog A1 Arduino
+	ADMUX |= (0<<MUX0);		// input analog A1 Arduino
 	ADMUX |= (1<<REFS0);	// 5 volt
 	ADCSRA |= (1<<ADEN);	// ADC enable
 }
@@ -494,6 +494,7 @@ int navigate(){
 		harts.HartS(levensB, 16, 13);
 			
 		if (levensA == 0) {
+			 PORTC &=~(1<<PORTC1); 
 			return 1;
 		}
 		if (levensB == 0) {
@@ -515,6 +516,7 @@ int level1() {
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
 	OB.ObstacleDR(1);
+	 PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3); 
 	life = navigate();
 	resetGrid();
 	if(life == 2) {
@@ -537,6 +539,7 @@ int level2() {
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
 	OB.ObstacleDR(2);
+	 PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3); 
 	life = navigate();
 	resetGrid();
 	if(life == 2) {
@@ -556,6 +559,7 @@ int levelRandom() {
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
 	OB.ObstacleDR(3);
+	 PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3); 
 	navigate();
 	life = navigate();
 	resetGrid();
@@ -808,8 +812,10 @@ int main(void)
 	lcd.begin();
 	nunchuk.init();
 	initBrightness();
-	
 	reset(1);
+	
+	DDRC |= (1<<DDC1) | (1<<DDC2) | (1<<DDC3);
+	
 	lcd.touchRead();
 	if(lcd.touchZ() || readCalData()) //calibration data in EEPROM?
 	{
