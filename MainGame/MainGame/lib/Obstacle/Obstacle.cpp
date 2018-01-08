@@ -16,7 +16,7 @@ Obstacle::woodBox(int X, int Y){
 	
 }
 
-Obstacle::ObstacleDR(int level, uint8_t SR)
+Obstacle::ObstacleDR(int level)
 {
 	Serial.begin(9600);
 	char i;
@@ -111,19 +111,10 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 		uint8_t x;
 		uint8_t y;
 		uint8_t QX;
-		
-		if(SR == 1){
-			while(0){
-				if(Serial.available()){
-					seed = Serial.read();	
-					randomSeed(seed);
-				}
-			}
-		}else{
-			seed = random(TCNT0);
-			randomSeed(seed);
-			Serial.print(seed);
-		}
+		randomSeed(TCNT0);
+		seed = random(10);
+		randomSeed(seed);
+		Serial.print(seed);
 		for(QX = 0; QX < 123; QX++){
 			x = random(1,14);
 			y = random(1,14);

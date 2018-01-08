@@ -10,12 +10,12 @@
 
 #define __AVR_ATmega328p__
 #define __AVR_ATmega328P__
-#define ARDUINO 106012
+#define ARDUINO 10804
 #define ARDUINO_MAIN
 #define F_CPU 16000000L
 #define __AVR__
 #define F_CPU 16000000L
-#define ARDUINO 106012
+#define ARDUINO 10804
 #define ARDUINO_AVR_UNO
 #define ARDUINO_ARCH_AVR
 void initBrightness();
@@ -30,11 +30,14 @@ int winScreen();
 int navigate();
 int level1();
 int level2();
-int levelRandom(uint8_t SL);
+int levelRandom();
 int highScore();
+int deletememory();
 int hoofdscherm();
 int navigateHoofdscherm();
 int waitScreen();
+void writeCalData(void);
+uint8_t readCalData(void);
 int main(void);
 
 #include "pins_arduino.h" 

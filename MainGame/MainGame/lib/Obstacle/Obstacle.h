@@ -17,7 +17,7 @@ private:
 //functions
 public:
 	woodBox(int X, int Y);
-	ObstacleDR(int Level, uint8_t SR);
+	ObstacleDR(int Level);
 protected:
 private:
 
