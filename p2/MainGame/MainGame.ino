@@ -415,6 +415,8 @@ int navigate(){
 	while(1) {
 		single_sample();
 		nunchuk.update();
+		
+		
 		XA = gridFH.GridF(nunchukX);	// hier move character A
 		YA = gridFH.GridF(nunchukY);
 		XB = gridFH.GridF(loopX);			// hier move character B

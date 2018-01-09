@@ -111,19 +111,23 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 		uint8_t x;
 		uint8_t y;
 		uint8_t QX;
+		uint8_t p=0;
+		uint8_t check=0;
 		
 		if(SR == 1){
-			while(seed >= 10){
-				Serial.println("loop");
+			while(!check){
+				
 				if(Serial.available()){
-					seed = Serial.read() -48;
-					Serial.println("READ");
-					Serial.println(seed);
+					seed = Serial.read() -48;				
 					if (seed>=0 && seed <= 9)
-					{
-						Serial.print("seed");
-						Serial.println(seed);
-						randomSeed(seed);
+					{p++;
+						if ( p== 2)
+						{
+							randomSeed(seed);
+							p = 0;
+							check =1;
+						}
+						
 					}
 					
 				}
