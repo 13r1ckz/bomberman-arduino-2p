@@ -44,12 +44,7 @@ hart::HartS(int L, int X, int Y)
 			PORTC &=~(1<<PORTC2);
 		}
 	}
-	/*lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16*3, 16, WHITE);
-	for(i = 0; i < L; i++){
-		drawHarts(X, Y);
-		X++;
-	}*/
-	
+
 } 
 
 hart::drawHarts(int X, int Y){
