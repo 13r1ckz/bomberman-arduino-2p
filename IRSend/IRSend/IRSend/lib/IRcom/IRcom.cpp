@@ -59,11 +59,11 @@ void IRcom::sendBit(char b){
 	setTellerVerzender(0);
 	if(b == 1){
 		while(!(getTellerVerzender() == 20)){
-			Serial.print("");
+			_delay_ms(1);
 		}
 	} else {
 		while(!(getTellerVerzender() == 10)){
-			Serial.print("");
+			_delay_ms(1);
 		}
 	}
 }
@@ -72,7 +72,7 @@ void IRcom::sendPulse(){
 	setTellerVerzender(0);
 	TCCR2A |= (1 << COM2B1);
 	while(!(getTellerVerzender() == 10)){
-		Serial.print("");
+		_delay_ms(1);
 	}
 	TCCR2A &= ~(1 << COM2B1);
 }
@@ -81,7 +81,7 @@ void IRcom::sendStartBit(){
 	sendPulse();
 	setTellerVerzender(0);
 	while(!(getTellerVerzender() == 30)){
-		Serial.print("");
+		_delay_ms(1);
 	}
 }
 

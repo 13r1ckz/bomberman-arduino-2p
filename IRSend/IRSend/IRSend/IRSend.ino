@@ -58,8 +58,8 @@ void nibble(uint8_t bericht){
 	uint8_t y = bericht;
 	x >>= 4;
 	y &= 0x0F;
-	Serial.println(x, HEX);
-	Serial.println(y, HEX);
+	Serial.println(x, BIN);
+	Serial.println(y, BIN);
 }
 
 int main(void){
@@ -67,13 +67,19 @@ int main(void){
 	sei();
 	
 	ir.setIR();
+	uint8_t x;
+	uint8_t y;
+	uint8_t bericht;
 	
 	while(1){
-		if(Serial.available()){
-			char letter = Serial.read();
-			//nibble(letter);
-			ir.sendByte(letter);
-		}
+		x = 8;
+		y = 9;
+		bericht = x << 4;
+		Serial.println(bericht, BIN);
+		bericht += y;
+		Serial.println(bericht, BIN);
+		ir.sendByte(bericht);
+		delay(1000);
 	}
 	
 	return;
