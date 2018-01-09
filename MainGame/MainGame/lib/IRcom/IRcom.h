@@ -29,7 +29,6 @@ private:
 //functions
 public:
 	void setIR(); //zetten van timers en interrupts
-	
 	void sendByte(uint8_t command);//byte versturen
 	
 	//functies voor tellen
@@ -48,6 +47,6 @@ private:
 	void setTimer();
 	void setPWM56();
 	void setInterrupt();
-}; //IRcom
+}; 
 
 #endif //__IRCOM_H__
