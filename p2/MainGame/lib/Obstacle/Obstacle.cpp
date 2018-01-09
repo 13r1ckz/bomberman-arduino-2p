@@ -113,17 +113,14 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 		uint8_t QX;
 		
 		if(SR == 1){
-			while(0){
+			while(1){
 				if(Serial.available()){
-					seed = Serial.read();
-					Serial.print(seed);
+					seed = Serial.read() -48;
+					Serial.print(seed,DEC);
 					randomSeed(seed);
 				}
+				delay(1);
 			}
-			}else{
-			seed = random(TCNT0);
-			randomSeed(seed);
-			Serial.print(seed);
 		}
 		for(QX = 0; QX < 123; QX++){
 			x = random(1,14);
