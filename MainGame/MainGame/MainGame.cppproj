@@ -152,7 +152,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM6</arduino.upload.port>
+        <arduino.upload.port>COM11</arduino.upload.port>
         <arduino.board.name>uno</arduino.board.name>
         <arduino.board.desc>Arduino/Genuino Uno</arduino.board.desc>
         <arduino.board.property_bag>name=Arduino/Genuino Uno
@@ -557,7 +557,7 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM6</arduino.upload.port>
+        <arduino.upload.port>COM11</arduino.upload.port>
         <arduino.board.name>uno</arduino.board.name>
         <arduino.board.desc>Arduino/Genuino Uno</arduino.board.desc>
         <arduino.board.property_bag>name=Arduino/Genuino Uno
