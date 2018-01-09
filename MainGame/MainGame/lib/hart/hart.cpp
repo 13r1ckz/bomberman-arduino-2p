@@ -31,7 +31,9 @@ hart::HartS(int L, int X, int Y)
 		drawHarts(X, Y);
 		X++;
 		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, WHITE);
-		PORTC &=~(1<<PORTC3);				//Het groene ledje wordt uitgezet
+		if(levensA == 2){
+		PORTC &=~(1<<PORTC3);	
+		}			//Het groene ledje wordt uitgezet
 	}
 	else if(L == 1){
 		drawHarts(X, Y);
@@ -39,7 +41,11 @@ hart::HartS(int L, int X, int Y)
 		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, WHITE);
 		X++;
 		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, WHITE);
-		 PORTC &=~(1<<PORTC2);				//Het oranje ledje wordt uitgezet
+		if (levensA == 1)
+		{
+			 PORTC &=~(1<<PORTC2);				//Het oranje ledje wordt uitgezet
+		}
+		
 	}
 } 
 
