@@ -1,6 +1,10 @@
 #include "Navigate.h"
 #define WHITE 0xFFFFFFFF
 #define RED 0xFFFFF800
+
+/*
+Met deze functie kan het poppetje bewegen 
+*/
 Navigate::navigate()
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -123,7 +127,9 @@ Navigate::navigate()
 	}
 } //Navigate
 
-
+/*
+Met deze functie wordt de rode rand getekend
+*/
 Navigate::navigatestart(char button)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -182,8 +188,11 @@ Navigate::navigatestart(char button)
 	else{
 		lcd.drawText(20,20, "enter number between 1 and 4", RED,RED,3);
 	}
-} //Navigatestart
+} 
 
+/*
+Met deze functie wordt de rode rand getekend
+*/
 Navigate::navigateHoofdscherm(char button){
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	if(button == 1){	

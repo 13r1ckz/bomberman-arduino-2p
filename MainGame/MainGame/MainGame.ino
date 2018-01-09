@@ -51,34 +51,37 @@ uint8_t bericht = 0;
 ISR(TIMER2_COMPB_vect){
 }
 
+/*
+Met deze functie wordt het aantal keer in overflow geteld
+*/
 ISR(TIMER1_OVF_vect) {    //macro met interrupt vector
 	ir.setTellerVerzender(ir.getTellerVerzender() + 1);
 	ir.setTellerOntvanger(ir.getTellerOntvanger() + 1);
 }
 
+/*
+Deze functie wordt geactiveerd bij een interrupt
+Met deze functie worden de bits omgezet tot een byte die gebruikt kan worden in het spel
+*/
 ISR(INT0_vect){
-	//Serial.println("i");
 	ir.verschil = ir.getTellerOntvanger() - ir.tempteller;
 	
 	if(ir.startbit == 0){
 		if(ir.verschil >= 40){
 			ir.startbit = 1;
 			ir.ontvangeraantal++;
-			//Serial.println("Startbit");
 		}
-		} else if (ir.startbit == 1){
+	} else if (ir.startbit == 1){
 		if(ir.verschil >= 40){
 			ir.startbit = 0;
 			ir.setTellerOntvanger(0);
 			ir.tempteller = 0;
 			ir.ontvangeraantal++;
-			} else if(ir.verschil >= 30 && ir.verschil <40){
-			Serial.println("1");
+			} else if(ir.verschil >= 30 && ir.verschil <40){ //bit 1
 			ir.ontvangenbericht |=(1<<ir.bitteller);
 			ir.bitteller--;
 			ir.ontvangeraantal++;
-			} else if(ir.verschil >= 20 && ir.verschil <30){
-			Serial.println("0");
+			} else if(ir.verschil >= 20 && ir.verschil <30){ //bit 0
 			ir.ontvangenbericht &=~(1<<ir.bitteller);
 			ir.bitteller--;
 			ir.ontvangeraantal++;
@@ -91,7 +94,7 @@ ISR(INT0_vect){
 			ir.letter = ir. ontvangenbericht;
 			Serial.println(ir.letter);
 			ir.ontvangenbericht = 0x00;
-			}else{
+		}else{
 			ir.bitteller =7;
 			ir.ontvangenbericht = 0x00;
 		}
@@ -99,6 +102,9 @@ ISR(INT0_vect){
 	ir.tempteller = ir.getTellerOntvanger();
 }
 
+/*
+Met deze functie wordt de potentiometer aangezet 
+*/
 void initBrightness()	//init brightness
 {
 	ADMUX |= (0<<MUX0);		// input analog A1 Arduino
@@ -106,6 +112,9 @@ void initBrightness()	//init brightness
 	ADCSRA |= (1<<ADEN);	// ADC enable
 }
 
+/*
+Met deze functie wordt de helderheid aangepast aan de hand van de potentiometer
+*/
 void brightness()	//brightness
 {
 	uint8_t bright;
@@ -119,6 +128,9 @@ void brightness()	//brightness
 	lcd.led(bright);
 }
 
+/*
+Met deze functie worden de highscores gereset
+*/
 int reset(int soort){
 	uint8_t a,b,c,d,e;
 	a = eeprom_read_byte(110);
@@ -162,6 +174,9 @@ int reset(int soort){
 	}
 }
 
+/*
+Met deze functie kan je bewegen door het startscherm
+*/
 int navigateStart() { //navigates through start
 	int nunchukY = 1;
 	int counter = 5;
@@ -171,7 +186,6 @@ int navigateStart() { //navigates through start
 	nunchuk.update();
 	
 	while(nunchuk.zButton == 0) {
-		
 		nunchuk.update();
 		brightness();
 		
@@ -195,34 +209,18 @@ int navigateStart() { //navigates through start
 				i++;
 			}
 			i++;
-		}
-		
-		
-		/*if (Serial.available()){
-			msg = Serial.read();
-			
-			msg = msg - 48;
-			if(msg >= 1 || msg <= 5){
-				return msg;
-			}
-		}*/
-		
-		else{
+		} else{
 			if(nunchukY == 1){
 				nav.navigatestart(1);
-
 			}
 			if(nunchukY == 2){
 				nav.navigatestart(2); //tekent rode rand om geselecteerde level
-
 			}
 			if(nunchukY == 3){
-				nav.navigatestart(3);
-				
+				nav.navigatestart(3);				
 			}
 			if(nunchukY == 4){
-				nav.navigatestart(4);
-				
+				nav.navigatestart(4);				
 			}
 		}
 	}
@@ -231,6 +229,9 @@ int navigateStart() { //navigates through start
 	return nunchukY;
 }
 
+/*
+In deze functie wordt het startscherm getekend
+*/
 int Startscherm(){	
 	lcd.fillScreen(BLACK);
 	
@@ -256,6 +257,9 @@ int Startscherm(){
 	return;
 }
 
+/*
+Met deze functie wordt het grid gereset
+*/
 int resetGrid(){
 	for (int i = 1; i < 14; i++) {		//leegt veld
 		for (int j = 1; j < 14; j++) {
@@ -269,6 +273,9 @@ int resetGrid(){
 	}
 }
 
+/*
+Met deze functie wordt de highscore in het geheugen gezet
+*/
 int memory(int geheugen){
 	uint8_t a,b,c,d,e;
 	if (eeprom_is_ready())
@@ -324,6 +331,9 @@ int memory(int geheugen){
 	
 }
 
+/*
+In deze functie wordt het lose screen getekend de functie memory aangeroepen
+*/
 int loseScreen(){
 	uint8_t m = 0;
 	uint8_t geheugen;
@@ -364,6 +374,9 @@ int loseScreen(){
 	}
 }
 
+/*
+In deze functie wordt het win screen getekend de functie memory aangeroepen
+*/
 int winScreen(){
 	uint8_t geheugen;
 	uint8_t m = 0;
@@ -407,6 +420,9 @@ int winScreen(){
 	}
 }
 
+/*
+In deze functie wordt het bewegen van de tegenstander geregistreerd 
+*/
 int navigate(){
 	
 	int counterBomExplosionA = 0;
@@ -510,6 +526,9 @@ int navigate(){
 	}
 }
 
+/*
+In deze functie wordt alles voor level 1 aangeroepen
+*/
 int level1() {
 	int life;
 	lcd.fillScreen(WHITE);
@@ -533,6 +552,9 @@ int level1() {
 	return;
 }
 
+/*
+In deze functie wordt alles voor level 2 aangeroepen
+*/
 int level2() {
 	int life;
 	lcd.fillScreen(WHITE);
@@ -553,6 +575,9 @@ int level2() {
 	return;
 }
 
+/*
+In deze functie wordt alles voor random level aangeroepen
+*/
 int levelRandom() {
 	int life;
 	lcd.fillScreen(WHITE);
@@ -574,6 +599,9 @@ int levelRandom() {
 	return;
 }
 
+/*
+In deze functie wordt alles voor het highscore scherm aangeroepen
+*/
 int highScore() {
 	uint8_t a,b,c,d,e;
 	lcd.fillScreen(BLACK);
@@ -624,6 +652,9 @@ int highScore() {
 	return;
 }
 
+/*
+In deze functie wordt het geheugen gewist van de highscore
+*/
 int deletememory(){
 	
 	int h = 0;
@@ -672,6 +703,9 @@ int deletememory(){
 	return;
 }
 
+/*
+In deze functie wordt het hoofdscherm getekend
+*/
 int hoofdscherm(){
 	lcd.fillScreen(BLACK);
 	
@@ -689,6 +723,9 @@ int hoofdscherm(){
 	return;
 }
 
+/*
+Met deze functie kan je bewegen door het hoofdscherm
+*/
 int navigateHoofdscherm(){
 	int nunchukY = 1;
 	int counter = 5;
@@ -748,6 +785,9 @@ int navigateHoofdscherm(){
 	return nunchukY;
 }
 
+/*
+In deze functie wordt het wait scherm getekend
+*/
 int waitScreen(){
 	char a;
 	lcd.fillScreen(BLACK);
@@ -764,6 +804,9 @@ int waitScreen(){
 	return a;
 }
 
+/*
+
+*/
 void writeCalData(void)
 {
 	uint16_t i, addr=0;
@@ -780,6 +823,9 @@ void writeCalData(void)
 	return;
 }
 
+/*
+
+*/
 uint8_t readCalData(void)
 {
 	uint16_t i, addr=0;

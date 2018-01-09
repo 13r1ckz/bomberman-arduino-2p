@@ -10,13 +10,14 @@
 #define DARKRED 0xFFFFA000
 #define WHITECREAM 0xFFFFFFF5
 #define WHITE 0xFFFFFF
-// default constructor
+
+/*
+In deze functie wordt er een bom getekend
+*/
 Bom::BomXY(int X, int Y)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	
-	
-	//lcd.fillRect(gridFH.GridF(X),gridFH.GridF(Y),16,16,WHITE);
 	lcd.fillCircle((X+7),(Y+9),5,BLACK);
 	lcd.drawPixel((X+11),(Y+5),DARKGREY);
 	lcd.drawPixel((X+13),(Y+5),ORANGE);
@@ -26,8 +27,11 @@ Bom::BomXY(int X, int Y)
 	lcd.drawPixel((X+13),(Y+4),LIGHTRED);
 	lcd.drawPixel((X+6),(Y+6),WHITE);
 	lcd.drawPixel((X+5),(Y+7),WHITE);
-} //Bom
+} 
 
+/*
+In deze functie wordt de explosie van de bom getekend
+*/
 Bom::BomExpl(int X, int Y)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -42,7 +46,10 @@ Bom::BomExpl(int X, int Y)
 	
 }//explosion
 
-Bom::BomTrackA(int bomX, int bomY, int character) //kratten verwijderen+punten tellen
+/*
+In deze functie worden de kratten verwijderd en de punten geteld
+*/
+Bom::BomTrackA(int bomX, int bomY, int character) 
 {
 	BomExpl(bomX, bomY);
 	if(!(a[bomY/16][bomX/16-1] == 2)) {		//links van de bom
@@ -96,6 +103,9 @@ Bom::BomTrackA(int bomX, int bomY, int character) //kratten verwijderen+punten t
 	}
 }
 
+/*
+Met deze functie worden de kratten om de bom verwijderd na de explosie
+*/
 Bom::BomDelete(int bomX, int bomY)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -119,6 +129,9 @@ Bom::BomDelete(int bomX, int bomY)
 	}
 }
 
+/*
+In deze functie worden de bovenstaande functies in de goede volgorde aangeroepen
+*/
 void Bom::PlaceBomA(int XA, int YA, int XB, int YB, int character, int * counterBomExplosionA, int * counterBomDeleteA)
 {
 	MI0283QT9 lcd;
@@ -171,6 +184,9 @@ void Bom::PlaceBomA(int XA, int YA, int XB, int YB, int character, int * counter
 	
 }
 
+/*
+In deze functie worden de bovenstaande functies in de goede volgorde aangeroepen
+*/
 void Bom::PlaceBomB(int XA, int YA, int XB, int YB, int character, int bomBinnen, int * counterBomExplosionB, int * counterBomDeleteB)
 {
 	MI0283QT9 lcd;
@@ -211,6 +227,9 @@ void Bom::PlaceBomB(int XA, int YA, int XB, int YB, int character, int bomBinnen
 	}
 }
 
+/*
+In deze functie worden de kratten verwijderd en de punten geteld
+*/
 Bom::BomTrackB(int bomX, int bomY, int character) //Bom verwijderen+punten tellen
 {
 	BomExpl(bomX, bomY);

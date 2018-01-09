@@ -4,9 +4,13 @@
 #define WINDESHEIM 0xFFFFD501
 #define DARKBROWN 0x6A82
 
+/*
+Met deze functie wordt het houten kratje getekend en toegevoegd aan een array
+*/
 Obstacle::woodBox(int X, int Y){
-	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
+	MI0283QT9 lcd; 
 	GridClass gridFH;
+	
 	lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, LIGHTBROWN);
 	lcd.drawRect((gridFH.GridF(X)+3), gridFH.GridF(Y), 2, 16, WINDESHEIM);
 	lcd.drawRect((gridFH.GridF(X)+7), gridFH.GridF(Y), 2, 16, WINDESHEIM);
@@ -16,6 +20,9 @@ Obstacle::woodBox(int X, int Y){
 	
 }
 
+/*
+Hier wordt het level gemaakt.
+*/
 Obstacle::ObstacleDR(int level)
 {
 	Serial.begin(9600);
