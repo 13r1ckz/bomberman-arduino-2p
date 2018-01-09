@@ -796,7 +796,8 @@ int waitScreen(){
 }
 
 /*
-
+In deze functie wordt de callibratie gezet op de eeprom
+bron: examples grafics libary
 */
 void writeCalData(void)
 {
@@ -815,7 +816,8 @@ void writeCalData(void)
 }
 
 /*
-
+In deze functie wordt de callibratie op gehaalt van de eeprom
+bron: examples grafics libary
 */
 uint8_t readCalData(void)
 {
