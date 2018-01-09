@@ -27,7 +27,11 @@ hart::HartS(int L, int X, int Y)
 		drawHarts(X, Y);
 		X++;
 		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, WHITE);
-		PORTC &=~(1<<PORTC3);
+		if (levensA ==2)
+		{
+			PORTC &=~(1<<PORTC3);
+		}
+		
 	}
 	else if(L == 1){
 		drawHarts(X, Y);
@@ -35,7 +39,10 @@ hart::HartS(int L, int X, int Y)
 		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, WHITE);
 		X++;
 		lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16, 16, WHITE);
-		PORTC &=~(1<<PORTC2);
+		if (levensA ==1)
+		{
+			PORTC &=~(1<<PORTC2);
+		}
 	}
 	/*lcd.fillRect(gridFH.GridF(X), gridFH.GridF(Y), 16*3, 16, WHITE);
 	for(i = 0; i < L; i++){

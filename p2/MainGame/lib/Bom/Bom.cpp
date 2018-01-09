@@ -152,6 +152,9 @@ void Bom::PlaceBomA(int XA, int YA, int XB, int YB, int character, int * counter
 		if (*counterBomDeleteA == bomDelete) {
 			if ((((XA == bomXA) || (XA == bomXA-16) || (XA == bomXA+16)) && (YA == bomYA)) || ((XA == bomXA) && ((YA == bomYA) || (YA == bomYA-16) || (YA == bomYA+16))))	{ //character A midden in bom
 				levensA--;
+		
+				if(levensA)
+				
 				lcd.fillRect(255, 112,100, 50, WHITE);
 				points -= 5;
 			}
@@ -197,6 +200,7 @@ if(bomBinnen ==1 ){
 		if (*counterBomDeleteB == bomDelete) {
 			if ((((XA == bomXB) || (XA == bomXB-16) || (XA == bomXB+16)) && (YA == bomYB)) || ((XA == bomXB) && ((YA == bomYB) || (YA == bomYB-16) || (YA == bomYB+16))))	{ //character A midden in bom
 				levensA--;
+
 				lcd.fillRect(255, 112,100, 50, WHITE);
 			}
 			if ((((XB == bomXB) || (XB == bomXB-16) || (XB == bomXB+16)) && (YB == bomYB)) || ((XB == bomXB) && ((YB == bomYB) || (YB == bomYB-16) || (YB == bomYB+16))))	{ //character B midden in bom

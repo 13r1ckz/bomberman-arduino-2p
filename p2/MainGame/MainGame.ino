@@ -425,16 +425,18 @@ int navigate(){
 		Characters.MoveBlue(gridFH.GridF(loopX), gridFH.GridF(loopY));
 
 		if(Serial.available()>0){
-			if (level == 3);
-			{
-			uint8_t opvang = Serial.read();
-			level = 0;
-			}
+			//if (level == 3);
+			//{
+			//uint8_t opvang = Serial.read();
+			//level = 0;
+			//}
 			if(z == 0){
 				bericht = Serial.read() - 48;
+
 				z = 1;
 				} else if (z == 1) {
 				lopen = Serial.read() - 48;
+
 				z = 2;
 			}
 			
@@ -461,14 +463,14 @@ int navigate(){
 
 				lopen = Serial.read() - 48;
 
-				z = 5;
+					z = 5;
 			}
 			
-			if(z == 5){
+			if(z == 5){	
 				if(bericht == 0){
 					loopX = lopen;
 
-					} else if(bericht == 1){
+						} else if(bericht == 1){
 					if(lopen == 5){
 						bomBinnen = 1;
 						character = 2;
@@ -509,6 +511,7 @@ int level1() {
 	wallIn.InnerWallP();
 	OB.ObstacleDR(1, 0);
 	PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3);
+
 	life = navigate();
 	resetGrid();
 	
@@ -533,6 +536,7 @@ int level2() {
 	wallIn.InnerWallP();
 	OB.ObstacleDR(2, 0);
 	PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3);
+
 	life = navigate();
 	resetGrid();
 	
@@ -552,7 +556,6 @@ int levelRandom(uint8_t SL) {
 	lcd.fillScreen(WHITE);
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
-	level = 3;
 	PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3);
 	if (SL == 1)
 	{
