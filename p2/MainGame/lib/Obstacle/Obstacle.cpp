@@ -107,21 +107,30 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 		}
 	}
 	else if (level == 3){
-		uint8_t seed;
+		uint8_t seed = 10;
 		uint8_t x;
 		uint8_t y;
 		uint8_t QX;
 		
 		if(SR == 1){
-			while(1){
+			while(seed >= 10){
+				Serial.println("loop");
 				if(Serial.available()){
 					seed = Serial.read() -48;
-					Serial.print(seed,DEC);
-					randomSeed(seed);
+					Serial.println("READ");
+					Serial.println(seed);
+					if (seed>=0 && seed <= 9)
+					{
+						Serial.print("seed");
+						Serial.println(seed);
+						randomSeed(seed);
+					}
+					
 				}
 				delay(1);
 			}
 		}
+		
 		for(QX = 0; QX < 123; QX++){
 			x = random(1,14);
 			y = random(1,14);

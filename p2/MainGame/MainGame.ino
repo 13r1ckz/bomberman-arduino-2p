@@ -425,11 +425,7 @@ int navigate(){
 		Characters.MoveBlue(gridFH.GridF(loopX), gridFH.GridF(loopY));
 
 		if(Serial.available()>0){
-			//if (level == 3);
-			//{
-			//uint8_t opvang = Serial.read();
-			//level = 0;
-			//}
+			
 			if(z == 0){
 				bericht = Serial.read() - 48;
 
