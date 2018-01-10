@@ -298,7 +298,7 @@ int loseScreen(){
 	lcd.drawInteger(200, 100, points, DEC, WHITE, BLACK, 2 | 0x00);
 	levensA = 3;
 	levensB = 3;
-	
+	PORTC &=~ (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3);
 	
 	geheugen = memory(geheugen);
 	if (geheugen == 0)
@@ -338,7 +338,7 @@ int winScreen(){
 	lcd.drawInteger(200, 100, points, DEC, WHITE, BLACK, 2 | 0x00);
 	levensA = 3;
 	levensB = 3;
-	
+	PORTC &=~ (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3);
 	
 	geheugen = memory(geheugen);
 
