@@ -1,7 +1,7 @@
 #ifndef __CHARACTER_H__
 #define __CHARACTER_H__
 
-#include "Grid.h"
+#include "../Grid/Grid.h"
 #include <GraphicsLib.h>
 #include <MI0283QT9.h>
 
@@ -14,8 +14,8 @@ private:
 
 //functions
 public:
-	MoveA(int X, int Y);
-	MoveB(int X, int Y);
+	MoveBlue(int X, int Y);
+	MoveRed(int X, int Y);
 protected:
 private:
 
