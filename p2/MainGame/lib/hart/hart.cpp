@@ -3,7 +3,9 @@
 #define RED 0xFFFFF800
 #define WHITE 0xFFFFFFFF
 
-// default constructor
+/*
+In deze functie het aantal hartjes getekend
+*/
 hart::HartS(int L, int X, int Y)
 {
 	
@@ -46,7 +48,9 @@ hart::HartS(int L, int X, int Y)
 	}
 
 } 
-
+/*
+Met deze functie wordt een hartje getekend
+*/
 hart::drawHarts(int X, int Y){
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	GridClass gridFH;

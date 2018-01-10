@@ -18,8 +18,8 @@
 #define ARDUINO 10801
 #define ARDUINO_AVR_UNO
 #define ARDUINO_ARCH_AVR
-void init_adc_single_sample();
-void single_sample();
+void initBrightness();
+void brightness();
 int reset(int soort);
 int hoofdscherm();
 int waitScreen();

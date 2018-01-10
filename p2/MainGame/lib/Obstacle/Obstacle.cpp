@@ -3,7 +3,9 @@
 #define LIGHTBROWN 0xFFFFAC08
 #define WINDESHEIM 0xFFFFD501
 #define DARKBROWN 0x6A82
-
+/*
+Met deze functie wordt het houten kratje getekend en toegevoegd aan een array
+*/
 Obstacle::woodBox(int X, int Y){
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
 	GridClass gridFH;
@@ -15,12 +17,15 @@ Obstacle::woodBox(int X, int Y){
 	a[Y][X] = 3;
 	
 }
-
+ /*
+Hier worden de boxen in de levels gezet
+*/
 Obstacle::ObstacleDR(int level, uint8_t SR)
 {
 	Serial.begin(9600);
 	char i;
 	
+	// level 1 boxen
 	if(level == 1){
 		woodBox(4,1);
 		for(i = 7; i <= 10; i++){ //rij 1
@@ -79,6 +84,7 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 		woodBox(10,13);
 		woodBox(11,13);
 	}
+	// level 2 boxen
 	else if (level == 2){
 		for (i = 1; i <= 13; i++){//rij 5/7/9
 			woodBox(i, 5);
@@ -106,6 +112,7 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 			woodBox(i, 13);
 		}
 	}
+	//random level
 	else if (level == 3){
 		uint8_t seed = 10;
 		uint8_t x;
@@ -116,14 +123,14 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 		
 		if(SR == 1){
 			while(!check){
-				
+				//wacht op seed
 				if(Serial.available()){
 					seed = Serial.read() -48;				
 					if (seed>=0 && seed <= 9)
 					{p++;
 						if ( p== 2)
 						{
-							randomSeed(seed);
+							randomSeed(seed);//seed voor functie random zetten
 							p = 0;
 							check =1;
 						}
@@ -135,6 +142,7 @@ Obstacle::ObstacleDR(int level, uint8_t SR)
 			}
 		}
 		
+		//set random boxen
 		for(QX = 0; QX < 123; QX++){
 			x = random(1,14);
 			y = random(1,14);

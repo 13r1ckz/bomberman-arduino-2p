@@ -8,11 +8,11 @@
 #define LIGHTRED 0xFFFFF801
 
 
-//RGB(2,13,199)
-
 #include "Character.h"
 
-// default constructor
+/*
+Met deze functie wordt het blauwe karakter getekend
+*/
 Character::MoveBlue(int X, int Y)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -76,7 +76,9 @@ Character::MoveBlue(int X, int Y)
 	lcd.drawLine((X+2), (Y+15), (X+5), (Y+15), BLACK);
 	lcd.drawLine((X+10), (Y+15), (X+13), (Y+15), BLACK);
 } //Character
-
+/*
+Met deze functie wordt het blauwe karakter getekend
+*/
 Character::MoveRed(int X, int Y)
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1

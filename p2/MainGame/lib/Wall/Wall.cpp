@@ -2,7 +2,10 @@
 
 #define BLACK 0x00000000
 #define WHITE 0xFFFFFFFF
-// default constructor
+
+/*
+Met deze functie wordt de buitenmuur getekend
+*/
 int OuterWall::OuterWallP()
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1
@@ -32,7 +35,9 @@ int OuterWall::OuterWallP()
 		}
 
 } //OuterWall
-
+/*
+Met deze functie wordt de binnenmuur getekend
+*/
 int InnerWall::InnerWallP()
 {
 	MI0283QT9 lcd;  //MI0283QT9 Adapter v1

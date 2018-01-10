@@ -1,14 +1,11 @@
- /*
-* initRW.cpp
-*
-* Created: 12/14/2017 2:27:42 PM
-* Author: gerjo
-*/
+
 
 
 #include "initRW.h"
 
-// default constructor
+/*
+herschreven init functie
+*/
 initRW::init()
 {
 	// this needs to be called before setup() or some functions won't

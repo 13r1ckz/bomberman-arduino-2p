@@ -888,12 +888,6 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
     <Compile Include="lib\init\initRW.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="lib\IRcom\IRcom.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="lib\IRcom\IRcom.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="lib\Navigate\Navigate.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -927,7 +921,6 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
     <Folder Include="lib\Data" />
     <Folder Include="lib\hart" />
     <Folder Include="lib\init\" />
-    <Folder Include="lib\IRcom\" />
     <Folder Include="lib\Navigate\" />
     <Folder Include="lib\Obstacle\" />
     <Folder Include="lib\Wall\" />
