@@ -137,8 +137,8 @@ void Bom::PlaceBomA(int XA, int YA, int XB, int YB, int character, int * counter
 	MI0283QT9 lcd;
 	ArduinoNunchuk nunchuk;
 	
-	int bomExplosion = 40;
-	int bomDelete = 40;
+	int bomExplosion = 30;
+	int bomDelete = 20;
 	nunchuk.update();
 	
 	if (bombA==0){				//als er geen bom ligt
