@@ -308,15 +308,13 @@ int loseScreen(){
 	 }
 	 
 	 Serial.print(1, DEC);
-	 
-	if(m == 1){
-		loopX = 1;
-		loopY = 1;
+	 	loopX = 13;
+		loopY = 13;
 		bom.bombA =0;
 		bom.bombB =0;
 		points = 0;
 		return;
-	}
+	
 }
 
 /*
@@ -324,15 +322,11 @@ In deze functie wordt het win screen getekend de functie memory aangeroepen
 */
 int winScreen(){
 	uint8_t geheugen;
-	uint8_t m = 0;
+
 	lcd.fillScreen(BLACK);
 	lcd.drawText(35, 50, "You win", GREEN, BLACK, 4);
 	lcd.drawText(80, 100, "Points: ", WHITE, BLACK, 2);
-	lcd.drawInteger(200, 100, points, DEC, WHITE, BLACK, 2 | 0x00);
-	levensA = 3;
-	levensB = 3;
-	
-	
+	lcd.drawInteger(200, 100, points, DEC, WHITE, BLACK, 2 | 0x00);	
 	geheugen = memory(geheugen);
 	levensA = 3;
 	levensB = 3;
@@ -353,16 +347,13 @@ int winScreen(){
 		delay(1);
 	}
 	
-	Serial.print(1, DEC);
-	
-	if(m == 1){
-		loopX = 1;
-		loopY = 1;
+		Serial.print(1, DEC);
+		loopX = 13;
+		loopY = 13;
 		bom.bombA =0;
 		bom.bombB =0;
-		points = 0;
 		return;
-	}
+	
 }
 
 /*
@@ -750,7 +741,8 @@ int waitScreen(){
 }
 
 /*
-
+In deze functie wordt de callibratie gezet op de eeprom
+bron: examples grafics libary
 */
 void writeCalData(void)
 {
@@ -769,7 +761,8 @@ void writeCalData(void)
 }
 
 /*
-
+In deze functie wordt de callibratie op gehaalt van de eeprom
+bron: examples grafics libary
 */
 uint8_t readCalData(void)
 {

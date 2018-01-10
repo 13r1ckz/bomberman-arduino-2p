@@ -18,8 +18,7 @@
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
-    <OverrideVtorValue>
-    </OverrideVtorValue>
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
     <eraseonlaunchrule>0</eraseonlaunchrule>
     <ProgFlashFromRam>true</ProgFlashFromRam>
     <RamSnippetAddress>0x20000000</RamSnippetAddress>
@@ -56,7 +55,7 @@
     <ListValues>
       <Value>__AVR_ATmega328p__</Value>
       <Value>__AVR_ATmega328P__</Value>
-      <Value>ARDUINO=106012</Value>
+      <Value>ARDUINO=10801</Value>
       <Value>ARDUINO_MAIN</Value>
       <Value>F_CPU=16000000L</Value>
       <Value>__AVR__</Value>
@@ -66,24 +65,25 @@
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries/Wire/src</Value>
-      <Value>D:/Documenten/Arduino/libraries/GraphicsLib</Value>
-      <Value>D:/Documenten/Arduino/libraries/MI0283QT9</Value>
-      <Value>D:/Documenten/Arduino/libraries/ArduinoNunchuk</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries/EEPROM/src</Value>
-      <Value>D:/Documenten/Arduino/libraries/digitalWriteFast</Value>
-      <Value>D:/Documenten/Arduino/libraries/SPI</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries/Wire/src/utility</Value>
-      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries</Value>
-      <Value>D:/Documenten/Arduino/libraries</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/cores/arduino</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/variants/standard</Value>
       <Value>../../../MainGame</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/avr/include/</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/avr/include/avr/</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/lib/gcc/avr/4.9.2/include</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/lib/gcc/avr/4.9.3/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/GraphicsLib</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/MI0283QT9</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/Nunchuck</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/EEPROM/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/digitalWriteFast</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
+      <Value>C:/Users/arend/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -98,7 +98,7 @@
     <ListValues>
       <Value>__AVR_ATmega328p__</Value>
       <Value>__AVR_ATmega328P__</Value>
-      <Value>ARDUINO=106012</Value>
+      <Value>ARDUINO=10801</Value>
       <Value>ARDUINO_MAIN</Value>
       <Value>F_CPU=16000000L</Value>
       <Value>__AVR__</Value>
@@ -108,24 +108,25 @@
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries/Wire/src</Value>
-      <Value>D:/Documenten/Arduino/libraries/GraphicsLib</Value>
-      <Value>D:/Documenten/Arduino/libraries/MI0283QT9</Value>
-      <Value>D:/Documenten/Arduino/libraries/ArduinoNunchuk</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries/EEPROM/src</Value>
-      <Value>D:/Documenten/Arduino/libraries/digitalWriteFast</Value>
-      <Value>D:/Documenten/Arduino/libraries/SPI</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries/Wire/src/utility</Value>
-      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries</Value>
-      <Value>D:/Documenten/Arduino/libraries</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/cores/arduino</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/variants/standard</Value>
       <Value>../../../MainGame</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/avr/include/</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/avr/include/avr/</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/lib/gcc/avr/4.9.2/include</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/lib/gcc/avr/4.9.3/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/GraphicsLib</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/MI0283QT9</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/Nunchuck</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/EEPROM/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/digitalWriteFast</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
+      <Value>C:/Users/arend/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include</Value>
     </ListValues>
   </avrgcccpp.compiler.directories.IncludePaths>
   <avrgcccpp.compiler.optimization.level>Optimize (-O1)</avrgcccpp.compiler.optimization.level>
@@ -151,7 +152,7 @@
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM3</arduino.upload.port>
+        <arduino.upload.port>COM11</arduino.upload.port>
         <arduino.board.name>uno</arduino.board.name>
         <arduino.board.desc>Arduino/Genuino Uno</arduino.board.desc>
         <arduino.board.property_bag>name=Arduino/Genuino Uno
@@ -459,7 +460,7 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
     <ListValues>
       <Value>__AVR_ATmega328p__</Value>
       <Value>__AVR_ATmega328P__</Value>
-      <Value>ARDUINO=106012</Value>
+      <Value>ARDUINO=10801</Value>
       <Value>ARDUINO_MAIN</Value>
       <Value>F_CPU=16000000L</Value>
       <Value>__AVR__</Value>
@@ -469,24 +470,25 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries/Wire/src</Value>
-      <Value>D:/Documenten/Arduino/libraries/GraphicsLib</Value>
-      <Value>D:/Documenten/Arduino/libraries/MI0283QT9</Value>
-      <Value>D:/Documenten/Arduino/libraries/ArduinoNunchuk</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries/EEPROM/src</Value>
-      <Value>D:/Documenten/Arduino/libraries/digitalWriteFast</Value>
-      <Value>D:/Documenten/Arduino/libraries/SPI</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries/Wire/src/utility</Value>
-      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries</Value>
-      <Value>D:/Documenten/Arduino/libraries</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/cores/arduino</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/variants/standard</Value>
       <Value>../../../MainGame</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/avr/include/</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/avr/include/avr/</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/lib/gcc/avr/4.9.2/include</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/lib/gcc/avr/4.9.3/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/GraphicsLib</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/MI0283QT9</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/Nunchuck</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/EEPROM/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/digitalWriteFast</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
+      <Value>C:/Users/arend/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -501,7 +503,7 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
     <ListValues>
       <Value>__AVR_ATmega328p__</Value>
       <Value>__AVR_ATmega328P__</Value>
-      <Value>ARDUINO=106012</Value>
+      <Value>ARDUINO=10801</Value>
       <Value>ARDUINO_MAIN</Value>
       <Value>F_CPU=16000000L</Value>
       <Value>__AVR__</Value>
@@ -511,24 +513,25 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries/Wire/src</Value>
-      <Value>D:/Documenten/Arduino/libraries/GraphicsLib</Value>
-      <Value>D:/Documenten/Arduino/libraries/MI0283QT9</Value>
-      <Value>D:/Documenten/Arduino/libraries/ArduinoNunchuk</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries/EEPROM/src</Value>
-      <Value>D:/Documenten/Arduino/libraries/digitalWriteFast</Value>
-      <Value>D:/Documenten/Arduino/libraries/SPI</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries/Wire/src/utility</Value>
-      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/libraries</Value>
-      <Value>D:/Documenten/Arduino/libraries</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/cores/arduino</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/hardware/avr/1.6.20/variants/standard</Value>
       <Value>../../../MainGame</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/avr/include/</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/avr/include/avr/</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/lib/gcc/avr/4.9.2/include</Value>
-      <Value>C:/Users/wendy/AppData/Local/arduino15/packages/arduino/tools/avr-gcc/4.9.2-atmel3.5.4-arduino2/lib/gcc/avr/4.9.3/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/GraphicsLib</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/MI0283QT9</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/Nunchuck</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/EEPROM/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/digitalWriteFast</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/src/utility</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries</Value>
+      <Value>C:/Users/arend/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/avr/include/avr/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.2/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/avr/lib/gcc/avr/4.9.3/include</Value>
     </ListValues>
   </avrgcccpp.compiler.directories.IncludePaths>
   <avrgcccpp.compiler.optimization.level>Optimize (-O1)</avrgcccpp.compiler.optimization.level>
@@ -554,7 +557,7 @@ ProjectDir=C:\Users\gerjo\Desktop\windesheim\j2\s1\Ictesa-2017-s1\MainGame\MainG
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
-        <arduino.upload.port>COM3</arduino.upload.port>
+        <arduino.upload.port>COM11</arduino.upload.port>
         <arduino.board.name>uno</arduino.board.name>
         <arduino.board.desc>Arduino/Genuino Uno</arduino.board.desc>
         <arduino.board.property_bag>name=Arduino/Genuino Uno

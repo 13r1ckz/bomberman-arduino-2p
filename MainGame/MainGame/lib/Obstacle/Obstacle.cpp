@@ -122,6 +122,9 @@ Obstacle::ObstacleDR(int level)
 		seed = random(10);
 		randomSeed(seed);
 		Serial.print(seed);
+		Serial.print(seed);
+		Serial.print(seed);
+		Serial.print(seed);
 		for(QX = 0; QX < 123; QX++){
 			x = random(1,14);
 			y = random(1,14);
