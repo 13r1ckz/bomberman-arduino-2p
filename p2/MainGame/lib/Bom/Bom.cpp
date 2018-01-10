@@ -61,6 +61,7 @@ Bom::BomTrackA(int bomX, int bomY, int character) //kratten verwijderen+punten t
 			a[bomY/16][bomX/16-1] = 1;
 			
 			if(character == 1) {
+				lcd.fillRect(255, 112,100, 50, WHITE);
 				points +=2;
 			}
 		}
@@ -72,6 +73,7 @@ Bom::BomTrackA(int bomX, int bomY, int character) //kratten verwijderen+punten t
 			a[bomY/16][bomX/16+1] = 1;
 			
 			if(character == 1) {
+				lcd.fillRect(255, 112,100, 50, WHITE);
 				points +=2;
 			}
 		}
@@ -83,6 +85,7 @@ Bom::BomTrackA(int bomX, int bomY, int character) //kratten verwijderen+punten t
 			a[bomY/16-1][bomX/16] = 1;
 			
 			if(character == 1) {
+				lcd.fillRect(255, 112,100, 50, WHITE);
 				points +=2;
 			}
 		}
@@ -95,6 +98,7 @@ Bom::BomTrackA(int bomX, int bomY, int character) //kratten verwijderen+punten t
 			a[bomY/16+1][bomX/16] = 1;
 			
 			if(character == 1) {
+				lcd.fillRect(255, 112,100, 50, WHITE);
 				points +=2;
 			}
 		}
