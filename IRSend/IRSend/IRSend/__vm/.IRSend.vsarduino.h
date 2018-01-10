@@ -18,6 +18,7 @@
 #define ARDUINO 106012
 #define ARDUINO_AVR_UNO
 #define ARDUINO_ARCH_AVR
+void nibble(uint8_t bericht);
 int main(void);
 
 #include "pins_arduino.h" 
