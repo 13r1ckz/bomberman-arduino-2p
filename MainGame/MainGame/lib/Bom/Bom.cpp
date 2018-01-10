@@ -191,8 +191,8 @@ void Bom::PlaceBomB(int XA, int YA, int XB, int YB, int character, int bomBinnen
 {
 	MI0283QT9 lcd;
 	
-	int bomExplosion = 40;
-	int bomDelete = 40;
+	int bomExplosion = 30;
+	int bomDelete = 20;
 
 	if(bomBinnen ==1 ){
 		bomXB=XB;

@@ -27,10 +27,9 @@
 #define PINK 0xFFFFF8CE
 #define BLOOD 0xFFFFB043
 
-//Declare display !
 MI0283QT9 lcd;  //MI0283QT9 Adapter v1
-ArduinoNunchuk nunchuk = ArduinoNunchuk();
-GridClass gridFH;
+ArduinoNunchuk nunchuk = ArduinoNunchuk();	// zet nunchuk
+GridClass gridFH;	
 OuterWall wallOut;
 InnerWall wallIn;
 Obstacle OB;
@@ -40,6 +39,7 @@ hart harts;
 Navigate nav;
 initRW initrw;
 
+//locatie speler 2
 uint8_t loopX = 13;
 uint8_t loopY = 13;
 uint8_t loopXoud;
@@ -84,7 +84,7 @@ int reset(int soort){
 	d = eeprom_read_byte(140);
 	e = eeprom_read_byte(150);
 	
-	if (soort == 1)
+	if (soort == 1)	// als nieuwe EEPROM reset
 	{
 		if (a >254)
 		{
@@ -107,7 +107,7 @@ int reset(int soort){
 			eeprom_write_byte(150,0);
 		}
 		return;
-		}else if(soort == 2){
+		}else if(soort == 2){	// handmatige reset
 		eeprom_write_byte(110,0);
 		eeprom_write_byte(120,0);
 		eeprom_write_byte(130,0);
@@ -231,14 +231,14 @@ int memory(int geheugen){
 		e = eeprom_read_byte(150);
 	}
 
-	if (points <=0)
+	if (points <=0)	
 	{
 		if (points==-15)
 		{
 			return 6;
 		}
 		return 0;
-	}else if (points>a)
+	}else if (points>a) // als point groter is dan paats 1
 	{
 		eeprom_write_byte(150,d);
 		eeprom_write_byte(140,c);
@@ -246,26 +246,26 @@ int memory(int geheugen){
 		eeprom_write_byte(120,a);
 		eeprom_write_byte(110,points);
 		return 1;
-	}else if (points > b)
+	}else if (points > b) // als point groter is dan paats 2
 	{
 		eeprom_write_byte(150,d);
 		eeprom_write_byte(140,c);
 		eeprom_write_byte(130,b);
 		eeprom_write_byte(120,points);
 		return 2;
-	}else if (points > c)
+	}else if (points > c) // als point groter is dan paats 3
 	{
 		eeprom_write_byte(150,d);
 		eeprom_write_byte(140,c);
 		eeprom_write_byte(130,points);
 		return 3;
 		
-	}else if (points > d)
+	}else if (points > d) // als point groter is dan paats 4
 	{
 		eeprom_write_byte(150,d);
 		eeprom_write_byte(140,points);
 		return 4;
-	}else if (points > e)
+	}else if (points > e) // als point groter is dan paats 5
 	{
 		eeprom_write_byte(150,points);
 		return 5;
@@ -277,7 +277,7 @@ int memory(int geheugen){
 }
 
 /*
-In deze functie wordt het lose screen getekend de functie memory aangeroepen
+In deze functie wordt het lose screen getekend de functie memory aangeroepen om te controleren of je een highscore hebt
 */
 int loseScreen(){
 	uint8_t m = 0;
@@ -318,7 +318,7 @@ int loseScreen(){
 }
 
 /*
-In deze functie wordt het win screen getekend de functie memory aangeroepen
+In deze functie wordt het win screen getekend de functie memory aangeroepen om te controleren of je een highscore hebt
 */
 int winScreen(){
 	uint8_t geheugen;
@@ -357,7 +357,7 @@ int winScreen(){
 }
 
 /*
-In deze functie wordt het bewegen van de tegenstander geregistreerd 
+In deze functie wordt het bewegen van de karakters geregistreerd en het leggen van bommen
 */
 int navigate(){
 	
@@ -393,7 +393,7 @@ int navigate(){
 		
 		Characters.MoveRed(gridFH.GridF(loopX), gridFH.GridF(loopY));
 		
-		if(Serial.available()>0){
+		if(Serial.available()>0){ // kijk welke locatie door is gestuurd als 15 15 gestuurd wordt is het een bom
 			if(z == 0){
 				bericht = Serial.read() - 48;
 				z = 1;
@@ -441,10 +441,11 @@ int navigate(){
 				lcd.fillRect(gridFH.GridF(loopXoud), gridFH.GridF(loopYoud), 16, 16, WHITE); //wist vorige positie
 			}	
 		}
-
+		// teken juiste hoeveelheid hartjes
 		harts.HartS(levensA, 16, 2);
 		harts.HartS(levensB, 16, 13);
-			
+		
+		// als iemand geen hartjes meer heeft ga naar juiste win/lose scherm
 		if (levensA == 0) {
 			 PORTC &=~(1<<PORTC1); 
 			return 1;
@@ -453,6 +454,7 @@ int navigate(){
 			return 2;
 		}
 		
+		// controleer bommen
 		character = 1;
 		bom.PlaceBomA(XA, YA, XB, YB, character, &counterBomExplosionA, &counterBomDeleteA);
 		character = 2;
@@ -474,6 +476,8 @@ int level1() {
 	 PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3); 
 	life = navigate();
 	resetGrid();
+	
+	// controleert of gewonnen of verloren
 	if(life == 2) {
 		winScreen();
 		life = 0;
@@ -500,6 +504,8 @@ int level2() {
 	 PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3); 
 	life = navigate();
 	resetGrid();
+	
+	// controleert of gewonnen of verloren
 	if(life == 2) {
 		winScreen();
 		life = 0;
@@ -519,11 +525,13 @@ int levelRandom() {
 	lcd.fillScreen(WHITE);
 	wallOut.OuterWallP();
 	wallIn.InnerWallP();
-	OB.ObstacleDR(3);
+	OB.ObstacleDR(3);	// roept random level aan
 	 PORTC |= (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3); 
 	navigate();
 	life = navigate();
 	resetGrid();
+	
+	// controleert of gewonnen of verloren
 	if(life == 2) {
 		winScreen();
 		life = 0;
@@ -536,7 +544,7 @@ int levelRandom() {
 }
 
 /*
-In deze functie wordt alles voor het highscore scherm aangeroepen
+In deze functie wordt alles voor het highscore scherm aangeroepen en de mogelijkheid om het geheugen te verwijderen
 */
 int highScore() {
 	uint8_t a,b,c,d,e;
@@ -589,7 +597,7 @@ int highScore() {
 }
 
 /*
-In deze functie wordt het geheugen gewist van de highscore
+In deze functie wordt het geheugen gewist van de highscore en wordt gevraagd of je het zeker weet
 */
 int deletememory(){
 	
@@ -684,7 +692,7 @@ int navigateHoofdscherm(){
 				
 			}
 		}
-		
+		// bepaal of je op of neer gaat in menu
 		if(nunchuk.analogY < 60) {
 			if(i>counter) {
 				i=0;
@@ -707,8 +715,8 @@ int navigateHoofdscherm(){
 			i++;
 		}
 		else{
-			if(nunchukY == 1){
-				nav.navigateHoofdscherm(1);
+			if(nunchukY == 1){	
+				nav.navigateHoofdscherm(1); //tekent rode rand om geselecteerde level
 
 			}
 			if(nunchukY == 2){
@@ -742,7 +750,7 @@ int waitScreen(){
 
 /*
 In deze functie wordt de callibratie gezet op de eeprom
-bron: examples grafics libary
+bron: examples grafics libary: paint.ino
 */
 void writeCalData(void)
 {
@@ -762,7 +770,7 @@ void writeCalData(void)
 
 /*
 In deze functie wordt de callibratie op gehaalt van de eeprom
-bron: examples grafics libary
+bron: examples grafics libary: paint.ino
 */
 uint8_t readCalData(void)
 {
@@ -811,6 +819,7 @@ int main(void)
 	{
 		hoofdscherm();
 		a = navigateHoofdscherm();
+		// kijkt welk level is geselecteerd
 		if(a == 1){
 			level = waitScreen();
 			if(level){

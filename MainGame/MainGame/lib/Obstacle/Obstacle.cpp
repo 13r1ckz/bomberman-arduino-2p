@@ -21,14 +21,14 @@ Obstacle::woodBox(int X, int Y){
 }
 
 /*
-Hier wordt het level gemaakt.
+Hier worden de boxen in de levels gezet
 */
 Obstacle::ObstacleDR(int level)
 {
 	Serial.begin(9600);
 	char i;
 	
-	if(level == 1){
+	if(level == 1){	//level 1 boxen
 		woodBox(4,1);
 		for(i = 7; i <= 10; i++){ //rij 1
 			woodBox(i, 1);
@@ -86,7 +86,7 @@ Obstacle::ObstacleDR(int level)
 		woodBox(10,13);
 		woodBox(11,13);
 	}
-	else if (level == 2){
+	else if (level == 2){ //level 1 boxen
 		for (i = 1; i <= 13; i++){//rij 5/7/9
 			woodBox(i, 5);
 			woodBox(i, 7);
@@ -113,18 +113,22 @@ Obstacle::ObstacleDR(int level)
 			woodBox(i, 13);
 		}
 	}
-	else if (level == 3){
+	else if (level == 3){ // random level
 		uint8_t seed;
 		uint8_t x;
 		uint8_t y;
 		uint8_t QX;
-		randomSeed(TCNT0);
+		
+		//selecteer seed
+		randomSeed(TCNT0); 
 		seed = random(10);
-		randomSeed(seed);
+		randomSeed(seed); // seed voor functie random zetten
 		Serial.print(seed);
 		Serial.print(seed);
 		Serial.print(seed);
 		Serial.print(seed);
+		
+		// zet random boxen
 		for(QX = 0; QX < 123; QX++){
 			x = random(1,14);
 			y = random(1,14);

@@ -8,6 +8,7 @@
 
 #include "Data.h"
 
+// grid
 unsigned char a[15][15] = { {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 {2,1,1,1,1,1,1,1,1,1,1,1,1,1,2},
 {2,1,2,1,2,1,2,1,2,1,2,1,2,1,2},
@@ -25,10 +26,13 @@ unsigned char a[15][15] = { {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
 };
 
+// eigen locatie
 char nunchukX = 1;
 char nunchukY = 1;
 
+// levens
 int levensA = 3;
 int levensB = 3;
 
+//punten
 int points = 0;

@@ -1,6 +1,10 @@
 #include "Grid.h"
 
-int GridClass::GridF(int X)
+/*
+Zorgt ervoor dat alles in het grid geplaatst kan worden
+*/
+
+int GridClass::GridF(int X) 
 {
 	return (X*16);
 }

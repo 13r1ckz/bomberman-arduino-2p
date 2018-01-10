@@ -1,10 +1,3 @@
-/* 
-* hart.cpp
-*
-* Created: 12/7/2017 11:26:13 AM
-* Author: gerjo
-*/
-
 #include "hart.h"
 
 #define RED 0xFFFFF800
