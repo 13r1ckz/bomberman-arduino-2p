@@ -290,6 +290,7 @@ int loseScreen(){
 	levensA = 3;
 	levensB = 3;
 	points = 0;
+	PORTC &=~ (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3);
 	if (geheugen == 0)
 	{
 		lcd.drawText(35, 160,"No HighScore :(", PINK,BLACK,2);
@@ -331,7 +332,7 @@ int winScreen(){
 	levensA = 3;
 	levensB = 3;
 	points = 0;
-
+	PORTC &=~ (1<<PORTC1) | (1<<PORTC2) | (1<<PORTC3);
 	if (geheugen == 0)
 	{
 		lcd.drawText(35, 160,"No HighScore :(", PINK,BLACK,2);
